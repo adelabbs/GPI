@@ -8,5 +8,6 @@ public class classssse {
 	        Vector    v = new Vector();
 	        ArrayList a = new ArrayList();
 	        HashMap   m = new HashMap();
+	        Vector    vect = new Vector();
 	    }
 }
