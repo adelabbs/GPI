@@ -5,6 +5,7 @@ package test;
  * @author Adel
  *
  */
+/*Commited by Lucas (RVR)*/
 public class Hello {
 
 	public static void main(String[] args) {

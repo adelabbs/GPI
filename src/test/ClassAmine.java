@@ -2,9 +2,11 @@ package test;
 
 public class ClassAmine {
 /*
- * Commenté & modifié par Geoffroy
+ * Commentï¿½ & modifiï¿½ par Geoffroy
  * 
  */
+	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
