@@ -1,4 +1,4 @@
-# BETES
+# BUGS STUDIO
 
 ## Contributors
 - Geoffroy KEIME
