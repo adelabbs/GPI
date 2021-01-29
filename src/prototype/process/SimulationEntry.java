@@ -1,14 +1,20 @@
 package prototype.process;
 
 public class SimulationEntry {
-	int size;
+	int mapSize;
+	int insectCount;
 
-	public SimulationEntry(int size) {
-		this.size = size;
+	public SimulationEntry(int mapSize, int insectCount) {
+		this.mapSize = mapSize;
+		this.insectCount = insectCount;
 	}
 
-	public int getSize() {
-		return size;
+	public int getInsectCount() {
+		return insectCount;
+	}
+
+	public int getMapSize() {
+		return mapSize;
 	}
 
 }

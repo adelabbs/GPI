@@ -2,8 +2,12 @@ package prototype.process;
 
 import java.util.ArrayList;
 
+import prototype.data.Ant;
+import prototype.data.Bee;
 import prototype.data.Environment;
 import prototype.data.Insect;
+import prototype.process.managers.AntManager;
+import prototype.process.managers.BeeManager;
 import prototype.process.managers.BugManager;
 
 public class Simulation {
@@ -20,14 +24,30 @@ public class Simulation {
 	}
 
 	private void buildSimulation() {
-		int size = simulationEntry.getSize();
+		int size = simulationEntry.getMapSize();
 		float[][] map = new float[size][size];
+
 		for (int y = 0; y < size; y++) {
 			for (int x = 0; x < size; x++) {
 				map[y][x] = 0;
 			}
 		}
 		environment = new Environment(map);
+		int insectCount = simulationEntry.getInsectCount();
+		createInsects(insectCount);
+	}
+
+	private void createInsects(int insectCount) {
+		for (int i = 0; i < insectCount; i++) {
+			Ant ant = new Ant(i, null, i, i, i, i, i);
+			Bee bee = new Bee(i, null, i, i, i, i, i);
+			AntManager antManager = new AntManager('1', 'peaceful', ant);
+			BeeManager beeManager = new BeeManager('2', 'peaceful', bee);
+			insects.add(bee);
+			insects.add(ant);
+			bugManagers.add(beeManager);
+			bugManagers.add(antManager);
+		}
 	}
 
 	public void simulate() {
