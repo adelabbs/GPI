@@ -2,8 +2,8 @@ package prototype;
 
 public class Ants extends Insecte {
 	
-	public Ants() {
-		super();
+	public Ants(int id) {
+		super(id);
 	}
 
 	@Override
@@ -14,6 +14,18 @@ public class Ants extends Insecte {
 
 	@Override
 	public void drink() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void death() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void attack() {
 		// TODO Auto-generated method stub
 		
 	}

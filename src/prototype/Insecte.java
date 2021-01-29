@@ -7,7 +7,7 @@ public abstract class Insecte {
 	private int water;
 	private int attack;
 	
-	public Insecte(){
+	public Insecte(int id){
 		this.life=10;
 		this.food=10;
 		this.water=10;
@@ -17,4 +17,8 @@ public abstract class Insecte {
 	public abstract void eat();
 	
 	public abstract void drink();
+	
+	public abstract void death();
+	
+	public abstract void attack();
 }
