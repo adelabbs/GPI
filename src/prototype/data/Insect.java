@@ -22,7 +22,6 @@ public abstract class Insect {
 	private int maxThirst;
 	private int speed;
 	private int maxSpeed;
-	private int currentSpeed;
 
 	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, int speed,
 			int maxSpeed, String type) {
@@ -35,8 +34,8 @@ public abstract class Insect {
 		currentHunger = maxHunger;
 		this.maxThirst = maxThirst;
 		currentThirst = maxThirst;
-		this.maxSpeed = speed;
-		currentSpeed = maxSpeed;
+		this.maxSpeed = maxSpeed;
+		speed = maxSpeed;
 		this.type = type;
 
 	}
@@ -109,14 +108,6 @@ public abstract class Insect {
 
 	public void setMaxSpeed(int maxSpeed) {
 		this.maxSpeed = maxSpeed;
-	}
-
-	public int getCurrentSpeed() {
-		return currentSpeed;
-	}
-
-	public void setCurrentSpeed(int currentSpeed) {
-		this.currentSpeed = currentSpeed;
 	}
 
 	public Coordinate getCurrentPosition() {
