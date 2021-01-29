@@ -42,18 +42,8 @@ public abstract class BugManager {
 
 	public abstract void update();
 
-<<<<<<< Upstream, based on branch 'main' of https://github.com/dedely/GPI
-=======
-<<<<<<< Upstream, based on branch 'main' of https://github.com/dedely/GPI
-
-=======
->>>>>>> a9fad82 Indented BugManager properly
->>>>>>> db06162 Indented BugManager properly
 	public void moveInsect(Insect insect) {
-<<<<<<< Upstream, based on branch 'main' of https://github.com/dedely/GPI
-=======
-		
->>>>>>> db06162 Indented BugManager properly
+
 		Coordinate nextPosition = nextPos(insect);
 
 		insect.setCurrentPosition(nextPosition);
