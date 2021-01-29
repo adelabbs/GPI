@@ -14,6 +14,7 @@ import prototype.data.Insect;
 import prototype.process.Simulation;
 import prototype.process.SimulationEntry;
 import prototype.process.managers.BugManager;
+import test.SimuPara;
 
 /*
  * Main GUI class for simulation
@@ -27,7 +28,7 @@ public class InsectGUI extends JFrame implements Runnable {
 		
 	private Dashboard dashboard = new Dashboard();
 	
-	private SimulationEntry simEntry = new SimulationEntry();
+	private SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_MAP_SIZE);
 	private Simulation simulation = new Simulation(simEntry);
 		
 	
