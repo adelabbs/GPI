@@ -1,6 +1,6 @@
 package prototype.data;
 
-public class Ants extends Insecte {
+public class Ants extends Insect {
 	
 	public Ants(int id) {
 		super(id);

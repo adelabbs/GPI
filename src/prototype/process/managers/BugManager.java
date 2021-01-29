@@ -1,5 +1,7 @@
 package prototype.process.managers;
 
+import prototype.data.Coordinate;
+
 public abstract class BugManager {
 	
 	private String type = "none";
