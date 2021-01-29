@@ -25,7 +25,7 @@ public abstract class Insect {
 	private int currentSpeed;
 
 	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, int speed,
-			int maxSpeed) {
+			int maxSpeed, String type) {
 		this.id = id;
 		this.destinationPosition = destinationPosition;
 		currentPosition = destinationPosition;
@@ -37,6 +37,7 @@ public abstract class Insect {
 		currentThirst = maxThirst;
 		this.maxSpeed = speed;
 		currentSpeed = maxSpeed;
+		this.type = type;
 
 	}
 
