@@ -57,6 +57,7 @@ public abstract class BugManager {
 			double newY = (origin.getOrdinate() + (insect.getSpeed() / length * deltaY));
 
 			return new Coordinate(newX, newY);
+			
 
 		} else
 
