@@ -1,6 +1,7 @@
 package prototype.process.managers;
 
 import prototype.data.Bee;
+import prototype.data.Coordinate;
 import prototype.data.Insect;
 
 public class BeeManager extends BugManager {
@@ -19,6 +20,9 @@ public class BeeManager extends BugManager {
 
 	@Override
 	public void update() {
+		if (insect.getDestinationPosition().equals(insect.getCurrentPosition())) {
+			insect.setDestinationPosition(new Coordinate(Math.random()*100, Math.random()*100));
+		}
 		super.moveInsect(insect);
 
 	}

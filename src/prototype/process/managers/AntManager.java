@@ -1,6 +1,7 @@
 package prototype.process.managers;
 
 import prototype.data.Ant;
+import prototype.data.Coordinate;
 import prototype.data.Insect;
 
 public class AntManager extends BugManager {
@@ -14,6 +15,9 @@ public class AntManager extends BugManager {
 
 	@Override
 	public void update() {
+		if (insect.getDestinationPosition().equals(insect.getCurrentPosition())) {
+			insect.setDestinationPosition(new Coordinate(Math.random()*100, Math.random()*100));
+		}
 		super.moveInsect(insect);
 
 	}
