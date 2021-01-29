@@ -11,6 +11,8 @@ public abstract class Insect {
 	private Integer id;
 	private Coordinate currentPosition;
 	private Coordinate destinationPosition;
+	
+	private String type;
 
 	private int maxHealth;
 	private int currentHealth;
@@ -130,6 +132,14 @@ public abstract class Insect {
 
 	public void setDestinationPosition(Coordinate destinationPosition) {
 		this.destinationPosition = destinationPosition;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }
