@@ -3,6 +3,7 @@ package prototype.process;
 import java.util.ArrayList;
 
 import prototype.data.Environment;
+import prototype.data.Insect;
 import prototype.process.managers.BugManager;
 
 public class Simulation {
@@ -11,6 +12,7 @@ public class Simulation {
 	private SimulationState state;
 
 	private ArrayList<BugManager> bugManagers = new ArrayList<BugManager>();
+	private ArrayList<Insect> insects = new ArrayList<Insect>();
 
 	public Simulation(SimulationEntry simulationEntry) {
 		this.simulationEntry = simulationEntry;
@@ -18,6 +20,7 @@ public class Simulation {
 	}
 
 	private void buildSimulation() {
+		//TODO
 		environment = new Environment();
 	}
 
@@ -27,12 +30,28 @@ public class Simulation {
 		}
 	}
 
+	public void add(Insect insect) {
+		insects.add(insect);
+	}
+
+	public void remove(Insect insect) {
+		insects.remove(insect);
+	}
+
 	public void add(BugManager bugManager) {
 		bugManagers.add(bugManager);
 	}
 
+	public void remove(BugManager bugManager) {
+		bugManagers.remove(bugManager);
+	}
+
 	public ArrayList<BugManager> getExplorerManagers() {
 		return bugManagers;
+	}
+
+	public ArrayList<Insect> getInsects() {
+		return insects;
 	}
 
 	public Environment getEnvironment() {
@@ -41,6 +60,10 @@ public class Simulation {
 
 	public void setState(SimulationState state) {
 		this.state = state;
+	}
+
+	public SimulationState getState() {
+		return state;
 	}
 
 }
