@@ -7,8 +7,8 @@ public class BeeManager extends BugManager {
 
 	private Bee insect;
 
-	public BeeManager(String type, String groupID, String agressivity, Bee insect) {
-		super(type, groupID, agressivity);
+	public BeeManager (String groupID, String agressivity, Bee insect) {
+		super(groupID, agressivity);
 		this.insect = insect;
 	}
 

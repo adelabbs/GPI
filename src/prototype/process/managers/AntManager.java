@@ -7,8 +7,8 @@ public class AntManager extends BugManager {
 
 	private Ant insect;
 
-	public AntManager(String type, String groupID, String agressivity, Ant insect) {
-		super(type, groupID, agressivity);
+	public AntManager(String groupID, String agressivity, Ant insect) {
+		super(groupID, agressivity);
 		this.insect = insect;
 	}
 
