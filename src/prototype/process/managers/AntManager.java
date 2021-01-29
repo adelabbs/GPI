@@ -15,7 +15,8 @@ public class AntManager extends BugManager {
 
 	@Override
 	public void update() {
-		if (insect.getDestinationPosition().equals(insect.getCurrentPosition())) {
+		if (insect.getDestinationPosition().getOrdinate() == insect.getCurrentPosition().getOrdinate() &&
+				insect.getDestinationPosition().getAbscissa() == insect.getCurrentPosition().getAbscissa()) {
 			insect.setDestinationPosition(new Coordinate(Math.random()*100, Math.random()*100));
 		}
 		super.moveInsect(insect);
