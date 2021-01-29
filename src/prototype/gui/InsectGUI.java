@@ -19,56 +19,57 @@ import test.SimuPara;
 public class InsectGUI extends JFrame implements Runnable {
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800, 400);
 	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(800, 300);
-	
+
 	private ArrayList<Insect> insects = null;
-		
-	private Dashboard dashboard = new Dashboard();
-	
-	private SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_MAP_SIZE ,SimuPara.SIMULATION_INSECT_COUNT_PER_TYPE);
-	private Simulation simulation = new Simulation(simEntry);
-		
-	
+
+	private Dashboard dashboard;
+
+	private Simulation simulation;
+
 	private boolean stop = true;
-	
+
 	public InsectGUI(String title) {
 		super(title);
+		SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_MAP_SIZE,
+				SimuPara.SIMULATION_INSECT_COUNT_PER_TYPE);
+		simulation = new Simulation(simEntry);
+		insects = simulation.getInsects();
+		dashboard = new Dashboard(simulation);
 		init();
 	}
-	
-	
+
 	private void init() {
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		
+
 		dashboard.setPreferredSize(IDEAL_DASHBOARD_DIMENSION);
 		contentPane.add(BorderLayout.CENTER, dashboard);
-		
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
 		setPreferredSize(IDEAL_MAIN_DIMENSION);
 		setResizable(false);
 	}
-	
+
 	public void updateValues() {
-		//Update all insects position from simulation
+		// Update all insects position from simulation
 		insects = simulation.getInsects();
-		
+
 		dashboard.setInsects(insects);
 		dashboard.repaint();
 	}
-	
 
 	@Override
 	public void run() {
-		while(!stop) {
+		while (!stop) {
 			simulation.simulate();
-			if(!stop) {
+			if (!stop) {
 				updateValues();
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		new InsectGUI("BugsStudio");
 	}
