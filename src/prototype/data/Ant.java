@@ -4,9 +4,9 @@ import prototype.process.InsectVisitor;
 
 public class Ant extends Insect {
 
-	public Ant(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, int speed,
+	public Ant(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst,
 			int maxSpeed) {
-		super(id, destinationPosition, maxHealth, maxHunger, maxThirst, speed, maxSpeed, "ant");
+		super(id, destinationPosition, maxHealth, maxHunger, maxThirst, maxSpeed, "ant");
 	}
 
 	@Override
