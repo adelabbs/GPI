@@ -63,8 +63,8 @@ public abstract class BugManager {
 
 		if (insect.getSpeed() < length) {
 
-			float newX = Math.round((origin.getAbscissa() + (insect.getSpeed() / length * deltaX)));
-			float newY = Math.round((origin.getOrdinate() + (insect.getSpeed() / length * deltaY)));
+			double newX = Math.round((origin.getAbscissa() + (insect.getSpeed() / length * deltaX)));
+			double newY = Math.round((origin.getOrdinate() + (insect.getSpeed() / length * deltaY)));
 
 			return new Coordinate(newX, newY);
 
