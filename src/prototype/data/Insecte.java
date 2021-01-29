@@ -1,4 +1,4 @@
-package prototype;
+package prototype.data;
 
 public abstract class Insecte {
 	
