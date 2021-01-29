@@ -40,6 +40,8 @@ public abstract class BugManager {
 	}
 
 	public abstract void update();
+	
+	public abstract Insect getInsect();
 
 	public void moveInsect(Insect insect) {
 		Coordinate nextPosition = nextPos(insect);
@@ -61,6 +63,10 @@ public abstract class BugManager {
 			return new Coordinate(newX, newY);
 		} else
 			return destination;
+	}
+	
+	public boolean isDead() {
+		return getInsect().getCurrentHealth() <= 0;
 	}
 
 	public double distance(Coordinate position1, Coordinate position2) {

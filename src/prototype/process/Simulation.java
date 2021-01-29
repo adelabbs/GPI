@@ -61,9 +61,12 @@ public class Simulation {
 	public void setState(SimulationState state) {
 		this.state = state;
 	}
+	
+	public boolean isRunning() {
+		return state == SimulationState.RUNNING;
+	}
 
 	public SimulationState getState() {
 		return state;
 	}
-
 }
