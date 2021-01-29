@@ -1,8 +1,8 @@
-package prototype;
+package prototype.data;
 
-public class Bee extends Insecte {
+public class Ants extends Insecte {
 	
-	public Bee(int id) {
+	public Ants(int id) {
 		super(id);
 	}
 
