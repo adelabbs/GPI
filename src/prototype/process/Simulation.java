@@ -41,8 +41,8 @@ public class Simulation {
 		for (int i = 0; i < insectCount; i++) {
 			Ant ant = new Ant(i, null, i, i, i, i, i);
 			Bee bee = new Bee(i, null, i, i, i, i, i);
-			AntManager antManager = new AntManager('1', 'peaceful', ant);
-			BeeManager beeManager = new BeeManager('2', 'peaceful', bee);
+			AntManager antManager = new AntManager("1", "peaceful", ant);
+			BeeManager beeManager = new BeeManager("2", "peaceful", bee);
 			insects.add(bee);
 			insects.add(ant);
 			bugManagers.add(beeManager);

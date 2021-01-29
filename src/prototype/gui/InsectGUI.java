@@ -6,14 +6,10 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import com.sun.source.tree.TreeVisitor;
 
 import prototype.data.Insect;
 import prototype.process.Simulation;
 import prototype.process.SimulationEntry;
-import prototype.process.managers.BugManager;
 import test.SimuPara;
 
 /*
@@ -28,7 +24,7 @@ public class InsectGUI extends JFrame implements Runnable {
 		
 	private Dashboard dashboard = new Dashboard();
 	
-	private SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_MAP_SIZE);
+	private SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_MAP_SIZE ,SimuPara.SIMULATION_INSECT_COUNT_PER_TYPE);
 	private Simulation simulation = new Simulation(simEntry);
 		
 	
