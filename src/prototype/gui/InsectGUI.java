@@ -3,12 +3,14 @@ package prototype.gui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.sun.source.tree.TreeVisitor;
 
+import prototype.data.Insect;
 import prototype.process.Simulation;
 import prototype.process.SimulationEntry;
 import prototype.process.managers.BugManager;
@@ -21,8 +23,7 @@ public class InsectGUI extends JFrame implements Runnable {
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800, 400);
 	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(800, 300);
 	
-	private static final int TICK = 500;
-	
+	private ArrayList<Insect> insects = null;
 		
 	private Dashboard dashboard = new Dashboard();
 	
@@ -53,11 +54,10 @@ public class InsectGUI extends JFrame implements Runnable {
 	}
 	
 	public void updateValues() {
+		//Update all insects position from simulation
+		insects = simulation.getInsects();
 		
-		dashboard.setPosX(DISPOSE_ON_CLOSE);
-		dashboard.setPosY(DISPOSE_ON_CLOSE);
-		
-		
+		dashboard.setInsects(insects);
 		dashboard.repaint();
 	}
 	
@@ -65,11 +65,6 @@ public class InsectGUI extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		while(!stop) {
-			try {
-				Thread.sleep(TICK);
-			} catch (InterruptedException e) {
-				System.out.println(e.getMessage());
-			}
 			simulation.simulate();
 			if(!stop) {
 				updateValues();

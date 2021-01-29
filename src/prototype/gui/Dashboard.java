@@ -2,8 +2,11 @@ package prototype.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import prototype.data.Insect;
 
 
 public class Dashboard extends JPanel {
@@ -11,16 +14,25 @@ public class Dashboard extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	//Initial position of insect
-	private int posX = 0;
-	private int posY = 0;
+	private float posX = 0;
+	private float posY = 0;
+	
+	private ArrayList<Insect> insects = null;
+
 	
 	// Defines action when repaint is called
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.drawOval(5,5,posX, posY);
-		g.setColor(Color.RED);
+		for(Insect i : insects) {
+			g.drawOval(5,5, (int) i.getCurrentPosition().getAbscissa(), (int) i.getCurrentPosition().getOrdinate());
+			g.setColor(Color.RED);
+		}
+	}
+	
+	public void setInsects(ArrayList<Insect> insects) {
+		this.insects = insects;
 	}
 	
 	public void setPosX(int posX) {
