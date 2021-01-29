@@ -57,6 +57,7 @@ public class InsectGUI extends JFrame implements Runnable {
 		insects = simulation.getInsects();
 
 		dashboard.setInsects(insects);
+		dashboard.revalidate();
 		dashboard.repaint();
 	}
 

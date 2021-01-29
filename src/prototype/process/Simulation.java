@@ -78,7 +78,11 @@ public class Simulation {
 	}
 
 	public ArrayList<Insect> getInsects() {
-		return insects;
+		ArrayList<Insect> updatedInsects = new ArrayList<Insect>();
+		for(BugManager bugManager : bugManagers) {
+			updatedInsects.add(bugManager.getInsect());
+		}
+		return updatedInsects;
 	}
 
 	public Environment getEnvironment() {
