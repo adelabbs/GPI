@@ -8,7 +8,7 @@ public class Bee extends Insecte {
 
 	@Override
 	public void eat() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stu
 		
 	}
 

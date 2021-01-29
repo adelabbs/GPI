@@ -11,7 +11,7 @@ public abstract class Insecte {
 		this.life=10;
 		this.food=10;
 		this.water=10;
-		this.attack=1;
+		this.attack=2;
 	}
 	
 	public abstract void eat();
