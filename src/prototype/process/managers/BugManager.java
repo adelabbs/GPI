@@ -41,10 +41,9 @@ public abstract class BugManager {
 
 	public abstract void update();
 
-
 	public void moveInsect(Insect insect) {
 		Coordinate nextPosition = nextPos(insect);
-		
+
 		insect.setCurrentPosition(nextPosition);
 	}
 
