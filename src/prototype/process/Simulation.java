@@ -39,7 +39,7 @@ public class Simulation {
 	}
 
 	private void createInsects(int insectCount) {
-		for (int i = 0; i < insectCount; i++) {
+		for (int i = 1; i < insectCount + 1; i++) {
 			Ant ant = new Ant(i, new Coordinate(15*i, 15*i), i, i, i, i);
 			Bee bee = new Bee(i, new Coordinate(40*i, 60*i), i, i, i, i);
 			AntManager antManager = new AntManager("1", "peaceful", ant);
