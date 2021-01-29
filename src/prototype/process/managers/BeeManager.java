@@ -19,6 +19,7 @@ public class BeeManager extends BugManager {
 
 	@Override
 	public void update() {
+		super.moveInsect(insect);
 
 	}
 

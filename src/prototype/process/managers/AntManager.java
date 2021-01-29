@@ -14,6 +14,7 @@ public class AntManager extends BugManager {
 
 	@Override
 	public void update() {
+		super.moveInsect(insect);
 
 	}
 
