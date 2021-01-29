@@ -30,7 +30,7 @@ public class Dashboard extends JPanel {
 		super.paintComponent(g);
 
 		for (Insect i : simulation.getInsects()) {
-			g.drawOval(5, 5, (int) i.getCurrentPosition().getAbscissa(), (int) i.getCurrentPosition().getOrdinate());
+			g.drawOval((int) i.getCurrentPosition().getAbscissa(), (int) i.getCurrentPosition().getOrdinate(),50,50);
 
 			if (i.getType() == "ant") {
 				g.setColor(Color.BLACK);
