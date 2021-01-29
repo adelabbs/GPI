@@ -1,20 +1,22 @@
 package prototype.process.managers;
 
-import prototype.data.Coordinate;
 
 public abstract class BugManager {
 	
 	private String type = "none";
 	private String groupID = "0";
 	private String agressivity = "peaceful";
-	private Coordinate currentPostition;
 
-	private Coordinate heading;
 	
-	public BugManager() {
-		// TODO Auto-generated constructor stub
+	
+	
+	
+	public BugManager(String type, String groupID, String agressivity) {
+		super();
+		this.type = type;
+		this.groupID = groupID;
+		this.agressivity = agressivity;
 	}
-	
 	
 	public String getType() {
 		return type;
@@ -39,27 +41,8 @@ public abstract class BugManager {
 		this.agressivity = agressivity;
 	}
 
-	public Coordinate getCurrentPostition() {
-		return currentPostition;
-	}
-
-	public void setCurrentPostition(Coordinate currentPostition) {
-		this.currentPostition = currentPostition;
-	}
-
-	public Coordinate getHeading() {
-		return heading;
-	}
-
-	public void setHeading(Coordinate heading) {
-		this.heading = heading;
-	}
 	
 	public void update() {
-	}
-	
-	public void moveTo(Coordinate goTo) {
-		setHeading(goTo);
 		
 	}
 	
