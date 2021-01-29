@@ -22,9 +22,11 @@ public abstract class Insect {
 	private int maxSpeed;
 	private int currentSpeed;
 
-	public Insect(Integer id, Coordinate coordinates, int maxHealth, int maxHunger, int maxThirst, int speed) {
+	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, int speed,
+			int maxSpeed) {
 		this.id = id;
-		this.coordinates = coordinates;
+		this.destinationPosition = destinationPosition;
+		currentPosition = destinationPosition;
 		this.maxHealth = maxHealth;
 		currentHealth = maxHealth;
 		this.maxHunger = maxHunger;
@@ -33,14 +35,14 @@ public abstract class Insect {
 		currentThirst = maxThirst;
 		this.maxSpeed = speed;
 		currentSpeed = maxSpeed;
+
 	}
-	
-	abstract <T>  T accept(InsectVisitor<T> visitor);
+
+	abstract <T> T accept(InsectVisitor<T> visitor);
 
 	public Integer getId() {
 		return id;
 	}
-
 
 	public int getMaxHealth() {
 		return maxHealth;

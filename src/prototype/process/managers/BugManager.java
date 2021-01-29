@@ -65,6 +65,4 @@ public abstract class BugManager {
 		return Math.sqrt((Math.pow(position1.getAbscissa() - position2.getAbscissa(), 2)
 				+ (Math.pow(position1.getOrdinate() - position2.getOrdinate(), 2))));
 	}
-	
-	
 }
