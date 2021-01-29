@@ -23,7 +23,7 @@ public abstract class Insect {
 	private int speed;
 	private int maxSpeed;
 
-	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, int speed,
+	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, 
 			int maxSpeed, String type) {
 		this.id = id;
 		this.destinationPosition = destinationPosition;
