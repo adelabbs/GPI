@@ -2,12 +2,12 @@ package prototype.data;
 
 public class Coordinate {
 	
-	private float absyss;
+	private float abscissa;
 	private float ordinate;
 	
-	public Coordinate(float absyss, float ordinate) {
+	public Coordinate(float abscissa, float ordinate) {
 		super();
-		this.absyss = absyss;
+		this.abscissa = abscissa;
 		this.ordinate = ordinate;
 	}
 	public float getOrdinate() {
@@ -16,11 +16,11 @@ public class Coordinate {
 	public void setOrdinate(float ordinate) {
 		this.ordinate = ordinate;
 	}
-	public float getAbsyss() {
-		return absyss;
+	public float getAbscissa() {
+		return abscissa;
 	}
-	public void setAbsyss(float absyss) {
-		this.absyss = absyss;
+	public void setAbscissa(float abscissa) {
+		this.abscissa = abscissa;
 	}
 	
 }
