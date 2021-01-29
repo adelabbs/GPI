@@ -9,7 +9,8 @@ import prototype.process.InsectVisitor;
 public abstract class Insect {
 
 	private Integer id;
-	private Coordinate coordinates;
+	private Coordinate currentPosition;
+	private Coordinate destinationPosition;
 
 	private int maxHealth;
 	private int currentHealth;
@@ -40,14 +41,6 @@ public abstract class Insect {
 		return id;
 	}
 
-
-	public Coordinate getCoordinates() {
-		return coordinates;
-	}
-
-	public void setCoordinates(Coordinate coordinates) {
-		this.coordinates = coordinates;
-	}
 
 	public int getMaxHealth() {
 		return maxHealth;
@@ -119,6 +112,22 @@ public abstract class Insect {
 
 	public void setCurrentSpeed(int currentSpeed) {
 		this.currentSpeed = currentSpeed;
+	}
+
+	public Coordinate getCurrentPosition() {
+		return currentPosition;
+	}
+
+	public void setCurrentPosition(Coordinate currentPosition) {
+		this.currentPosition = currentPosition;
+	}
+
+	public Coordinate getDestinationPosition() {
+		return destinationPosition;
+	}
+
+	public void setDestinationPosition(Coordinate destinationPosition) {
+		this.destinationPosition = destinationPosition;
 	}
 
 }
