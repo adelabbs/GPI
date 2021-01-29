@@ -3,11 +3,9 @@ package prototype.gui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import prototype.data.Insect;
 import prototype.process.Simulation;
 import prototype.process.SimulationEntry;
 import test.SimuPara;
@@ -20,20 +18,17 @@ public class InsectGUI extends JFrame implements Runnable {
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800, 400);
 	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(800, 300);
 
-	private ArrayList<Insect> insects = null;
-
 	private Dashboard dashboard;
 
 	private Simulation simulation;
 
-	private boolean stop = true;
+	private boolean stop = false;
 
 	public InsectGUI(String title) {
 		super(title);
 		SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_MAP_SIZE,
 				SimuPara.SIMULATION_INSECT_COUNT_PER_TYPE);
 		simulation = new Simulation(simEntry);
-		insects = simulation.getInsects();
 		dashboard = new Dashboard(simulation);
 		init();
 	}
@@ -53,10 +48,7 @@ public class InsectGUI extends JFrame implements Runnable {
 	}
 
 	public void updateValues() {
-		// Update all insects position from simulation
-		insects = simulation.getInsects();
-
-		dashboard.setInsects(insects);
+		dashboard.setSimulation(simulation);
 		dashboard.revalidate();
 		dashboard.repaint();
 	}
@@ -64,7 +56,13 @@ public class InsectGUI extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		while (!stop) {
+			try {
+				Thread.sleep(SimuPara.SIMULATION_SPEED);
+			} catch (InterruptedException e) {
+				System.out.println(e.getMessage());
+			}
 			simulation.simulate();
+
 			if (!stop) {
 				updateValues();
 			}
@@ -72,6 +70,7 @@ public class InsectGUI extends JFrame implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		new InsectGUI("BugsStudio");
+		InsectGUI gui = new InsectGUI("BugsStudio");
+		gui.run();
 	}
 }

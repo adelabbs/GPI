@@ -17,7 +17,6 @@ public class Dashboard extends JPanel {
 	private float posX = 0;
 	private float posY = 0;
 
-	private ArrayList<Insect> insects = null;
 	private Simulation simulation;
 
 	public Dashboard(Simulation simulation) {
@@ -30,7 +29,7 @@ public class Dashboard extends JPanel {
 		super.paintComponent(g);
 
 		for (Insect i : simulation.getInsects()) {
-			g.drawOval((int) i.getCurrentPosition().getAbscissa(), (int) i.getCurrentPosition().getOrdinate(),50,50);
+			g.drawOval((int) i.getCurrentPosition().getAbscissa(), (int) i.getCurrentPosition().getOrdinate(), 50, 50);
 
 			if (i.getType().equals("Ant")) {
 				g.setColor(Color.BLUE);
@@ -42,8 +41,8 @@ public class Dashboard extends JPanel {
 		}
 	}
 
-	public void setInsects(ArrayList<Insect> insects) {
-		this.insects = insects;
+	public void setSimulation(Simulation simulation) {
+		this.simulation = simulation;
 	}
 
 	public void setPosX(int posX) {
