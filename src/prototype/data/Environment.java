@@ -1,22 +1,24 @@
 package prototype.data;
 
+/**
+ * The current environment is represented by a grid.
+ * 
+ *
+ */
 public class Environment {
-	
-	private int line;
-	private int column;
-	private int [][] map;
-	
-	public Environment(int line, int column) {
-		this.line= line;
-		this.column=column;
-		map = new int[line][column];
-		
-		for(int i=0; i< this.line; i++) {
-			for(int j=0; j< this.column; j++) {
-				this.map[i][j]= 0;
-			}
-		}
-		
+
+	private float[][] map;
+
+	public Environment(float[][] map) {
+		this.map = map;
 	}
-	
+
+	public float[][] getMap() {
+		return map;
+	}
+
+	public void setMap(float[][] map) {
+		this.map = map;
+	}
+
 }

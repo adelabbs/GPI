@@ -20,8 +20,14 @@ public class Simulation {
 	}
 
 	private void buildSimulation() {
-		//TODO
-		environment = new Environment();
+		int size = simulationEntry.getSize();
+		float[][] map = new float[size][size];
+		for (int y = 0; y < size; y++) {
+			for (int x = 0; x < size; x++) {
+				map[y][x] = 0;
+			}
+		}
+		environment = new Environment(map);
 	}
 
 	public void simulate() {
@@ -61,7 +67,7 @@ public class Simulation {
 	public void setState(SimulationState state) {
 		this.state = state;
 	}
-	
+
 	public boolean isRunning() {
 		return state == SimulationState.RUNNING;
 	}
