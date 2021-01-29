@@ -32,12 +32,12 @@ public class Dashboard extends JPanel {
 		for (Insect i : simulation.getInsects()) {
 			g.drawOval((int) i.getCurrentPosition().getAbscissa(), (int) i.getCurrentPosition().getOrdinate(),50,50);
 
-			if (i.getType() == "ant") {
-				g.setColor(Color.BLACK);
+			if (i.getType().equals("Ant")) {
+				g.setColor(Color.BLUE);
 			}
 
 			else {
-				g.setColor(Color.YELLOW);
+				g.setColor(Color.RED);
 			}
 		}
 	}
