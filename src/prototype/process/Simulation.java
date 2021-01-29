@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import prototype.data.Ant;
 import prototype.data.Bee;
+import prototype.data.Coordinate;
 import prototype.data.Environment;
 import prototype.data.Insect;
 import prototype.process.managers.AntManager;
@@ -39,8 +40,8 @@ public class Simulation {
 
 	private void createInsects(int insectCount) {
 		for (int i = 0; i < insectCount; i++) {
-			Ant ant = new Ant(i, null, i, i, i, i, i);
-			Bee bee = new Bee(i, null, i, i, i, i, i);
+			Ant ant = new Ant(i, new Coordinate(5*i, 5*i), i, i, i, i, i);
+			Bee bee = new Bee(i, new Coordinate(5*i, 5*i), i, i, i, i, i);
 			AntManager antManager = new AntManager("1", "peaceful", ant);
 			BeeManager beeManager = new BeeManager("2", "peaceful", bee);
 			insects.add(bee);
