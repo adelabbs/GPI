@@ -1,4 +1,4 @@
-package prototype.process.managers;
+package prototype.data;
 
 public class Coordinate {
 	

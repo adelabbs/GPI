@@ -1,13 +1,13 @@
 package prototype.data;
 
-public abstract class Insecte {
+public abstract class Insect {
 	
 	private int life;
 	private int food;
 	private int water;
 	private int attack;
 	
-	public Insecte(int id){
+	public Insect(int id){
 		this.life=10;
 		this.food=10;
 		this.water=10;
