@@ -11,7 +11,6 @@ public abstract class BugManager {
 	
 	
 	public BugManager(String type, String groupID, String agressivity) {
-		super();
 		this.type = type;
 		this.groupID = groupID;
 		this.agressivity = agressivity;
