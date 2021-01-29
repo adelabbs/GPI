@@ -23,4 +23,10 @@ public class Coordinate {
 		this.abscissa = abscissa;
 	}
 	
+	@Override
+	public String toString() {
+		return "Coordinate [abscissa=" + abscissa + ", ordinate=" + ordinate + "]";
+	}
+	
+	
 }
