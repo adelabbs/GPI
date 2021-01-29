@@ -49,7 +49,7 @@ public abstract class BugManager {
 		insect.setCurrentPosition(nextPosition);
 	}
 
-	private Coordinate nextPos(Insect insect) {
+	public Coordinate nextPos(Insect insect) {
 
 		Coordinate origin = insect.getCurrentPosition();
 		Coordinate destination = insect.getDestinationPosition();
