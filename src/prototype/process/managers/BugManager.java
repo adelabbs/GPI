@@ -13,7 +13,6 @@ public abstract class BugManager {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public abstract void update();
 	
 	public String getType() {
 		return type;
