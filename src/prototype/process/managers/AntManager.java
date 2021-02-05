@@ -31,10 +31,14 @@ public class AntManager extends BugManager {
 			this.goEat();
 			hungry = true;
 		}
+		else {
+			wandering=true;
+			
+		}
 
 		if (insect.getDestinationPosition() == insect.getCurrentPosition()) {
 			if (wandering) {
-				// test si l'insecte à trouver un POI valide
+				// test si l'insecte a trouvé un POI valide et met le wandering a false
 
 				insect.setDestinationPosition(new Coordinate(Math.random() * SimuPara.SIMULATION_MAP_SIZE,
 						Math.random() * SimuPara.SIMULATION_MAP_SIZE));
