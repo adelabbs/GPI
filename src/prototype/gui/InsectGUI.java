@@ -16,7 +16,8 @@ import test.SimuPara;
  */
 public class InsectGUI extends JFrame implements Runnable {
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800, 400);
-	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(800, 300);
+	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(1200, 1200);
+
 
 	private Dashboard dashboard;
 

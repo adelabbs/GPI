@@ -44,7 +44,7 @@ public class AntManager extends BugManager {
 	}
 
 	public void eat() {
-		//eat qui rempli totalement la faim de l'insecte
+		// eat qui rempli totalement la faim de l'insecte
 		int currentHunger = insect.getCurrentHunger();
 		int maxHunger = insect.getMaxHunger();
 		int delta = maxHunger - currentHunger;
@@ -52,21 +52,20 @@ public class AntManager extends BugManager {
 		// TODO décrémenter la ressource de delta
 
 	}
-	
+
 	public void eat(int quantity) {
-		//eat qui rempli de quantity la faim de l'insecte
+		// eat qui rempli de quantity la faim de l'insecte
 		int currentHunger = insect.getCurrentHunger();
 		int maxHunger = insect.getMaxHunger();
 		int calculatedHunger = currentHunger + quantity;
-		
-		if(calculatedHunger>maxHunger) {			
+
+		if (calculatedHunger > maxHunger) {
 			insect.setCurrentHunger(insect.getMaxHunger());
-			quantity=calculatedHunger-maxHunger;
-		}
-		else {
+			quantity = calculatedHunger - maxHunger;
+		} else {
 			insect.setCurrentHunger(currentHunger + quantity);
 		}
-		
+
 		// TODO décrémenter la ressource de quantity
 
 	}
