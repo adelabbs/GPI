@@ -15,8 +15,8 @@ import test.SimuPara;
  * 
  */
 public class InsectGUI extends JFrame implements Runnable {
-	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800, 400);
-	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(800, 300);
+	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(1100, 1100);
+	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(1000, 1000);
 
 	private Dashboard dashboard;
 
@@ -24,8 +24,8 @@ public class InsectGUI extends JFrame implements Runnable {
 
 	private boolean stop = false;
 
-	public InsectGUI(String title) {
-		super(title);
+	public InsectGUI() {
+		super("BugStudio");
 		SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_MAP_SIZE,
 				SimuPara.SIMULATION_INSECT_COUNT_PER_TYPE);
 		simulation = new Simulation(simEntry);
@@ -69,8 +69,4 @@ public class InsectGUI extends JFrame implements Runnable {
 		}
 	}
 
-	public static void main(String[] args) {
-		InsectGUI gui = new InsectGUI("BugsStudio");
-		gui.run();
-	}
 }
