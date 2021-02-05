@@ -6,7 +6,6 @@ public class Coordinate {
 	private double ordinate;
 	
 	public Coordinate(double newX, double newY) {
-		super();
 		this.abscissa = newX;
 		this.ordinate = newY;
 	}
@@ -27,6 +26,4 @@ public class Coordinate {
 	public String toString() {
 		return "Coordinate [abscissa=" + abscissa + ", ordinate=" + ordinate + "]";
 	}
-	
-	
 }
