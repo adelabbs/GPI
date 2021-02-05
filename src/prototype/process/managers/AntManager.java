@@ -33,19 +33,20 @@ public class AntManager extends BugManager {
 		}
 
 		if (insect.getDestinationPosition() == insect.getCurrentPosition()) {
-			if (thirsty) {
-				drink();
-
-			}
-			if (hungry) {
-				eat();
-			}
 			if (wandering) {
 				// test si l'insecte à trouver un POI valide
 
 				insect.setDestinationPosition(new Coordinate(Math.random() * SimuPara.SIMULATION_MAP_SIZE,
 						Math.random() * SimuPara.SIMULATION_MAP_SIZE));
 			}
+			else if (thirsty) {
+				drink();
+
+			}
+			else if (hungry) {
+				eat();
+			}
+			
 		}
 		super.moveInsect(insect);
 
