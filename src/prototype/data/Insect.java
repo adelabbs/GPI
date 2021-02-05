@@ -11,6 +11,7 @@ import prototype.process.InsectVisitor;
 public abstract class Insect {
 
 	private Integer id;
+	
 	private Coordinate currentPosition;
 	private Coordinate destinationPosition;
 	private ArrayList<NaturalResource> poi;
@@ -48,6 +49,11 @@ public abstract class Insect {
 	public Integer getId() {
 		return id;
 	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 
 	public int getMaxHealth() {
 		return maxHealth;
@@ -142,5 +148,11 @@ public abstract class Insect {
 	public void remove (NaturalResource naturalResource) {
 		poi.remove(naturalResource);
 	}
+	public ArrayList<NaturalResource> getPoi() {
+		return poi;
+	}
 
+	public void setPoi(ArrayList<NaturalResource> poi) {
+		this.poi = poi;
+	}
 }
