@@ -4,16 +4,14 @@ public class NaturalResource {
 	private String type;
 	private String id;
 	private int quantity;
-	private float xPos;
-	private float yPos;
+	private Coordinate coordinates;
 
 
-	public NaturalResource (String type, String id, int quantity, float x, float y) {
+	public NaturalResource (String type, String id, int quantity, Coordinate coordinates) {
 		this.type = type;
 		this.id = id;
 		this.quantity = quantity;
-		this.xPos = x;
-		this.yPos = y;
+		this.coordinates = coordinates;
 	}
 
 	public String getId() {
@@ -24,20 +22,12 @@ public class NaturalResource {
 		this.id = id;
 	}
 
-	public float getxPos() {
-		return xPos;
+	public Coordinate getCoordinates() {
+		return coordinates;
 	}
 
-	public void setxPos(float xPos) {
-		this.xPos = xPos;
-	}
-
-	public float getyPos() {
-		return yPos;
-	}
-
-	public void setyPos(float yPos) {
-		this.yPos = yPos;
+	public void setCoordinates(Coordinate coordinates) {
+		this.coordinates = coordinates;
 	}
 
 	public String getType() {

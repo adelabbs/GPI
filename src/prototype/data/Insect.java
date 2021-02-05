@@ -1,5 +1,7 @@
 package prototype.data;
 
+import java.util.ArrayList;
+
 import prototype.process.InsectVisitor;
 
 /**
@@ -11,6 +13,7 @@ public abstract class Insect {
 	private Integer id;
 	private Coordinate currentPosition;
 	private Coordinate destinationPosition;
+	private ArrayList<NaturalResource> poi;
 	
 	private String type;
 
@@ -132,6 +135,12 @@ public abstract class Insect {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	public void add (NaturalResource naturalResource) {
+		poi.add(naturalResource);
+	}
+	public void remove (NaturalResource naturalResource) {
+		poi.remove(naturalResource);
 	}
 
 }
