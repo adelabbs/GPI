@@ -1,7 +1,6 @@
 package prototype.process;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import prototype.data.Ant;
 import prototype.data.Bee;
@@ -20,10 +19,11 @@ public class Simulation {
 	private ArrayList<BugManager> bugManagers = new ArrayList<BugManager>();
 	private ArrayList<Insect> insects = new ArrayList<Insect>();
 
-	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
+	// private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
 
 	// Using a HashMap will allow us to access specific managers quicker
-	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
+	// private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer,
+	// BugManager>();
 
 	public Simulation(SimulationEntry simulationEntry) {
 		this.simulationEntry = simulationEntry;
