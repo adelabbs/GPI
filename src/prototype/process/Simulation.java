@@ -1,6 +1,7 @@
 package prototype.process;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import prototype.data.Ant;
 import prototype.data.Bee;
@@ -18,6 +19,11 @@ public class Simulation {
 
 	private ArrayList<BugManager> bugManagers = new ArrayList<BugManager>();
 	private ArrayList<Insect> insects = new ArrayList<Insect>();
+
+	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
+
+	// Using a HashMap will allow us to access specific managers quicker
+	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
 
 	public Simulation(SimulationEntry simulationEntry) {
 		this.simulationEntry = simulationEntry;
@@ -40,8 +46,8 @@ public class Simulation {
 
 	private void createInsects(int insectCount) {
 		for (int i = 1; i < insectCount + 1; i++) {
-			Ant ant = new Ant(i, new Coordinate(15*i, 15*i), i, i, i, i);
-			Bee bee = new Bee(i, new Coordinate(40*i, 60*i), i, i, i, i);
+			Ant ant = new Ant(i, new Coordinate(15 * i, 15 * i), i, i, i, i);
+			Bee bee = new Bee(i, new Coordinate(40 * i, 60 * i), i, i, i, i);
 			AntManager antManager = new AntManager("1", "peaceful", ant);
 			BeeManager beeManager = new BeeManager("2", "peaceful", bee);
 			insects.add(bee);
@@ -73,16 +79,16 @@ public class Simulation {
 		bugManagers.remove(bugManager);
 	}
 
+	public void removeAllDeadInsects() {
+
+	}
+
 	public ArrayList<BugManager> getExplorerManagers() {
 		return bugManagers;
 	}
 
 	public ArrayList<Insect> getInsects() {
-		ArrayList<Insect> updatedInsects = new ArrayList<Insect>();
-		for(BugManager bugManager : bugManagers) {
-			updatedInsects.add(bugManager.getInsect());
-		}
-		return updatedInsects;
+		return insects;
 	}
 
 	public Environment getEnvironment() {

@@ -1,8 +1,7 @@
 package prototype.gui;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -12,10 +11,6 @@ import prototype.process.Simulation;
 public class Dashboard extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	// Initial position of insect
-	private float posX = 0;
-	private float posY = 0;
 
 	private Simulation simulation;
 
@@ -27,30 +22,26 @@ public class Dashboard extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		// Use Graphics2D to have more drawing options later
+		Graphics2D g2 = (Graphics2D) g;
 
-		for (Insect i : simulation.getInsects()) {
-			g.drawOval((int) i.getCurrentPosition().getAbscissa(), (int) i.getCurrentPosition().getOrdinate(), 50, 50);
+		printMap(g2);
+		printInsects(g2);
+	}
 
-			if (i.getType().equals("Ant")) {
-				g.setColor(Color.BLUE);
-			}
+	private void printMap(Graphics2D g2) {
 
-			else {
-				g.setColor(Color.RED);
-			}
+	}
+
+	private void printInsects(Graphics2D g2) {
+		for (Insect insect : simulation.getInsects()) {
+			PaintVisitor paintVisitor = new PaintVisitor(g2);
+			insect.accept(paintVisitor);
 		}
 	}
 
 	public void setSimulation(Simulation simulation) {
 		this.simulation = simulation;
-	}
-
-	public void setPosX(int posX) {
-		this.posX = posX;
-	}
-
-	public void setPosY(int posY) {
-		this.posY = posY;
 	}
 
 }

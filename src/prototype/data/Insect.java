@@ -40,7 +40,7 @@ public abstract class Insect {
 
 	}
 
-	abstract <T> T accept(InsectVisitor<T> visitor);
+	public abstract <T> T accept(InsectVisitor<T> visitor);
 
 	public Integer getId() {
 		return id;

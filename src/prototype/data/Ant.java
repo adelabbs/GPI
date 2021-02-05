@@ -10,7 +10,7 @@ public class Ant extends Insect {
 	}
 
 	@Override
-	<T> T accept(InsectVisitor<T> visitor) {
+	public <T> T accept(InsectVisitor<T> visitor) {
 		return visitor.visit(this);
 	}
 
