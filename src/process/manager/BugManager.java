@@ -50,6 +50,9 @@ public abstract class BugManager {
 
 		int newTileX = calculateTileX(nextPosition);
 		int newTileY = calculateTileY(nextPosition);
+		
+		setTileX(newTileX);
+		setTileY(newTileY);
 
 	}
 
