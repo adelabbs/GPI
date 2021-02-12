@@ -1,10 +1,16 @@
 package process.manager;
 
+import java.util.ArrayList;
+
+import javax.annotation.Resources;
+
 import data.Ant;
 import data.Constants;
 import data.Coordinate;
+import data.Environment;
 import data.Insect;
 import data.NaturalResource;
+import data.TileCoordinate;
 import test.manual.SimuPara;
 
 public class AntManager extends BugManager {
@@ -85,6 +91,16 @@ public class AntManager extends BugManager {
 		}
 
 		// TODO décrémenter la ressource de quantity
+		int x =(int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
+		int y =(int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
+		
+		TileCoordinate tileCoordinate = new TileCoordinate(x,y);
+		
+		for(NaturalResource resource : Environment.getInstance().getResources()) {
+			if(resource.getCoordinates() == tileCoordinate) {
+				resource.setQuantity(resource.getQuantity()-quantity);
+			}
+		}
 
 	}
 
@@ -103,6 +119,16 @@ public class AntManager extends BugManager {
 		}
 
 		// TODO décrémenter la ressource de quantity
+		int x =(int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
+		int y =(int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
+		
+		TileCoordinate tileCoordinate = new TileCoordinate(x,y);
+		
+		for(NaturalResource resource : Environment.getInstance().getResources()) {
+			if(resource.getCoordinates() == tileCoordinate) {
+				resource.setQuantity(resource.getQuantity()-quantity);
+			}
+		}
 
 	}
 
