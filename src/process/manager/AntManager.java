@@ -23,8 +23,7 @@ public class AntManager extends BugManager {
 
 	@Override
 	public void update() {
-		System.out.println(waitTime);
-		
+
 		if (waiting) {
 			if (waitTime > 0) {
 				waitTime--;
