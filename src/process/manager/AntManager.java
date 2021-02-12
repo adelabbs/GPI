@@ -5,6 +5,7 @@ import data.Constants;
 import data.Coordinate;
 import data.Insect;
 import data.NaturalResource;
+import data.TileCoordinate;
 import test.manual.SimuPara;
 
 public class AntManager extends BugManager {
@@ -30,10 +31,9 @@ public class AntManager extends BugManager {
 		else if (((insect.getCurrentHunger() / insect.getMaxHunger()) <= 0.30) && !hungry) {
 			this.goEat();
 			hungry = true;
-		}
-		else {
-			wandering=true;
-			
+		} else {
+			wandering = true;
+
 		}
 
 		if (insect.getDestinationPosition() == insect.getCurrentPosition()) {
@@ -42,15 +42,13 @@ public class AntManager extends BugManager {
 
 				insect.setDestinationPosition(new Coordinate(Math.random() * SimuPara.SIMULATION_MAP_SIZE,
 						Math.random() * SimuPara.SIMULATION_MAP_SIZE));
-			}
-			else if (thirsty) {
+			} else if (thirsty) {
 				drink();
 
-			}
-			else if (hungry) {
+			} else if (hungry) {
 				eat();
 			}
-			
+
 		}
 		super.moveInsect(insect);
 
@@ -90,7 +88,6 @@ public class AntManager extends BugManager {
 		int delta = maxThirst - currentThirst;
 		insect.setCurrentThirst(insect.getMaxThirst());
 		// TODO décrémenter la ressource de delta
-
 	}
 
 	public void drink(int quantity) {
@@ -112,34 +109,32 @@ public class AntManager extends BugManager {
 
 	private void goEat() {
 		boolean nofood = true;
-		for (NaturalResource ressource : insect.getPoi()) {
-			if (ressource.getType() == Constants.FOOD) {
+		for (NaturalResource resource : insect.getPoi()) {
+			if (resource.getType() == Constants.FOOD) {
 				nofood = false;
-				insect.setDestinationPosition(resource.getCoordinates());
+				TileCoordinate resourcePosition = resource.getCoordinates();
+				Coordinate destination = new Coordinate(resourcePosition.getAbscissa(), resourcePosition.getOrdinate());
+				insect.setDestinationPosition(destination);
 			}
 			if (nofood) {
 				wandering = true;
-
 			}
-
 		}
-
 	}
 
 	private void goDrink() {
 		boolean noWater = true;
-		for (NaturalResource ressource : insect.getPoi()) {
-			if (ressource.getType() == Constants.WATER) {
+		for (NaturalResource resource : insect.getPoi()) {
+			if (resource.getType() == Constants.WATER) {
 				noWater = false;
-				insect.setDestinationPosition(resource.getCoordinates());
+				TileCoordinate resourcePosition = resource.getCoordinates();
+				Coordinate destination = new Coordinate(resourcePosition.getAbscissa(), resourcePosition.getOrdinate());
+				insect.setDestinationPosition(destination);
 			}
 			if (noWater) {
 				wandering = true;
-
 			}
-
 		}
-
 	}
 
 	@Override
