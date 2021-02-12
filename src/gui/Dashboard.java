@@ -29,6 +29,8 @@ public class Dashboard extends JPanel {
 
 	private Simulation simulation;
 
+	private static boolean DEBUG = false;
+
 	public Dashboard(Simulation simulation) {
 		this.simulation = simulation;
 		loadTiles();
@@ -46,7 +48,9 @@ public class Dashboard extends JPanel {
 		printTiles(g2);
 		printResources(g2);
 		printInsects(g2);
-		// printDebugGrid(g2);
+		if (DEBUG) {
+			printDebugGrid(g2);
+		}
 	}
 
 	private void printMap(Graphics2D g2) {

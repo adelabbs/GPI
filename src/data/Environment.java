@@ -60,6 +60,16 @@ public class Environment {
 		insects.remove(insect);
 	}
 
+	public void addResource(NaturalResource resource) {
+		if (resource != null) {
+			resources.add(resource);
+		}
+	}
+
+	public void remove(NaturalResource resource) {
+		resources.remove(resource);
+	}
+
 	public String printMap() {
 		String tmp = "Map : width=" + map.length + ", height=" + map.length + "\n";
 		for (int y = 0; y < map.length; y++) {
