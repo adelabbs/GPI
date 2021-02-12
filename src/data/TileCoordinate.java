@@ -1,11 +1,10 @@
 package data;
 
-public class TileCoordiante {
+public class TileCoordinate {
 	private int abscissa;
 	private int ordinate;
 
-	public TileCoordiante(int abscissa, int ordinate) {
-		super();
+	public TileCoordinate(int abscissa, int ordinate) {
 		this.abscissa = abscissa;
 		this.ordinate = ordinate;
 	}
@@ -25,8 +24,5 @@ public class TileCoordiante {
 	public void setOrdinate(int ordinate) {
 		this.ordinate = ordinate;
 	}
-	
-	
-
 
 }

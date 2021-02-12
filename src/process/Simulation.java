@@ -1,12 +1,15 @@
 package process;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import data.Ant;
 import data.Bee;
 import data.Coordinate;
 import data.Environment;
 import data.Insect;
+import data.NaturalResource;
+import data.TileCoordinate;
 import process.manager.AntManager;
 import process.manager.BeeManager;
 import process.manager.BugManager;
@@ -16,14 +19,11 @@ public class Simulation {
 	private SimulationEntry simulationEntry;
 	private Environment environment;
 	private SimulationState state;
+	private Integer currentInsectId = 1;
+	private Integer currentResourceId = 1;
 
-	private ArrayList<BugManager> bugManagers = new ArrayList<BugManager>();
-
-	// private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
-
-	// Using a HashMap will allow us to access specific managers quicker
-	// private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer,
-	// BugManager>();
+	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
+	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
 
 	public Simulation(SimulationEntry simulationEntry) {
 		this.simulationEntry = simulationEntry;
@@ -39,7 +39,7 @@ public class Simulation {
 				map[y][x] = Integer.valueOf((int) (Math.random() * (SimuPara.TILESET_SIZE)));
 			}
 		}
-		
+
 		environment = Environment.getInstance();
 		environment.setMap(map);
 		int insectCount = simulationEntry.getInsectCount();
@@ -50,24 +50,24 @@ public class Simulation {
 	private void createInsects(int insectCount) {
 		ArrayList<Insect> insects = new ArrayList<Insect>();
 		for (int i = 1; i < insectCount + 1; i++) {
-			Ant ant = new Ant(i, new Coordinate(15 * i, 15 * i), i, i, i, i);
-			Bee bee = new Bee(i, new Coordinate(40 * i, 60 * i), i, i, i, i);
-			AntManager antManager = new AntManager("1", "peaceful", ant);
-			BeeManager beeManager = new BeeManager("2", "peaceful", bee);
+			Ant ant = new Ant(getNextInsectId(), new Coordinate(15 * i, 15 * i), i, i, i, i);
+			Bee bee = new Bee(getNextInsectId(), new Coordinate(40 * i, 60 * i), i, i, i, i);
+			BugManager antManager = new AntManager("1", "peaceful", ant);
+			BugManager beeManager = new BeeManager("2", "peaceful", bee);
 			insects.add(bee);
 			insects.add(ant);
-			bugManagers.add(beeManager);
-			bugManagers.add(antManager);
+			bugManagersByIds.put(bee.getId(), beeManager);
+			bugManagersByIds.put(ant.getId(), antManager);
 		}
 		environment.setInsects(insects);
 	}
 
 	private void createResources() {
-		// TODO
+		NaturalResource flower = new NaturalResource(NaturalResource.FLOWER, getNextResourceId(), 10, new TileCoordinate(0, 0));
 	}
 
 	public void simulate() {
-		for (BugManager bugManager : bugManagers) {
+		for (BugManager bugManager : bugManagersByIds.values()) {
 			bugManager.update();
 		}
 	}
@@ -82,20 +82,25 @@ public class Simulation {
 		insects.remove(insect);
 	}
 
-	public void add(BugManager bugManager) {
-		bugManagers.add(bugManager);
-	}
-
-	public void remove(BugManager bugManager) {
-		bugManagers.remove(bugManager);
+	public void remove(Integer bugManagerId) {
+		bugManagersByIds.remove(bugManagerId);
 	}
 
 	public void removeAllDeadInsects() {
+		for (Integer id : deadInsectsIds) {
+			Insect insect = bugManagersByIds.get(id).getInsect();
+			environment.getInsects().remove(insect);
+			remove(id);
+		}
+		deadInsectsIds.clear();
+	}
 
+	public void addDeadInsect(Integer id) {
+		deadInsectsIds.add(id);
 	}
 
 	public ArrayList<BugManager> getExplorerManagers() {
-		return bugManagers;
+		return new ArrayList<BugManager>(bugManagersByIds.values());
 	}
 
 	public ArrayList<Insect> getInsects() {
@@ -105,8 +110,8 @@ public class Simulation {
 	public Environment getEnvironment() {
 		return environment;
 	}
-	
-	public Integer[][] getMap(){
+
+	public Integer[][] getMap() {
 		return environment.getMap();
 	}
 
@@ -120,5 +125,13 @@ public class Simulation {
 
 	public SimulationState getState() {
 		return state;
+	}
+
+	private Integer getNextInsectId() {
+		return ++currentInsectId;
+	}
+	
+	private Integer getNextResourceId() {
+		return ++currentResourceId;
 	}
 }

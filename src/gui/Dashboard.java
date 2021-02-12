@@ -24,7 +24,7 @@ public class Dashboard extends JPanel {
 	public static final String FILE_EXTENSION = ".png";
 
 	private HashMap<Integer, BufferedImage> tiles = new HashMap<Integer, BufferedImage>();
-	private HashMap<String, BufferedImage> resourceTiles = new HashMap<String, BufferedImage>();
+	private HashMap<Integer, BufferedImage> resourceTiles = new HashMap<Integer, BufferedImage>();
 	ArrayList<NaturalResource> resources = null;
 
 	private Simulation simulation;
@@ -72,13 +72,13 @@ public class Dashboard extends JPanel {
 		}
 	}
 
-	private void loadRessources(){
+	private void loadRessources() {
 		resources = simulation.getEnvironment().getResources();
 		BufferedImage bufferImage = null;
 		String filename = null;
 
-		for(NaturalResource nr : resources) {
-			switch(nr.getType()) {
+		for (NaturalResource nr : resources) {
+			switch (nr.getType()) {
 			case "flower":
 				filename = FILE_PATH + 3 + FILE_EXTENSION;
 				try {
@@ -99,7 +99,7 @@ public class Dashboard extends JPanel {
 				break;
 			}
 		}
-		
+
 	}
 
 	private void loadTiles() {
@@ -127,10 +127,11 @@ public class Dashboard extends JPanel {
 			}
 		}
 	}
-	
+
 	private void printResources(Graphics2D g2) {
 		for (NaturalResource nr : resources) {
-			g2.drawImage(resourceTiles.get(nr.getId()), (int) nr.getCoordinates().getAbscissa() * SimuPara.SCALE, (int) nr.getCoordinates().getOrdinate() * SimuPara.SCALE, null);
+			g2.drawImage(resourceTiles.get(nr.getId()), (int) nr.getCoordinates().getAbscissa() * SimuPara.SCALE,
+					(int) nr.getCoordinates().getOrdinate() * SimuPara.SCALE, null);
 		}
 	}
 
