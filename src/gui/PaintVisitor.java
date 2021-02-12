@@ -27,7 +27,6 @@ public class PaintVisitor implements InsectVisitor<Void> {
 			bufferImage = rotate(bufferImage, insect.getDirection());
 			g.drawImage(bufferImage, (int) insect.getCurrentPosition().getAbscissa(),
 					(int) insect.getCurrentPosition().getOrdinate(), null);
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,21 +53,19 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		int w;
 		int h;
 		// width and height equals to max(width,height) to avoid image crop
-		if(bimg.getHeight() > bimg.getWidth()) {
-			w = bimg.getHeight();    
-		    h = bimg.getHeight();
+		if (bimg.getHeight() > bimg.getWidth()) {
+			w = bimg.getHeight();
+			h = bimg.getHeight();
+		} else {
+			w = bimg.getWidth();
+			h = bimg.getWidth();
 		}
-		else {
-			w = bimg.getWidth();    
-		    h = bimg.getWidth();
-		}
-		
-	  
-	    BufferedImage rotated = new BufferedImage(w, h, bimg.getType());  
-	    Graphics2D graphic = rotated.createGraphics();
-	    graphic.rotate(Math.toRadians(angle), w/2, h/2);
-	    graphic.drawImage(bimg, null, 0, 0);
-	    graphic.dispose();
-	    return rotated;
+
+		BufferedImage rotated = new BufferedImage(w, h, bimg.getType());
+		Graphics2D graphic = rotated.createGraphics();
+		graphic.rotate(Math.toRadians(angle), w / 2, h / 2);
+		graphic.drawImage(bimg, null, 0, 0);
+		graphic.dispose();
+		return rotated;
 	}
 }

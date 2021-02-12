@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -16,11 +18,18 @@ import test.manual.SimuPara;
 public class Dashboard extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	public static final String FILE_PATH = "resources/tiles/Tile";
+	public static final String FILE_EXTENSION = ".png";
+	
+	private HashMap<Integer,BufferedImage> tiles = new HashMap<Integer, BufferedImage>();
+	
+	
 	private Simulation simulation;
 
 	public Dashboard(Simulation simulation) {
 		this.simulation = simulation;
+		loadTiles();
 	}
 
 	// Defines action when repaint is called
@@ -33,11 +42,10 @@ public class Dashboard extends JPanel {
 		printMap(g2);
 		printTiles(g2);
 		printInsects(g2);
-		printDebugGrid(g2);
+		//printDebugGrid(g2);
 	}
 
 	private void printMap(Graphics2D g2) {
-
 	}
 
 	private void printInsects(Graphics2D g2) {
@@ -60,24 +68,33 @@ public class Dashboard extends JPanel {
 		}
 	}
 	
-	private void printTiles(Graphics2D g2) {
-		String filename = "resources/tiles/Tile0.png";
-		BufferedImage bufferImage = null;
-		int width = getWidth();
-		int height = getHeight();
-		
-		try {
-			bufferImage = ImageIO.read(new File(filename));
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 
-		for (int i = 0; i <= width; i += SimuPara.SCALE) {
-			for (int j = 0; j <= height; j += SimuPara.SCALE) {
-				g2.drawImage(bufferImage, i,j, null);
+	private void loadTiles() {
+		for(int i = 0; i < 5; i++) {
+			String filename = FILE_PATH + i + FILE_EXTENSION;
+			BufferedImage bufferImage = null;
+			try {
+				bufferImage = ImageIO.read(new File(filename));
+
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			tiles.put(i, bufferImage);
+		}
+	}
+	
+	private void printTiles(Graphics2D g2) {
+		BufferedImage bufferImage = null;
+		Integer[][] map = simulation.getMap();
+		
+		for (int y = 0; y < SimuPara.SIMULATION_TILES; y++) {
+			for (int x = 0; x < SimuPara.SIMULATION_TILES; x++) {
+				bufferImage = tiles.get(map[y][x]);
+				g2.drawImage(bufferImage, x * SimuPara.SCALE, y * SimuPara.SCALE, null);
 			}
 		}
 	}
+	
 
 	public void setSimulation(Simulation simulation) {
 		this.simulation = simulation;
