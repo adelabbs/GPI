@@ -50,15 +50,6 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		return null;
 	}
 
-	public void flip(BufferedImage image) {
-		for (int i = 0; i < image.getWidth(); i++)
-			for (int j = 0; j < image.getHeight() / 2; j++) {
-				int tmp = image.getRGB(i, j);
-				image.setRGB(i, j, image.getRGB(i, image.getHeight() - j - 1));
-				image.setRGB(i, image.getHeight() - j - 1, tmp);
-			}
-	}
-	
 	public static BufferedImage rotate(BufferedImage bimg, double angle) {
 		int w;
 		int h;
