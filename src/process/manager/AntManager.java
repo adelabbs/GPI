@@ -58,26 +58,16 @@ public class AntManager extends BugManager {
 					insect.setDestinationPosition(new Coordinate(Math.random() * SimuPara.SIMULATION_MAP_SIZE,
 							Math.random() * SimuPara.SIMULATION_MAP_SIZE));
 				} else if (thirsty) {
-					drink();
+					drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
 
 				} else if (hungry) {
-					eat();
+					eat(SimuPara.INSECT_DEFAULT_DRINK_QTT);
 				}
 
 			}
 			super.moveInsect(insect);
 
 		}
-
-	}
-
-	public void eat() {
-		// eat qui rempli totalement la faim de l'insecte
-		int currentHunger = insect.getCurrentHunger();
-		int maxHunger = insect.getMaxHunger();
-		int delta = maxHunger - currentHunger;
-		insect.setCurrentHunger(insect.getMaxHunger());
-		// TODO décrémenter la ressource de delta
 
 	}
 
@@ -98,15 +88,6 @@ public class AntManager extends BugManager {
 
 	}
 
-	public void drink() {
-		// eat qui rempli totalement la soif de l'insecte
-		int currentThirst = insect.getCurrentThirst();
-		int maxThirst = insect.getMaxThirst();
-		int delta = maxThirst - currentThirst;
-		insect.setCurrentThirst(insect.getMaxThirst());
-		// TODO décrémenter la ressource de delta
-
-	}
 
 	public void drink(int quantity) {
 		// eat qui rempli de quantity la soif de l'insecte
