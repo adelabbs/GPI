@@ -6,7 +6,10 @@ public class NaturalResource {
 	private int quantity;
 	private Coordinate coordinates;
 
-
+	public static final String FLOWER = "flower";
+	public static final String WATER = "water";
+	
+	
 	public NaturalResource (String type, String id, int quantity, Coordinate coordinates) {
 		this.type = type;
 		this.id = id;
