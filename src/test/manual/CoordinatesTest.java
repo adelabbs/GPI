@@ -10,55 +10,20 @@ public class CoordinatesTest {
 		Bee bee = new Bee(1, new Coordinate(25.0, 25.0), 10, 10, 10, 10);
 		BeeManager beeman = new BeeManager("0", "peaceful", bee);
 		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
+		Coordinate coordiante1 = new Coordinate(10, 10);
 		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
+		Coordinate coordiante2 = new Coordinate(5, 10);
 		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
+		System.out.println(calculateDirection(coordiante1, coordiante2));
 		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
-		
-		beeman.update();
-		System.out.println(beeman.getInsect().getCurrentPosition().toString());
 		
 
 	}
+	
+	public static double calculateDirection(Coordinate currentPosition, Coordinate nextPosition) {
+		double angle = Math.toDegrees(Math.atan2(nextPosition.getOrdinate() - currentPosition.getOrdinate(),
+			nextPosition.getAbscissa() - currentPosition.getAbscissa()));
+	return angle;
+}
 
 }

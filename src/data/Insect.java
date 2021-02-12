@@ -3,6 +3,7 @@ package data;
 import java.util.ArrayList;
 
 import process.InsectVisitor;
+import test.manual.SimuPara;
 
 /**
  * The Insect model
@@ -16,6 +17,8 @@ public abstract class Insect {
 	private Coordinate currentPosition;
 	private Coordinate destinationPosition;
 	private ArrayList<NaturalResource> poi;
+	
+	private int size = SimuPara.INSECT_DEFAULT_SIZE ;
 	
 	private String type;
 
@@ -163,5 +166,13 @@ public abstract class Insect {
 
 	public void setDirection(double direction) {
 		this.direction = direction;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 }
