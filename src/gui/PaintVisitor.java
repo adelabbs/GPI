@@ -24,6 +24,7 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		String filename = "resources/images/guepe_test2.png";
 		try {
 			BufferedImage bufferImage = ImageIO.read(new File(filename));
+			bufferImage = rotate(bufferImage, insect.getOrientation());
 			g.drawImage(bufferImage, (int) insect.getCurrentPosition().getAbscissa(),
 					(int) insect.getCurrentPosition().getOrdinate(), null);
 			
@@ -39,8 +40,7 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		String filename = "resources/images/fourmi_test2.png";
 		try {
 			BufferedImage bufferImage = ImageIO.read(new File(filename));
-			//flip(bufferImage);
-			bufferImage = rotate(bufferImage, 50);
+			bufferImage = rotate(bufferImage, insect.getOrientation());
 			g.drawImage(bufferImage, (int) insect.getCurrentPosition().getAbscissa(),
 					(int) insect.getCurrentPosition().getOrdinate(), null);
 
@@ -60,10 +60,19 @@ public class PaintVisitor implements InsectVisitor<Void> {
 	}
 	
 	public static BufferedImage rotate(BufferedImage bimg, double angle) {
-		// width and height equals to height to avoid image crop
-	    int w = bimg.getHeight();    
-	    int h = bimg.getHeight();
-
+		int w;
+		int h;
+		// width and height equals to max(width,height) to avoid image crop
+		if(bimg.getHeight() > bimg.getWidth()) {
+			w = bimg.getHeight();    
+		    h = bimg.getHeight();
+		}
+		else {
+			w = bimg.getWidth();    
+		    h = bimg.getWidth();
+		}
+		
+	  
 	    BufferedImage rotated = new BufferedImage(w, h, bimg.getType());  
 	    Graphics2D graphic = rotated.createGraphics();
 	    graphic.rotate(Math.toRadians(angle), w/2, h/2);
