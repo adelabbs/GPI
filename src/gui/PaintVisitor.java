@@ -24,7 +24,7 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		String filename = "resources/images/guepe_test2.png";
 		try {
 			BufferedImage bufferImage = ImageIO.read(new File(filename));
-			bufferImage = rotate(bufferImage, insect.getOrientation());
+			bufferImage = rotate(bufferImage, insect.getDirection());
 			g.drawImage(bufferImage, (int) insect.getCurrentPosition().getAbscissa(),
 					(int) insect.getCurrentPosition().getOrdinate(), null);
 			
@@ -40,7 +40,7 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		String filename = "resources/images/fourmi_test2.png";
 		try {
 			BufferedImage bufferImage = ImageIO.read(new File(filename));
-			bufferImage = rotate(bufferImage, insect.getOrientation());
+			bufferImage = rotate(bufferImage, insect.getDirection());
 			g.drawImage(bufferImage, (int) insect.getCurrentPosition().getAbscissa(),
 					(int) insect.getCurrentPosition().getOrdinate(), null);
 

@@ -8,7 +8,7 @@ public abstract class BugManager {
 	private String groupID = "0";
 	private String agressivity = "peaceful";
 
-	public BugManager( String groupID, String agressivity) {
+	public BugManager(String groupID, String agressivity) {
 
 		this.groupID = groupID;
 		this.agressivity = agressivity;
@@ -37,8 +37,19 @@ public abstract class BugManager {
 	public void moveInsect(Insect insect) {
 
 		Coordinate nextPosition = nextPos(insect);
+		
+		double direction = calculateDirection(insect.getCurrentPosition(), nextPosition);
+
+		insect.setDirection(direction);
 
 		insect.setCurrentPosition(nextPosition);
+	}
+
+	public double calculateDirection(Coordinate currentPosition, Coordinate nextPosition) {
+		
+			double angle = Math.toDegrees(Math.atan2(nextPosition.getOrdinate() - currentPosition.getOrdinate(),
+				nextPosition.getAbscissa() - currentPosition.getAbscissa()));
+		return angle-90;
 	}
 
 	public Coordinate nextPos(Insect insect) {
@@ -57,7 +68,6 @@ public abstract class BugManager {
 			double newY = (origin.getOrdinate() + (insect.getSpeed() / length * deltaY));
 
 			return new Coordinate(newX, newY);
-			
 
 		} else
 

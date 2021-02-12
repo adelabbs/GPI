@@ -11,6 +11,7 @@ import process.InsectVisitor;
 public abstract class Insect {
 
 	private Integer id;
+	private double direction = 0.0;
 	
 	private Coordinate currentPosition;
 	private Coordinate destinationPosition;
@@ -26,8 +27,7 @@ public abstract class Insect {
 	private int maxThirst;
 	private int speed;
 	private int maxSpeed;
-	private int orientation = 0; //0=north, 1=east, 2=south, 3=west
-
+	
 	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, 
 			int maxSpeed, String type) {
 		this.id = id;
@@ -156,11 +156,12 @@ public abstract class Insect {
 	public void setPoi(ArrayList<NaturalResource> poi) {
 		this.poi = poi;
 	}
-	public int getOrientation() {
-		return orientation;
+
+	public double getDirection() {
+		return direction;
 	}
 
-	public void setOrientation(int orientation) {
-		this.orientation = orientation;
+	public void setDirection(double direction) {
+		this.direction = direction;
 	}
 }
