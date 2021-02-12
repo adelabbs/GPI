@@ -118,4 +118,7 @@ public abstract class BugManager {
 		this.tileX = tileX;
 	}
 
+	public Integer getInsectId() {
+		return getInsect().getId();
+	}
 }
