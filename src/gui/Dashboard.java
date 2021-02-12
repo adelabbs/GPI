@@ -90,7 +90,7 @@ public class Dashboard extends JPanel {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				resourceTiles.put(Integer.valueOf(3), bufferImage);
+				resourceTiles.put(nr.getId(), bufferImage);
 				break;
 			case "water":
 				filename = FILE_PATH + 4 + FILE_EXTENSION;
@@ -99,7 +99,7 @@ public class Dashboard extends JPanel {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				resourceTiles.put(Integer.valueOf(4), bufferImage);
+				resourceTiles.put(nr.getId(), bufferImage);
 				break;
 			}
 		}
