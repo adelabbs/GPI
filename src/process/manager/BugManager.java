@@ -51,7 +51,6 @@ public abstract class BugManager {
 		int newTileX = calculateTileX(nextPosition);
 		int newTileY = calculateTileY(nextPosition);
 
-		System.out.println(insect.getType() + " tile " + newTileX + "," + newTileY);
 	}
 
 	private int calculateTileX(Coordinate nextPosition) {
