@@ -25,6 +25,7 @@ public class AntManagerTest {
 	public void shouldEatOnAResource() {
 		Ant ant = new Ant(1, new Coordinate(15, 15), 10, 10, 10, 1);
 		AntManager manager = new AntManager(null, null, ant);
+		manager.update();
 		//
 		fail("Not yet implemented");
 	}
