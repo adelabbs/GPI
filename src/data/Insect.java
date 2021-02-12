@@ -13,13 +13,13 @@ public abstract class Insect {
 
 	private Integer id;
 	private double direction = 0.0;
-	
+
 	private Coordinate currentPosition;
 	private Coordinate destinationPosition;
 	private ArrayList<NaturalResource> poi;
-	
-	private int size = SimuPara.INSECT_DEFAULT_SIZE ;
-	
+
+	private int size = SimuPara.INSECT_DEFAULT_SIZE;
+
 	private String type;
 
 	private int maxHealth;
@@ -30,9 +30,9 @@ public abstract class Insect {
 	private int maxThirst;
 	private int speed;
 	private int maxSpeed;
-	
-	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, 
-			int maxSpeed, String type) {
+
+	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, int maxSpeed,
+			String type) {
 		this.id = id;
 		this.destinationPosition = destinationPosition;
 		currentPosition = destinationPosition;
@@ -53,11 +53,10 @@ public abstract class Insect {
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public int getMaxHealth() {
 		return maxHealth;
@@ -139,6 +138,13 @@ public abstract class Insect {
 		this.destinationPosition = destinationPosition;
 	}
 
+	public void setDestinationPosition(TileCoordinate destinationTile) {
+		Coordinate destinationPosition = new Coordinate(
+				destinationTile.getAbscissa() * SimuPara.SCALE + SimuPara.INSECT_DEFAULT_SIZE / 2,
+				destinationTile.getAbscissa() * SimuPara.SCALE + SimuPara.INSECT_DEFAULT_SIZE / 2);
+		this.destinationPosition = destinationPosition;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -146,12 +152,15 @@ public abstract class Insect {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public void add (NaturalResource naturalResource) {
+
+	public void add(NaturalResource naturalResource) {
 		poi.add(naturalResource);
 	}
-	public void remove (NaturalResource naturalResource) {
+
+	public void remove(NaturalResource naturalResource) {
 		poi.remove(naturalResource);
 	}
+
 	public ArrayList<NaturalResource> getPoi() {
 		return poi;
 	}
