@@ -24,7 +24,7 @@ public class Dashboard extends JPanel {
 	public static final String FILE_EXTENSION = ".png";
 
 	private HashMap<Integer, BufferedImage> tiles = new HashMap<Integer, BufferedImage>();
-	private HashMap<String, BufferedImage> resourceTiles = new HashMap<String, BufferedImage>();
+	private HashMap<Integer, BufferedImage> resourceTiles = new HashMap<Integer, BufferedImage>();
 	ArrayList<NaturalResource> resources = null;
 
 	private Simulation simulation;
@@ -86,7 +86,7 @@ public class Dashboard extends JPanel {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				resourceTiles.put(nr.getId(), bufferImage);
+				resourceTiles.put(Integer.valueOf(3), bufferImage);
 				break;
 			case "water":
 				filename = FILE_PATH + 4 + FILE_EXTENSION;
@@ -95,7 +95,7 @@ public class Dashboard extends JPanel {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				resourceTiles.put(nr.getId(), bufferImage);
+				resourceTiles.put(Integer.valueOf(4), bufferImage);
 				break;
 			}
 		}
