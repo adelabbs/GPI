@@ -16,7 +16,7 @@ public abstract class Insect {
 
 	private Coordinate currentPosition;
 	private Coordinate destinationPosition;
-	private ArrayList<NaturalResource> poi;
+	private ArrayList<NaturalResource> poi = new ArrayList<NaturalResource>();
 
 	private int size = SimuPara.INSECT_DEFAULT_SIZE;
 

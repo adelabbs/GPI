@@ -85,6 +85,7 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		String[] states = new String[2];
 		int maxh = insect.getMaxHunger();
 		int curh = insect.getCurrentHunger();
+		System.out.println(curh);
 		int maxt = insect.getMaxThirst();
 		int curt = insect.getCurrentThirst();
 		

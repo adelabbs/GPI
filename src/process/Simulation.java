@@ -16,12 +16,13 @@ import process.manager.BugManager;
 import test.manual.SimuPara;
 
 public class Simulation {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	private SimulationEntry simulationEntry;
 	private Environment environment;
 	private SimulationState state;
 	private Integer currentInsectId = 0;
 	private Integer currentResourceId = 0;
+	private Integer currentIteration = 0;
 
 	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
 	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
@@ -51,8 +52,8 @@ public class Simulation {
 	private void createInsects(int insectCount) {
 		ArrayList<Insect> insects = new ArrayList<Insect>();
 		for (int i = 1; i < insectCount + 1; i++) {
-			Ant ant = new Ant(getNextInsectId(), new Coordinate(15 * i, 15 * i), i, i, i, i);
-			Bee bee = new Bee(getNextInsectId(), new Coordinate(40 * i, 60 * i), i, i, i, i);
+			Ant ant = new Ant(getNextInsectId(), new Coordinate(15 * i, 15 * i), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, i);
+			Bee bee = new Bee(getNextInsectId(), new Coordinate(40 * i, 60 * i), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, i);
 			BugManager antManager = new AntManager("1", "peaceful", ant);
 			BugManager beeManager = new BeeManager("2", "peaceful", bee);
 			insects.add(bee);
@@ -73,7 +74,16 @@ public class Simulation {
 		for (BugManager bugManager : bugManagersByIds.values()) {
 			bugManager.update();
 			if (DEBUG) {
-				decreaseHealth(bugManager);
+				currentIteration++;
+				// decreaseHealth(bugManager);
+				if (currentIteration % 5 == 0) {
+					if (bugManager.getInsect().getId().equals(Integer.valueOf(1))) {
+						Insect insect = bugManager.getInsect();
+						int currentHunger = insect.getCurrentHunger();
+						insect.setCurrentHunger(currentHunger - 10);
+						System.out.println(currentHunger);
+					}
+				}
 			}
 			if (bugManager.isDead()) {
 				addDeadInsect(bugManager.getInsectId());

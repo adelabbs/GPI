@@ -6,8 +6,6 @@ import org.junit.Test;
 
 public class BugManagerTest {
 
-
-
 	@Test
 	public void testMoveInsect() {
 		fail("Not yet implemented");
@@ -26,6 +24,13 @@ public class BugManagerTest {
 	@Test
 	public void testDistance() {
 		fail("Not yet implemented");
+	}
+
+	@Test
+	void shouldEatIfOnResourceAndHungry() {
+		// Ant ant = new Ant(Integer.valueOf(1), null, SimuPara.MAX_HEALTH,
+		// SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, 0);
+		// BugManager manager = new AntManager(null, null, ant);
 	}
 
 }
