@@ -10,6 +10,7 @@ import data.Insect;
 import process.manager.AntManager;
 import process.manager.BeeManager;
 import process.manager.BugManager;
+import test.manual.SimuPara;
 
 public class Simulation {
 	private SimulationEntry simulationEntry;
@@ -31,14 +32,16 @@ public class Simulation {
 
 	private void buildSimulation() {
 		int size = simulationEntry.getMapSize();
-		float[][] map = new float[size][size];
+		Integer[][] map = new Integer[size][size];
 
 		for (int y = 0; y < size; y++) {
 			for (int x = 0; x < size; x++) {
-				map[y][x] = 0;
+				map[y][x] = Integer.valueOf((int) (Math.random() * (SimuPara.TILESET_SIZE)));
 			}
 		}
+		
 		environment = Environment.getInstance();
+		environment.setMap(map);
 		int insectCount = simulationEntry.getInsectCount();
 		createInsects(insectCount);
 		createResources();
@@ -101,6 +104,10 @@ public class Simulation {
 
 	public Environment getEnvironment() {
 		return environment;
+	}
+	
+	public Integer[][] getMap(){
+		return environment.getMap();
 	}
 
 	public void setState(SimulationState state) {

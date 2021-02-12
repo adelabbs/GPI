@@ -12,7 +12,7 @@ public class Environment {
 	 * The unique instance of the class prepared
 	 */
 	private static Environment instance = new Environment();
-	private float[][] map;
+	private Integer[][] map;
 	private ArrayList<NaturalResource> resources = new ArrayList<NaturalResource>();
 	private ArrayList<Insect> insects = new ArrayList<Insect>();
 
@@ -26,11 +26,11 @@ public class Environment {
 		return instance;
 	}
 
-	public float[][] getMap() {
+	public Integer[][] getMap() {
 		return map;
 	}
 
-	public void setMap(float[][] map) {
+	public void setMap(Integer[][] map) {
 		this.map = map;
 	}
 
@@ -58,6 +58,17 @@ public class Environment {
 
 	public void remove(Insect insect) {
 		insects.remove(insect);
+	}
+
+	public String printMap() {
+		String tmp = "Map : width=" + map.length + ", height=" + map.length + "\n";
+		for (int y = 0; y < map.length; y++) {
+			for (int x = 0; x < map.length; x++) {
+				tmp += map[y][x].toString() + " ";
+			}
+			tmp += "\n";
+		}
+		return tmp;
 	}
 
 }

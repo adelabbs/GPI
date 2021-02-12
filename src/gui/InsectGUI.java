@@ -28,7 +28,7 @@ public class InsectGUI extends JFrame implements Runnable {
 
 	public InsectGUI() {
 		super("BugStudio");
-		SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_MAP_SIZE,
+		SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_TILES,
 				SimuPara.SIMULATION_INSECT_COUNT_PER_TYPE);
 		simulation = new Simulation(simEntry);
 		dashboard = new Dashboard(simulation);
