@@ -115,7 +115,7 @@ public class AntManager extends BugManager {
 		for (NaturalResource ressource : insect.getPoi()) {
 			if (ressource.getType() == Constants.FOOD) {
 				nofood = false;
-				insect.setDestinationPosition(ressource.getCoordinates());
+				insect.setDestinationPosition(resource.getCoordinates());
 			}
 			if (nofood) {
 				wandering = true;
@@ -131,7 +131,7 @@ public class AntManager extends BugManager {
 		for (NaturalResource ressource : insect.getPoi()) {
 			if (ressource.getType() == Constants.WATER) {
 				noWater = false;
-				insect.setDestinationPosition(ressource.getCoordinates());
+				insect.setDestinationPosition(resource.getCoordinates());
 			}
 			if (noWater) {
 				wandering = true;

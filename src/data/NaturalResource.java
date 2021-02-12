@@ -2,34 +2,33 @@ package data;
 
 public class NaturalResource {
 	private String type;
-	private String id;
+	private Integer id;
 	private int quantity;
-	private Coordinate coordinates;
+	private TileCoordinate coordinates;
 
 	public static final String FLOWER = "flower";
 	public static final String WATER = "water";
-	
-	
-	public NaturalResource (String type, String id, int quantity, Coordinate coordinates) {
+
+	public NaturalResource(String type, Integer integer, int quantity, TileCoordinate coordinates) {
 		this.type = type;
-		this.id = id;
+		this.id = integer;
 		this.quantity = quantity;
 		this.coordinates = coordinates;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Coordinate getCoordinates() {
+	public TileCoordinate getCoordinates() {
 		return coordinates;
 	}
 
-	public void setCoordinates(Coordinate coordinates) {
+	public void setCoordinates(TileCoordinate coordinates) {
 		this.coordinates = coordinates;
 	}
 
@@ -48,5 +47,5 @@ public class NaturalResource {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
 }
