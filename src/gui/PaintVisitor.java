@@ -9,12 +9,24 @@ import javax.imageio.ImageIO;
 
 import data.Ant;
 import data.Bee;
+import data.Insect;
 import process.InsectVisitor;
 
 public class PaintVisitor implements InsectVisitor<Void> {
 
 	private Graphics g;
 
+	public static String HUNGER1 = "resources/icon/Faim1.png";
+	public static String HUNGER2 = "resources/icon/Faim2.png";
+	public static String HUNGER3 = "resources/icon/Faim3.png";
+	public static String THIRST1 = "resources/icon/Soif1.png";
+	public static String THIRST2 = "resources/icon/Soif2.png";
+	public static String THIRST3 = "resources/icon/Soif3.png";
+	
+	public static int HUNGER_CASE = 0;
+	public static int THIRST_CASE = 1;
+	
+	
 	public PaintVisitor(Graphics graphics) {
 		this.g = graphics;
 	}
@@ -67,5 +79,30 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		graphic.drawImage(bimg, null, 0, 0);
 		graphic.dispose();
 		return rotated;
+	}
+	
+	public static String[] getLifeState(Insect insect) {
+		String[] states = new String[2];
+		int maxh = insect.getMaxHunger();
+		int curh = insect.getCurrentHunger();
+		int maxt = insect.getMaxThirst();
+		int curt = insect.getCurrentThirst();
+		
+		if(curh/maxh < maxh/4) {
+			states[HUNGER_CASE] = HUNGER1;
+		} else if(curh/maxh < maxh/2) {
+			states[HUNGER_CASE] = HUNGER2;
+		} else if (curh/maxh < 3*maxh/4) {
+			states[HUNGER_CASE] = HUNGER3;
+		}
+		
+		if(curh/maxt < maxt/4) {
+			states[THIRST_CASE] = HUNGER1;
+		} else if(curt/maxt < maxt/2) {
+			states[THIRST_CASE] = HUNGER2;
+		} else if (curt/maxt < 3*maxt/4) {
+			states[THIRST_CASE] = HUNGER3;
+		}
+		return states;
 	}
 }
