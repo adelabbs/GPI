@@ -15,7 +15,7 @@ public class Environment {
 	private Integer[][] map;
 	private ArrayList<NaturalResource> resources = new ArrayList<NaturalResource>();
 	private ArrayList<Insect> insects = new ArrayList<Insect>();
-
+	
 	/**
 	 * Private constructor ensuring no access from outside of the class.
 	 */
@@ -50,23 +50,23 @@ public class Environment {
 		this.insects = insects;
 	}
 
-	public void add(Insect insect) {
+	public synchronized void add(Insect insect) {
 		if (insect != null) {
 			insects.add(insect);
 		}
 	}
 
-	public void remove(Insect insect) {
+	public synchronized void remove(Insect insect) {
 		insects.remove(insect);
 	}
 
-	public void addResource(NaturalResource resource) {
+	public synchronized void addResource(NaturalResource resource) {
 		if (resource != null) {
 			resources.add(resource);
 		}
 	}
 
-	public void remove(NaturalResource resource) {
+	public synchronized void remove(NaturalResource resource) {
 		resources.remove(resource);
 	}
 

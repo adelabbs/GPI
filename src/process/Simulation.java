@@ -16,11 +16,12 @@ import process.manager.BugManager;
 import test.manual.SimuPara;
 
 public class Simulation {
+	private static final boolean DEBUG = false;
 	private SimulationEntry simulationEntry;
 	private Environment environment;
 	private SimulationState state;
-	private Integer currentInsectId = 1;
-	private Integer currentResourceId = 1;
+	private Integer currentInsectId = 0;
+	private Integer currentResourceId = 0;
 
 	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
 	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
@@ -71,10 +72,20 @@ public class Simulation {
 	public void simulate() {
 		for (BugManager bugManager : bugManagersByIds.values()) {
 			bugManager.update();
+			if (DEBUG) {
+				decreaseHealth(bugManager);
+			}
 			if (bugManager.isDead()) {
 				addDeadInsect(bugManager.getInsectId());
 			}
 		}
+		removeAllDeadInsects();
+	}
+
+	private void decreaseHealth(BugManager bugManager) {
+		Insect insect = bugManager.getInsect();
+		int currentHealth = insect.getCurrentHealth();
+		insect.setCurrentHealth(currentHealth - 1);
 	}
 
 	public void add(Insect insect) {
@@ -102,10 +113,6 @@ public class Simulation {
 
 	public void addDeadInsect(Integer id) {
 		deadInsectsIds.add(id);
-	}
-
-	public ArrayList<BugManager> getExplorerManagers() {
-		return new ArrayList<BugManager>(bugManagersByIds.values());
 	}
 
 	public ArrayList<Insect> getInsects() {
