@@ -17,7 +17,6 @@ public class Simulation {
 	private SimulationState state;
 
 	private ArrayList<BugManager> bugManagers = new ArrayList<BugManager>();
-	private ArrayList<Insect> insects = new ArrayList<Insect>();
 
 	// private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
 
@@ -39,12 +38,14 @@ public class Simulation {
 				map[y][x] = 0;
 			}
 		}
-		environment = new Environment(map);
+		environment = Environment.getInstance();
 		int insectCount = simulationEntry.getInsectCount();
 		createInsects(insectCount);
+		createResources();
 	}
 
 	private void createInsects(int insectCount) {
+		ArrayList<Insect> insects = new ArrayList<Insect>();
 		for (int i = 1; i < insectCount + 1; i++) {
 			Ant ant = new Ant(i, new Coordinate(15 * i, 15 * i), i, i, i, i);
 			Bee bee = new Bee(i, new Coordinate(40 * i, 60 * i), i, i, i, i);
@@ -55,6 +56,11 @@ public class Simulation {
 			bugManagers.add(beeManager);
 			bugManagers.add(antManager);
 		}
+		environment.setInsects(insects);
+	}
+
+	private void createResources() {
+		// TODO
 	}
 
 	public void simulate() {
@@ -64,10 +70,12 @@ public class Simulation {
 	}
 
 	public void add(Insect insect) {
+		ArrayList<Insect> insects = environment.getInsects();
 		insects.add(insect);
 	}
 
 	public void remove(Insect insect) {
+		ArrayList<Insect> insects = environment.getInsects();
 		insects.remove(insect);
 	}
 
@@ -88,7 +96,7 @@ public class Simulation {
 	}
 
 	public ArrayList<Insect> getInsects() {
-		return insects;
+		return environment.getInsects();
 	}
 
 	public Environment getEnvironment() {
