@@ -3,7 +3,10 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import data.Insect;
@@ -28,6 +31,7 @@ public class Dashboard extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 
 		printMap(g2);
+		printTiles(g2);
 		printInsects(g2);
 		printDebugGrid(g2);
 	}
@@ -53,6 +57,25 @@ public class Dashboard extends JPanel {
 
 		for (int i = SimuPara.SCALE; i <= height; i += SimuPara.SCALE) {
 			g2.drawLine(1, i, width, i);
+		}
+	}
+	
+	private void printTiles(Graphics2D g2) {
+		String filename = "resources/tiles/Tile0.png";
+		BufferedImage bufferImage = null;
+		int width = getWidth();
+		int height = getHeight();
+		
+		try {
+			bufferImage = ImageIO.read(new File(filename));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i <= width; i += SimuPara.SCALE) {
+			for (int j = 0; j <= height; j += SimuPara.SCALE) {
+				g2.drawImage(bufferImage, i,j, null);
+			}
 		}
 	}
 
