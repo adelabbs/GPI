@@ -27,12 +27,11 @@ public class AntManager extends BugManager {
 		if (waiting) {
 			if (waitTime > 0) {
 				waitTime--;
-			}
-			else {
+			} else {
 				waiting = false;
 			}
 		} else {
-			
+
 			if (((insect.getCurrentThirst() / insect.getMaxThirst()) <= 0.30) && !thirsty) {
 				this.goDrink();
 				thirsty = true;
@@ -45,13 +44,13 @@ public class AntManager extends BugManager {
 				wandering = true;
 
 			}
-			
+
 			if (insect.getDestinationPosition() == insect.getCurrentPosition())
 
 			{
 				if (!thirsty && !hungry && !waiting) {
 					waiting = true;
-					waitTime = (int) (Math.random() * 200 );
+					waitTime = (int) (Math.random() * 200);
 				}
 				if (wandering) {
 					// test si l'insecte a trouvé un POI valide et met le wandering a false
@@ -70,7 +69,6 @@ public class AntManager extends BugManager {
 
 		}
 
-		
 	}
 
 	public void eat() {

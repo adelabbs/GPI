@@ -70,5 +70,4 @@ public class InsectGUI extends JFrame implements Runnable {
 			}
 		}
 	}
-
 }

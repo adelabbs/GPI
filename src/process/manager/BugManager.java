@@ -50,6 +50,9 @@ public abstract class BugManager {
 
 		int newTileX = calculateTileX(nextPosition);
 		int newTileY = calculateTileY(nextPosition);
+		
+		setTileX(newTileX);
+		setTileY(newTileY);
 
 	}
 
@@ -118,4 +121,7 @@ public abstract class BugManager {
 		this.tileX = tileX;
 	}
 
+	public Integer getInsectId() {
+		return getInsect().getId();
+	}
 }

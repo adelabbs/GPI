@@ -63,13 +63,17 @@ public class Simulation {
 	}
 
 	private void createResources() {
-		NaturalResource flower = new NaturalResource(NaturalResource.FLOWER, getNextResourceId(), 10, new TileCoordinate(0, 0));
+		NaturalResource flower = new NaturalResource(NaturalResource.FLOWER, getNextResourceId(), 10,
+				new TileCoordinate(0, 0));
 		environment.addResource(flower);
 	}
 
 	public void simulate() {
 		for (BugManager bugManager : bugManagersByIds.values()) {
 			bugManager.update();
+			if (bugManager.isDead()) {
+				addDeadInsect(bugManager.getInsectId());
+			}
 		}
 	}
 
@@ -131,7 +135,7 @@ public class Simulation {
 	private Integer getNextInsectId() {
 		return ++currentInsectId;
 	}
-	
+
 	private Integer getNextResourceId() {
 		return ++currentResourceId;
 	}
