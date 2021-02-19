@@ -49,6 +49,10 @@ public class Simulation {
 		createResources();
 	}
 
+	public HashMap<Integer, BugManager> getBugManagersByIds() {
+		return bugManagersByIds;
+	}
+
 	private void createInsects(int insectCount) {
 		ArrayList<Insect> insects = new ArrayList<Insect>();
 		for (int i = 1; i < insectCount + 1; i++) {
