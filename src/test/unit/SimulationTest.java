@@ -60,7 +60,8 @@ public class SimulationTest {
 		
 		SimulationEntry SE = new SimulationEntry(50,0);
 		Simulation S = new Simulation(SE);
-		assertEquals(SimulationState.RUNNING,S.isRunning());
+		S.simulate();
+		assertEquals(S.getState() == SimulationState.RUNNING,S.isRunning());
 		
 	}
 
