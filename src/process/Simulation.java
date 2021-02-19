@@ -16,7 +16,7 @@ import process.manager.BugManager;
 import test.manual.SimuPara;
 
 public class Simulation {
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	private SimulationEntry simulationEntry;
 	private Environment environment;
 	private SimulationState state;
@@ -75,7 +75,7 @@ public class Simulation {
 			bugManager.update();
 			if (DEBUG) {
 				currentIteration++;
-				// decreaseHealth(bugManager);
+				decreaseHealth(bugManager);
 				if (currentIteration % 5 == 0) {
 					if (bugManager.getInsect().getId().equals(Integer.valueOf(1))) {
 						Insect insect = bugManager.getInsect();
