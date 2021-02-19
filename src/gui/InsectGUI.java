@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import process.Simulation;
 import process.SimulationEntry;
+import process.SimulationState;
 import test.manual.SimuPara;
 
 /*
@@ -58,16 +59,25 @@ public class InsectGUI extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		while (!stop) {
-			try {
-				Thread.sleep(SimuPara.SIMULATION_SPEED);
-			} catch (InterruptedException e) {
-				System.out.println(e.getMessage());
+			if (simulation.isReady()) {
+				simulation.launch();
 			}
-			simulation.simulate();
-
-			if (!stop) {
+			if (simulation.isRunning()) {
+				unitTime();
+				simulation.simulate();
 				updateValues();
 			}
+			if (simulation.getState() == SimulationState.STOP) {
+				stop = true;
+			}
+		}
+	}
+
+	public static void unitTime() {
+		try {
+			Thread.sleep(SimuPara.SIMULATION_SPEED);
+		} catch (InterruptedException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 }

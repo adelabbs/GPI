@@ -15,14 +15,19 @@ import process.manager.BeeManager;
 import process.manager.BugManager;
 import test.manual.SimuPara;
 
+/**
+ * The Simulation processing class.
+ * 
+ * @author Adel
+ *
+ */
 public class Simulation {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	private SimulationEntry simulationEntry;
 	private Environment environment;
 	private SimulationState state;
 	private Integer currentInsectId = 0;
 	private Integer currentResourceId = 0;
-	private Integer currentIteration = 0;
 
 	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
 	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
@@ -47,6 +52,7 @@ public class Simulation {
 		int insectCount = simulationEntry.getInsectCount();
 		createInsects(insectCount);
 		createResources();
+		setState(SimulationState.READY);
 	}
 
 	public HashMap<Integer, BugManager> getBugManagersByIds() {
@@ -78,34 +84,30 @@ public class Simulation {
 		NaturalResource water = new NaturalResource(NaturalResource.WATER, getNextResourceId(), 300,
 				new TileCoordinate(10, 10));
 		environment.addResource(water);
+
+		if (DEBUG) {
+			createTestResources();
+		}
+	}
+
+	public void createTestResources() {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				NaturalResource water = new NaturalResource(NaturalResource.WATER, getNextResourceId(), 300,
+						new TileCoordinate(10 + i, 10 + j));
+				environment.addResource(water);
+			}
+		}
 	}
 
 	public void simulate() {
 		for (BugManager bugManager : bugManagersByIds.values()) {
 			bugManager.update();
-			if (DEBUG) {
-				currentIteration++;
-				decreaseHealth(bugManager);
-				if (currentIteration % 5 == 0) {
-					if (bugManager.getInsect().getId().equals(Integer.valueOf(1))) {
-						Insect insect = bugManager.getInsect();
-						int currentHunger = insect.getCurrentHunger();
-						insect.setCurrentHunger(currentHunger - 10);
-						System.out.println(currentHunger);
-					}
-				}
-			}
 			if (bugManager.isDead()) {
 				addDeadInsect(bugManager.getInsectId());
 			}
 		}
 		removeAllDeadInsects();
-	}
-
-	private void decreaseHealth(BugManager bugManager) {
-		Insect insect = bugManager.getInsect();
-		int currentHealth = insect.getCurrentHealth();
-		insect.setCurrentHealth(currentHealth - 1);
 	}
 
 	public void add(Insect insect) {
@@ -151,8 +153,16 @@ public class Simulation {
 		this.state = state;
 	}
 
+	public void launch() {
+		state = SimulationState.RUNNING;
+	}
+
 	public boolean isRunning() {
 		return state == SimulationState.RUNNING;
+	}
+
+	public boolean isReady() {
+		return state == SimulationState.READY;
 	}
 
 	public SimulationState getState() {
