@@ -6,7 +6,7 @@ import test.manual.SimuPara;
 
 public abstract class BugManager {
 
-	public static final int TIME_INTERVAL = 100;
+	public static final int TIME_INTERVAL = 10;
 
 	private String groupID = "0";
 	private String agressivity = "peaceful";
