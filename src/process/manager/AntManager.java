@@ -26,6 +26,23 @@ public class AntManager extends BugManager {
 	@Override
 	public void update() {
 		updateStats();
+		
+		int hunger = insect.getCurrentHunger();
+		int thirst = insect.getCurrentThirst();
+		int health = insect.getCurrentHealth();
+		
+		int maxHunger = insect.getMaxHunger();
+		int maxThirst = insect.getMaxThirst();
+		int maxHealth = insect.getMaxHealth();
+		
+		if(hunger <= 0) {
+			insect.decreaseCurrentHealth();
+		}
+		
+		if(thirst <= 0) {
+			insect.decreaseCurrentHealth();
+		}
+		
 		if (waiting) {
 			if (waitTime > 0) {
 				waitTime--;
@@ -34,12 +51,12 @@ public class AntManager extends BugManager {
 			}
 		} else {
 
-			if (((insect.getCurrentThirst() / insect.getMaxThirst()) <= 0.30) && !thirsty) {
+			if (((thirst / maxThirst) <= SimuPara.INSECT_THIRST_THRESHOLD) && !thirsty) {
 				this.goDrink();
 				thirsty = true;
 			}
 
-			else if (((insect.getCurrentHunger() / insect.getMaxHunger()) <= 0.30) && !hungry) {
+			else if (((hunger / maxHunger) <= SimuPara.INSECT_HUNGER_THRESHOLD) && !hungry) {
 				this.goEat();
 				hungry = true;
 			} else {

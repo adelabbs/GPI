@@ -6,11 +6,15 @@ import test.manual.SimuPara;
 
 public abstract class BugManager {
 
+	public static final int TIME_INTERVAL = 100;
+
 	private String groupID = "0";
 	private String agressivity = "peaceful";
 
 	private int tileX = 0;
 	private int tileY = 0;
+
+	private int currentTick = 0;
 
 	public BugManager(String groupID, String agressivity) {
 
@@ -95,22 +99,41 @@ public abstract class BugManager {
 			return destination;
 	}
 
+	/**
+	 * Stats are updated every TIME_INTERVAL
+	 */
 	public void updateStats() {
-		updateHunger();
-		updateThirst();
-		updateLifeSpan();
+		currentTick++;
+		if (currentTick % TIME_INTERVAL == 0) {
+			currentTick = 1;
+			updateHunger();
+			updateThirst();
+			updateLifeSpan();
+		}
 	}
 
 	private void updateHunger() {
-		getInsect().decreaseCurrentHunger();
+		Insect insect = getInsect();
+		insect.decreaseCurrentHunger();
+		if (insect.getCurrentHunger() <= 0) {
+			insect.decreaseCurrentHealth();
+		}
 	}
 
 	private void updateThirst() {
-		getInsect().decreaseCurrentThirst();
+		Insect insect = getInsect();
+		insect.decreaseCurrentThirst();
+		if (insect.getCurrentHunger() <= 0) {
+			insect.decreaseCurrentHealth();
+		}
 	}
 
 	private void updateLifeSpan() {
-		getInsect().decreaseLifeSpan();
+		Insect insect = getInsect();
+		insect.decreaseLifeSpan();
+		if (insect.getCurrentHunger() <= 0) {
+			insect.decreaseCurrentHealth();
+		}
 	}
 
 	public boolean isDead() {
@@ -142,4 +165,13 @@ public abstract class BugManager {
 	public Integer getInsectId() {
 		return getInsect().getId();
 	}
+
+	public int getCurrentTick() {
+		return currentTick;
+	}
+
+	public void setCurrentTick(int currentTick) {
+		this.currentTick = currentTick;
+	}
+
 }

@@ -87,6 +87,12 @@ public abstract class Insect {
 			currentHunger--;
 		}
 	}
+	
+	public void decreaseCurrentHealth() {
+		if (currentHealth > 0) {
+			currentHealth--;
+		}
+	}
 
 	public int getMaxHunger() {
 		return maxHunger;
