@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import process.Simulation;
 import process.SimulationEntry;
 import process.SimulationState;
+import process.SimulationUtility;
 import test.manual.SimuPara;
 
 /*
@@ -63,7 +64,7 @@ public class InsectGUI extends JFrame implements Runnable {
 				simulation.launch();
 			}
 			if (simulation.isRunning()) {
-				unitTime();
+				SimulationUtility.unitTime();
 				simulation.simulate();
 				updateValues();
 			}
@@ -73,11 +74,4 @@ public class InsectGUI extends JFrame implements Runnable {
 		}
 	}
 
-	public static void unitTime() {
-		try {
-			Thread.sleep(SimuPara.SIMULATION_SPEED);
-		} catch (InterruptedException e) {
-			System.out.println(e.getMessage());
-		}
-	}
 }

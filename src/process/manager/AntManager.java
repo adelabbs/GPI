@@ -7,6 +7,7 @@ import data.Environment;
 import data.Insect;
 import data.NaturalResource;
 import data.TileCoordinate;
+import process.SimulationUtility;
 import test.manual.SimuPara;
 
 public class AntManager extends BugManager {
@@ -125,7 +126,7 @@ public class AntManager extends BugManager {
 
 		if (calculatedThirst > maxThirst) {
 			insect.setCurrentThirst(insect.getMaxThirst());
-			quantity = calculatedThirst - maxThirst;
+			quantity -= calculatedThirst - maxThirst;
 		} else {
 			insect.setCurrentThirst(currentThirst + quantity);
 		}
@@ -134,10 +135,11 @@ public class AntManager extends BugManager {
 		int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
 		int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
 
-		TileCoordinate tileCoordinate = new TileCoordinate(x, y);
-
 		for (NaturalResource resource : Environment.getInstance().getResources()) {
-			if (resource.getCoordinates() == tileCoordinate) {
+			TileCoordinate resourcePosition = resource.getCoordinates();
+			int resourceX = resourcePosition.getAbscissa();
+			int resourceY = resourcePosition.getOrdinate();
+			if (resourceX == x && resourceY == y) {
 				resource.setQuantity(resource.getQuantity() - quantity);
 			}
 		}
