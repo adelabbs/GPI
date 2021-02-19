@@ -86,7 +86,6 @@ public class AntManager extends BugManager {
 
 			}
 			super.moveInsect(insect);
-
 		}
 
 	}
