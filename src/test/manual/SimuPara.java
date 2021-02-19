@@ -21,6 +21,6 @@ public class SimuPara {
 
 	public static final double INSECT_THIRST_THRESHOLD = 0.9; // in decimal (30% = 0.3)
 	public static final double INSECT_HUNGER_THRESHOLD = 0.2;
-	public static final int TIME_INTERVAL = 20;
+	public static final int TIME_INTERVAL = 5;
 
 }
