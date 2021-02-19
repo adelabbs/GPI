@@ -26,6 +26,12 @@ public class PaintVisitor implements InsectVisitor<Void> {
 	public static int HUNGER_CASE = 0;
 	public static int THIRST_CASE = 1;
 	
+	public static int INSECT_SIZE = 53;
+	public static int ICON_HUNGER = 5;
+	public static int ICON_THIRST = 7;
+	
+	private String[] state;
+	
 	
 	public PaintVisitor(Graphics graphics) {
 		this.g = graphics;
@@ -39,6 +45,16 @@ public class PaintVisitor implements InsectVisitor<Void> {
 			bufferImage = rotate(bufferImage, insect.getDirection());
 			g.drawImage(bufferImage, (int) insect.getCurrentPosition().getAbscissa(),
 					(int) insect.getCurrentPosition().getOrdinate(), null);
+			state = getLifeState(insect);
+			//Icon Hunger
+			BufferedImage bufferIconHunger = ImageIO.read(new File(state[0]));
+			g.drawImage(bufferIconHunger,(int) insect.getCurrentPosition().getAbscissa() + ICON_HUNGER,
+					(int) insect.getCurrentPosition().getOrdinate() + ICON_HUNGER, null);
+
+			//Icon Thirst
+			BufferedImage bufferImageThirst = ImageIO.read(new File(state[1]));
+			g.drawImage(bufferImageThirst,(int) insect.getCurrentPosition().getAbscissa() + ICON_THIRST,
+					(int) insect.getCurrentPosition().getOrdinate() + ICON_THIRST, null);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,7 +70,17 @@ public class PaintVisitor implements InsectVisitor<Void> {
 			bufferImage = rotate(bufferImage, insect.getDirection());
 			g.drawImage(bufferImage, (int) insect.getCurrentPosition().getAbscissa(),
 					(int) insect.getCurrentPosition().getOrdinate(), null);
+			state = getLifeState(insect);
+			//Icon Hunger
+			BufferedImage bufferIconHunger = ImageIO.read(new File(state[0]));
+			g.drawImage(bufferIconHunger,(int) insect.getCurrentPosition().getAbscissa() + ICON_HUNGER,
+					(int) insect.getCurrentPosition().getOrdinate() + ICON_HUNGER, null);
 
+			//Icon Thirst
+			BufferedImage bufferImageThirst = ImageIO.read(new File(state[1]));
+			g.drawImage(bufferImageThirst,(int) insect.getCurrentPosition().getAbscissa() + ICON_THIRST,
+					(int) insect.getCurrentPosition().getOrdinate() + ICON_THIRST, null);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,7 +111,6 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		String[] states = new String[2];
 		int maxh = insect.getMaxHunger();
 		int curh = insect.getCurrentHunger();
-		System.out.println(curh);
 		int maxt = insect.getMaxThirst();
 		int curt = insect.getCurrentThirst();
 		
@@ -104,6 +129,7 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		} else if (curt/maxt < 3*maxt/4) {
 			states[THIRST_CASE] = HUNGER3;
 		}
+
 		return states;
 	}
 }
