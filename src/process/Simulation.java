@@ -91,11 +91,15 @@ public class Simulation {
 	}
 
 	public void createTestResources() {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				NaturalResource water = new NaturalResource(NaturalResource.WATER, getNextResourceId(), 300,
-						new TileCoordinate(10 + i, 10 + j));
+		int i = 0;
+		while (i < 10) {
+			int x = (int) (0 + Math.random() * ((19 - 0)));
+			int y = (int) (0 + Math.random() * ((19 - 0)));
+			NaturalResource water = new NaturalResource(NaturalResource.WATER, getNextResourceId(), 300,
+					new TileCoordinate(x, y));
+			if (!environment.getResources().contains(water)) {
 				environment.addResource(water);
+				i++;
 			}
 		}
 	}
