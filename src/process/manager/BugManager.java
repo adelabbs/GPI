@@ -1,8 +1,12 @@
 package process.manager;
 
+import java.util.ArrayList;
+
 import data.Coordinate;
 import data.Environment;
 import data.Insect;
+import data.NaturalResource;
+import data.TileCoordinate;
 import test.manual.SimuPara;
 
 public abstract class BugManager {
@@ -136,6 +140,24 @@ public abstract class BugManager {
 		insect.decreaseLifeSpan();
 		if (insect.getCurrentHunger() <= 0) {
 			insect.decreaseCurrentHealth();
+		}
+	}
+	
+	/**
+	 * The naïve point of interest discovery
+	 */
+	public void discoverPOI() {
+		ArrayList<NaturalResource> resources = environment.getResources();
+		Coordinate insectPosition = getInsect().getCurrentPosition();
+		int convertedX = ((int) insectPosition.getAbscissa()) / SimuPara.SCALE;
+		System.out.println(convertedX);
+		int convertedY = ((int) insectPosition.getOrdinate()) / SimuPara.SCALE;
+		System.out.println(convertedY);
+		for (NaturalResource resource : resources) {
+			TileCoordinate resourcePosition = resource.getCoordinates();
+			if (resourcePosition.getAbscissa() == convertedX && resourcePosition.getOrdinate() == convertedY) {
+				getInsect().add(resource);
+			}
 		}
 	}
 

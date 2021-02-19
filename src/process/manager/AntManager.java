@@ -26,6 +26,7 @@ public class AntManager extends BugManager {
 	@Override
 	public void update() {
 		updateStats();
+		discoverPOI();
 
 		int hunger = insect.getCurrentHunger();
 		int thirst = insect.getCurrentThirst();
