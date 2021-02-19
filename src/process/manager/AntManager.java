@@ -7,7 +7,6 @@ import data.Environment;
 import data.Insect;
 import data.NaturalResource;
 import data.TileCoordinate;
-import process.SimulationUtility;
 import test.manual.SimuPara;
 
 public class AntManager extends BugManager {
@@ -31,11 +30,9 @@ public class AntManager extends BugManager {
 
 		int hunger = insect.getCurrentHunger();
 		int thirst = insect.getCurrentThirst();
-		int health = insect.getCurrentHealth();
 
 		int maxHunger = insect.getMaxHunger();
 		int maxThirst = insect.getMaxThirst();
-		int maxHealth = insect.getMaxHealth();
 
 		if (hunger <= 0) {
 			insect.decreaseCurrentHealth();

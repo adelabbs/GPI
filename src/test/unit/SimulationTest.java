@@ -9,7 +9,6 @@ import data.Coordinate;
 import data.Environment;
 import data.NaturalResource;
 import data.TileCoordinate;
-import gui.InsectGUI;
 import process.Simulation;
 import process.SimulationEntry;
 import process.SimulationState;
