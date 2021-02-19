@@ -142,7 +142,7 @@ public abstract class BugManager {
 			insect.decreaseCurrentHealth();
 		}
 	}
-	
+
 	/**
 	 * The naïve point of interest discovery
 	 */
@@ -150,9 +150,9 @@ public abstract class BugManager {
 		ArrayList<NaturalResource> resources = environment.getResources();
 		Coordinate insectPosition = getInsect().getCurrentPosition();
 		int convertedX = ((int) insectPosition.getAbscissa()) / SimuPara.SCALE;
-		System.out.println(convertedX);
+
 		int convertedY = ((int) insectPosition.getOrdinate()) / SimuPara.SCALE;
-		System.out.println(convertedY);
+		//System.out.println(getInsect().getId() + " : " + convertedX + "," + " " + convertedY);
 		for (NaturalResource resource : resources) {
 			TileCoordinate resourcePosition = resource.getCoordinates();
 			if (resourcePosition.getAbscissa() == convertedX && resourcePosition.getOrdinate() == convertedY) {
