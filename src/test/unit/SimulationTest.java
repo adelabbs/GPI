@@ -2,8 +2,17 @@ package test.unit;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import process.InsectVisitor;
+import test.manual.SimuPara;
 import org.junit.Test;
 
+import data.Ant;
+import data.Coordinate;
+
+import process.Simulation;
+import process.SimulationEntry;
+import process.SimulationState;
 public class SimulationTest {
 
 	@Test
@@ -13,12 +22,29 @@ public class SimulationTest {
 
 	@Test
 	public void testAddInsect() {
-		fail("Not yet implemented");
+		Coordinate coordinate = new Coordinate(1, 1);
+		Ant a = new Ant(345555,coordinate,10,10,10,10); 
+		SimulationEntry SE = new SimulationEntry(50,0);
+		Simulation S = new Simulation(SE);
+		int taille = S.getInsects().size();
+		S.add(a);
+		assertEquals(taille+1,S.getInsects().size());
+		
 	}
 
 	@Test
 	public void testRemoveInsect() {
-		fail("Not yet implemented");
+		Coordinate coordinate = new Coordinate(1, 1);
+		Ant a = new Ant(345555,coordinate,10,10,10,10);
+		Ant b = new Ant(345555,coordinate,10,10,10,10);
+		SimulationEntry SE = new SimulationEntry(50,0);
+		Simulation S = new Simulation(SE);
+		
+		S.add(a);
+		S.add(b);
+		int taille = S.getInsects().size();
+		S.remove(b);
+		assertEquals(taille-1,S.getInsects().size());
 	}
 
 	@Test
@@ -33,7 +59,11 @@ public class SimulationTest {
 
 	@Test
 	public void testIsRunning() {
-		fail("Not yet implemented");
+		
+		SimulationEntry SE = new SimulationEntry(50,0);
+		Simulation S = new Simulation(SE);
+		assertEquals(SimulationState.RUNNING,S.isRunning());
+		
 	}
 
 }
