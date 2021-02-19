@@ -2,9 +2,7 @@ package test.unit;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import process.InsectVisitor;
-import test.manual.SimuPara;
+
 import org.junit.Test;
 
 import data.Ant;
