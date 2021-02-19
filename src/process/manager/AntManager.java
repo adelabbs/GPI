@@ -18,31 +18,31 @@ public class AntManager extends BugManager {
 	private boolean waiting;
 	private int waitTime = 0;
 
-	public AntManager(String groupID, String agressivity, Ant insect) {
-		super(groupID, agressivity);
+	public AntManager(String groupID, String agressivity, Ant insect, Environment environment) {
+		super(groupID, agressivity, environment);
 		this.insect = insect;
 	}
 
 	@Override
 	public void update() {
 		updateStats();
-		
+
 		int hunger = insect.getCurrentHunger();
 		int thirst = insect.getCurrentThirst();
 		int health = insect.getCurrentHealth();
-		
+
 		int maxHunger = insect.getMaxHunger();
 		int maxThirst = insect.getMaxThirst();
 		int maxHealth = insect.getMaxHealth();
-		
-		if(hunger <= 0) {
+
+		if (hunger <= 0) {
 			insect.decreaseCurrentHealth();
 		}
-		
-		if(thirst <= 0) {
+
+		if (thirst <= 0) {
 			insect.decreaseCurrentHealth();
 		}
-		
+
 		if (waiting) {
 			if (waitTime > 0) {
 				waitTime--;
@@ -85,7 +85,6 @@ public class AntManager extends BugManager {
 
 			}
 			super.moveInsect(insect);
-
 		}
 
 	}

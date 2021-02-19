@@ -1,12 +1,13 @@
 package process.manager;
 
 import data.Coordinate;
+import data.Environment;
 import data.Insect;
 import test.manual.SimuPara;
 
 public abstract class BugManager {
 
-	public static final int TIME_INTERVAL = 100;
+	public static final int TIME_INTERVAL = 10;
 
 	private String groupID = "0";
 	private String agressivity = "peaceful";
@@ -16,10 +17,12 @@ public abstract class BugManager {
 
 	private int currentTick = 0;
 
-	public BugManager(String groupID, String agressivity) {
+	private Environment environment;
 
+	public BugManager(String groupID, String agressivity, Environment environment) {
 		this.groupID = groupID;
 		this.agressivity = agressivity;
+		this.environment = environment;
 	}
 
 	public String getGroupID() {
@@ -172,6 +175,10 @@ public abstract class BugManager {
 
 	public void setCurrentTick(int currentTick) {
 		this.currentTick = currentTick;
+	}
+
+	public Environment getEnvironment() {
+		return environment;
 	}
 
 }
