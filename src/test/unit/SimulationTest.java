@@ -7,10 +7,13 @@ import org.junit.Test;
 
 import data.Ant;
 import data.Coordinate;
-
+import gui.InsectGUI;
 import process.Simulation;
 import process.SimulationEntry;
 import process.SimulationState;
+import process.manager.AntManager;
+import process.manager.BugManager;
+import test.manual.SimuPara;
 public class SimulationTest {
 
 	@Test
@@ -61,6 +64,50 @@ public class SimulationTest {
 		SimulationEntry SE = new SimulationEntry(50,0);
 		Simulation S = new Simulation(SE);
 		assertEquals(SimulationState.RUNNING,S.isRunning());
+		
+	}
+	
+	@Test
+	public void testUpdateHunger() {
+		Ant ant = new Ant(1, new Coordinate(15, 15), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, 1);
+		BugManager antManager = new AntManager("1", "peaceful", ant);
+		
+		int CurrentHunger = ant.getCurrentHunger();
+		
+		for(int i=0; i<51;i++) {
+			antManager.updateStats();
+		}
+		
+		assertEquals(CurrentHunger-1, ant.getCurrentHealth());
+		
+	}
+	
+	@Test
+	public void testUpdateThirst() {
+		Ant ant = new Ant(1, new Coordinate(15, 15), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, 1);
+		BugManager antManager = new AntManager("1", "peaceful", ant);
+		
+		ant.setCurrentThirst(0);;
+		int CurrentHealth = ant.getCurrentHealth();
+		for(int i=0; i<51;i++) {
+			antManager.updateStats();
+		}
+		
+		assertEquals(CurrentHealth-1, ant.getCurrentHealth());
+		
+	}
+	
+	@Test
+	public void testUpdateLifeSpan() {
+		Ant ant = new Ant(1, new Coordinate(15, 15), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, 1);
+		BugManager antManager = new AntManager("1", "peaceful", ant);
+		
+		int LifeSpan = ant.getLifeSpan();
+		for(int i=0; i<51;i++) {
+			antManager.updateStats();
+		}
+		
+		assertEquals(LifeSpan-1, ant.getLifeSpan());
 		
 	}
 
