@@ -1,9 +1,5 @@
 package process.manager;
 
-import java.util.ArrayList;
-
-import javax.annotation.Resources;
-
 import data.Ant;
 import data.Constants;
 import data.Coordinate;
