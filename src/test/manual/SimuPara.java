@@ -18,4 +18,7 @@ public class SimuPara {
 	public static final int MAX_HEALTH = 100;
 	public static final int MAX_THIRST = 100;
 	public static final int MAX_HUNGER = 100;
+	
+	public static final double INSECT_THIRST_THRESHOLD = 0.3; // in decimal (30% = 0.3)
+	public static final double INSECT_HUNGER_THRESHOLD = 0.2;
 }

@@ -51,12 +51,12 @@ public class AntManager extends BugManager {
 			}
 		} else {
 
-			if (((insect.getCurrentThirst() / insect.getMaxThirst()) <= 0.30) && !thirsty) {
+			if (((thirst / maxThirst) <= SimuPara.INSECT_THIRST_THRESHOLD) && !thirsty) {
 				this.goDrink();
 				thirsty = true;
 			}
 
-			else if (((insect.getCurrentHunger() / insect.getMaxHunger()) <= 0.30) && !hungry) {
+			else if (((hunger / maxHunger) <= SimuPara.INSECT_HUNGER_THRESHOLD) && !hungry) {
 				this.goEat();
 				hungry = true;
 			} else {
