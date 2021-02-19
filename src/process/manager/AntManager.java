@@ -18,8 +18,8 @@ public class AntManager extends BugManager {
 	private boolean waiting;
 	private int waitTime = 0;
 
-	public AntManager(String groupID, String agressivity, Ant insect) {
-		super(groupID, agressivity);
+	public AntManager(String groupID, String agressivity, Ant insect, Environment environment) {
+		super(groupID, agressivity, environment);
 		this.insect = insect;
 	}
 
