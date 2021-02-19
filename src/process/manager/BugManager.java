@@ -20,6 +20,7 @@ public abstract class BugManager {
 	private int tileY = 0;
 
 	private int currentTick = 0;
+	private int updateInterval = TIME_INTERVAL;
 
 	private Environment environment;
 
@@ -27,6 +28,14 @@ public abstract class BugManager {
 		this.groupID = groupID;
 		this.agressivity = agressivity;
 		this.environment = environment;
+	}
+
+	public int getUpdateInterval() {
+		return updateInterval;
+	}
+
+	public void setUpdateInterval(int updateInterval) {
+		this.updateInterval = updateInterval;
 	}
 
 	public String getGroupID() {
@@ -152,7 +161,8 @@ public abstract class BugManager {
 		int convertedX = ((int) insectPosition.getAbscissa()) / SimuPara.SCALE;
 
 		int convertedY = ((int) insectPosition.getOrdinate()) / SimuPara.SCALE;
-		//System.out.println(getInsect().getId() + " : " + convertedX + "," + " " + convertedY);
+		// System.out.println(getInsect().getId() + " : " + convertedX + "," + " " +
+		// convertedY);
 		for (NaturalResource resource : resources) {
 			TileCoordinate resourcePosition = resource.getCoordinates();
 			if (resourcePosition.getAbscissa() == convertedX && resourcePosition.getOrdinate() == convertedY) {
