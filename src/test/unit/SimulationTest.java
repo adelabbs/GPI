@@ -146,8 +146,24 @@ public class SimulationTest {
 	}
 
 	@Test
-	public void testEat() {
+	public void testConsume() {
+		NaturalResource water = new NaturalResource(NaturalResource.WATER, 1, 300, new TileCoordinate(0, 0));
+		Ant ant = new Ant(1, new Coordinate(15, 15), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER-1, SimuPara.MAX_THIRST, 1);
+
+		Environment e = Environment.getInstance();
+		e.addResource(water);
+		BugManager antManager = new AntManager("1", "peaceful", ant, e);
 		
+		ant.setCurrentThirst(10);
+		ant.add(water);
+		int currentThirst=ant.getCurrentThirst();
+		int currentResource= water.getQuantity();
+		
+		antManager.update();
+		
+		
+		assertEquals(currentThirst+SimuPara.INSECT_DEFAULT_DRINK_QTT,ant.getCurrentThirst());
+		assertEquals(currentResource-SimuPara.INSECT_DEFAULT_DRINK_QTT,water.getQuantity());
 	}
 
 }
