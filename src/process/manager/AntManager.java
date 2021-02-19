@@ -72,26 +72,6 @@ public class AntManager extends BugManager {
 		}
 
 	}
-	
-	public void updateStats() {
-		updateHunger();
-		updateThirst();
-		updateLifeSpan();
-	}
-	
-	private void updateHunger() {
-		if(insect.getCurrentHunger() > 0) {
-			//TODO
-		}
-	}
-	
-	private void updateThirst() {
-		//TODO
-	}
-	
-	private void updateLifeSpan() {
-		//TODO
-	}
 
 	public void eat(int quantity) {
 		// eat qui rempli de quantity la faim de l'insecte
@@ -107,19 +87,18 @@ public class AntManager extends BugManager {
 		}
 
 		// TODO décrémenter la ressource de quantity
-		int x =(int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
-		int y =(int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
-		
-		TileCoordinate tileCoordinate = new TileCoordinate(x,y);
-		
-		for(NaturalResource resource : Environment.getInstance().getResources()) {
-			if(resource.getCoordinates() == tileCoordinate) {
-				resource.setQuantity(resource.getQuantity()-quantity);
+		int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
+		int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
+
+		TileCoordinate tileCoordinate = new TileCoordinate(x, y);
+
+		for (NaturalResource resource : Environment.getInstance().getResources()) {
+			if (resource.getCoordinates() == tileCoordinate) {
+				resource.setQuantity(resource.getQuantity() - quantity);
 			}
 		}
 
 	}
-
 
 	public void drink(int quantity) {
 		// eat qui rempli de quantity la soif de l'insecte
@@ -135,14 +114,14 @@ public class AntManager extends BugManager {
 		}
 
 		// TODO décrémenter la ressource de quantity
-		int x =(int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
-		int y =(int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
-		
-		TileCoordinate tileCoordinate = new TileCoordinate(x,y);
-		
-		for(NaturalResource resource : Environment.getInstance().getResources()) {
-			if(resource.getCoordinates() == tileCoordinate) {
-				resource.setQuantity(resource.getQuantity()-quantity);
+		int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
+		int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
+
+		TileCoordinate tileCoordinate = new TileCoordinate(x, y);
+
+		for (NaturalResource resource : Environment.getInstance().getResources()) {
+			if (resource.getCoordinates() == tileCoordinate) {
+				resource.setQuantity(resource.getQuantity() - quantity);
 			}
 		}
 

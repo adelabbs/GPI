@@ -66,10 +66,6 @@ public abstract class Insect {
 		return maxHealth;
 	}
 
-	public void setMaxHealth(int maxHealth) {
-		this.maxHealth = maxHealth;
-	}
-
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
@@ -86,12 +82,14 @@ public abstract class Insect {
 		this.currentHunger = currentHunger;
 	}
 
-	public int getMaxHunger() {
-		return maxHunger;
+	public void decreaseCurrentHunger() {
+		if (currentHunger > 0) {
+			currentHunger--;
+		}
 	}
 
-	public void setMaxHunger(int maxHunger) {
-		this.maxHunger = maxHunger;
+	public int getMaxHunger() {
+		return maxHunger;
 	}
 
 	public int getCurrentThirst() {
@@ -102,12 +100,14 @@ public abstract class Insect {
 		this.currentThirst = currentThirst;
 	}
 
-	public int getMaxThirst() {
-		return maxThirst;
+	public void decreaseCurrentThirst() {
+		if (currentThirst > 0) {
+			currentThirst--;
+		}
 	}
 
-	public void setMaxThirst(int maxThirst) {
-		this.maxThirst = maxThirst;
+	public int getMaxThirst() {
+		return maxThirst;
 	}
 
 	public int getSpeed() {
@@ -120,10 +120,6 @@ public abstract class Insect {
 
 	public int getMaxSpeed() {
 		return maxSpeed;
-	}
-
-	public void setMaxSpeed(int maxSpeed) {
-		this.maxSpeed = maxSpeed;
 	}
 
 	public Coordinate getCurrentPosition() {
@@ -191,6 +187,12 @@ public abstract class Insect {
 
 	public int getLifeSpan() {
 		return lifeSpan;
+	}
+
+	public void decreaseLifeSpan() {
+		if(lifeSpan > 0) {
+			lifeSpan--;
+		}
 	}
 
 	public void setLifeSpan(int lifeSpan) {

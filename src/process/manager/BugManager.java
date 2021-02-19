@@ -50,7 +50,7 @@ public abstract class BugManager {
 
 		int newTileX = calculateTileX(nextPosition);
 		int newTileY = calculateTileY(nextPosition);
-		
+
 		setTileX(newTileX);
 		setTileY(newTileY);
 
@@ -95,12 +95,24 @@ public abstract class BugManager {
 			return destination;
 	}
 
-	public void decreaseLifeSpan() {
-		int currentLifeSpan = getInsect().getLifeSpan();
-		currentLifeSpan--;
-		getInsect().setLifeSpan(currentLifeSpan);
+	public void updateStats() {
+		updateHunger();
+		updateThirst();
+		updateLifeSpan();
 	}
-	
+
+	private void updateHunger() {
+		getInsect().decreaseCurrentHunger();
+	}
+
+	private void updateThirst() {
+		getInsect().decreaseCurrentThirst();
+	}
+
+	private void updateLifeSpan() {
+		getInsect().decreaseLifeSpan();
+	}
+
 	public boolean isDead() {
 		return getInsect().getCurrentHealth() <= 0;
 	}
