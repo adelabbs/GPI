@@ -25,7 +25,7 @@ public class AntManager extends BugManager {
 
 	@Override
 	public void update() {
-
+		updateStats();
 		if (waiting) {
 			if (waitTime > 0) {
 				waitTime--;
@@ -71,6 +71,26 @@ public class AntManager extends BugManager {
 
 		}
 
+	}
+	
+	public void updateStats() {
+		updateHunger();
+		updateThirst();
+		updateLifeSpan();
+	}
+	
+	private void updateHunger() {
+		if(insect.getCurrentHunger() > 0) {
+			//TODO
+		}
+	}
+	
+	private void updateThirst() {
+		//TODO
+	}
+	
+	private void updateLifeSpan() {
+		//TODO
 	}
 
 	public void eat(int quantity) {

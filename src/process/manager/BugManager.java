@@ -95,6 +95,12 @@ public abstract class BugManager {
 			return destination;
 	}
 
+	public void decreaseLifeSpan() {
+		int currentLifeSpan = getInsect().getLifeSpan();
+		currentLifeSpan--;
+		getInsect().setLifeSpan(currentLifeSpan);
+	}
+	
 	public boolean isDead() {
 		return getInsect().getCurrentHealth() <= 0;
 	}

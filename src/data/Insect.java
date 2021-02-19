@@ -11,6 +11,9 @@ import test.manual.SimuPara;
  */
 public abstract class Insect {
 
+	public static final int MIN_LIFESPAN = 10000;
+	public static final int MAX_LIFESPAN = 20000;
+
 	private Integer id;
 	private double direction = 0.0;
 
@@ -30,6 +33,7 @@ public abstract class Insect {
 	private int maxThirst;
 	private int speed;
 	private int maxSpeed;
+	private int lifeSpan;
 
 	public Insect(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst, int maxSpeed,
 			String type) {
@@ -45,7 +49,7 @@ public abstract class Insect {
 		this.maxSpeed = maxSpeed;
 		speed = maxSpeed;
 		this.type = type;
-
+		lifeSpan = (int) (MIN_LIFESPAN + Math.random() * ((MAX_LIFESPAN - MIN_LIFESPAN) + 1));
 	}
 
 	public abstract <T> T accept(InsectVisitor<T> visitor);
@@ -184,4 +188,13 @@ public abstract class Insect {
 	public void setSize(int size) {
 		this.size = size;
 	}
+
+	public int getLifeSpan() {
+		return lifeSpan;
+	}
+
+	public void setLifeSpan(int lifeSpan) {
+		this.lifeSpan = lifeSpan;
+	}
+
 }
