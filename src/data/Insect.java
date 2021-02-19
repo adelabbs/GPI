@@ -87,7 +87,7 @@ public abstract class Insect {
 			currentHunger--;
 		}
 	}
-	
+
 	public void decreaseCurrentHealth() {
 		if (currentHealth > 0) {
 			currentHealth--;
@@ -160,7 +160,9 @@ public abstract class Insect {
 	}
 
 	public void add(NaturalResource naturalResource) {
-		poi.add(naturalResource);
+		if (!poi.contains(naturalResource)) {
+			poi.add(naturalResource);
+		}
 	}
 
 	public void remove(NaturalResource naturalResource) {
@@ -196,7 +198,7 @@ public abstract class Insect {
 	}
 
 	public void decreaseLifeSpan() {
-		if(lifeSpan > 0) {
+		if (lifeSpan > 0) {
 			lifeSpan--;
 		}
 	}

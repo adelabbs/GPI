@@ -49,13 +49,19 @@ public class Simulation {
 		createResources();
 	}
 
+	public HashMap<Integer, BugManager> getBugManagersByIds() {
+		return bugManagersByIds;
+	}
+
 	private void createInsects(int insectCount) {
 		ArrayList<Insect> insects = new ArrayList<Insect>();
 		for (int i = 1; i < insectCount + 1; i++) {
-			Ant ant = new Ant(getNextInsectId(), new Coordinate(15 * i, 15 * i), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, i);
-			Bee bee = new Bee(getNextInsectId(), new Coordinate(40 * i, 60 * i), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, i);
-			BugManager antManager = new AntManager("1", "peaceful", ant);
-			BugManager beeManager = new BeeManager("2", "peaceful", bee);
+			Ant ant = new Ant(getNextInsectId(), new Coordinate(15 * i, 15 * i), SimuPara.MAX_HEALTH,
+					SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, i);
+			Bee bee = new Bee(getNextInsectId(), new Coordinate(40 * i, 60 * i), SimuPara.MAX_HEALTH,
+					SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, i);
+			BugManager antManager = new AntManager("1", "peaceful", ant, environment);
+			BugManager beeManager = new BeeManager("2", "peaceful", bee, environment);
 			insects.add(bee);
 			insects.add(ant);
 			bugManagersByIds.put(bee.getId(), beeManager);
@@ -65,9 +71,13 @@ public class Simulation {
 	}
 
 	private void createResources() {
-		NaturalResource flower = new NaturalResource(NaturalResource.FLOWER, getNextResourceId(), 10,
+		NaturalResource flower = new NaturalResource(NaturalResource.FLOWER, getNextResourceId(), 300,
 				new TileCoordinate(0, 0));
 		environment.addResource(flower);
+
+		NaturalResource water = new NaturalResource(NaturalResource.WATER, getNextResourceId(), 300,
+				new TileCoordinate(10, 10));
+		environment.addResource(water);
 	}
 
 	public void simulate() {

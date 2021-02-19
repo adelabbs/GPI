@@ -1,12 +1,17 @@
 package process.manager;
 
+import java.util.ArrayList;
+
 import data.Coordinate;
+import data.Environment;
 import data.Insect;
+import data.NaturalResource;
+import data.TileCoordinate;
 import test.manual.SimuPara;
 
 public abstract class BugManager {
 
-	public static final int TIME_INTERVAL = 100;
+	public static final int TIME_INTERVAL = 50;
 
 	private String groupID = "0";
 	private String agressivity = "peaceful";
@@ -15,11 +20,22 @@ public abstract class BugManager {
 	private int tileY = 0;
 
 	private int currentTick = 0;
+	private int updateInterval = TIME_INTERVAL;
 
-	public BugManager(String groupID, String agressivity) {
+	private Environment environment;
 
+	public BugManager(String groupID, String agressivity, Environment environment) {
 		this.groupID = groupID;
 		this.agressivity = agressivity;
+		this.environment = environment;
+	}
+
+	public int getUpdateInterval() {
+		return updateInterval;
+	}
+
+	public void setUpdateInterval(int updateInterval) {
+		this.updateInterval = updateInterval;
 	}
 
 	public String getGroupID() {
@@ -136,6 +152,25 @@ public abstract class BugManager {
 		}
 	}
 
+	/**
+	 * The naïve point of interest discovery
+	 */
+	public void discoverPOI() {
+		ArrayList<NaturalResource> resources = environment.getResources();
+		Coordinate insectPosition = getInsect().getCurrentPosition();
+		int convertedX = ((int) insectPosition.getAbscissa()) / SimuPara.SCALE;
+
+		int convertedY = ((int) insectPosition.getOrdinate()) / SimuPara.SCALE;
+		// System.out.println(getInsect().getId() + " : " + convertedX + "," + " " +
+		// convertedY);
+		for (NaturalResource resource : resources) {
+			TileCoordinate resourcePosition = resource.getCoordinates();
+			if (resourcePosition.getAbscissa() == convertedX && resourcePosition.getOrdinate() == convertedY) {
+				getInsect().add(resource);
+			}
+		}
+	}
+
 	public boolean isDead() {
 		return getInsect().getCurrentHealth() <= 0;
 	}
@@ -172,6 +207,10 @@ public abstract class BugManager {
 
 	public void setCurrentTick(int currentTick) {
 		this.currentTick = currentTick;
+	}
+
+	public Environment getEnvironment() {
+		return environment;
 	}
 
 }

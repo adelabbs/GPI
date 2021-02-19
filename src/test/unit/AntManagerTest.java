@@ -11,7 +11,7 @@ import process.manager.AntManager;
 
 public class AntManagerTest {
 
-	@Before 
+	@Before
 	public void prepareAnt() {
 		//
 	}
@@ -24,7 +24,7 @@ public class AntManagerTest {
 	@Test
 	public void shouldEatOnAResource() {
 		Ant ant = new Ant(1, new Coordinate(15, 15), 10, 10, 10, 1);
-		AntManager manager = new AntManager(null, null, ant);
+		AntManager manager = new AntManager(null, null, ant, null);
 		manager.update();
 		//
 		fail("Not yet implemented");
