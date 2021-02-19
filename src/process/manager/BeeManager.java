@@ -22,6 +22,8 @@ public class BeeManager extends BugManager {
 
 	@Override
 	public void update() {
+		updateStats();
+		discoverPOI();
 		if (insect.getDestinationPosition() == insect.getCurrentPosition()) {
 			insect.setDestinationPosition(new Coordinate(Math.random() * SimuPara.SIMULATION_MAP_SIZE,
 					Math.random() * SimuPara.SIMULATION_MAP_SIZE));

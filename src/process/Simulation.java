@@ -67,9 +67,13 @@ public class Simulation {
 	}
 
 	private void createResources() {
-		NaturalResource flower = new NaturalResource(NaturalResource.FLOWER, getNextResourceId(), 10,
+		NaturalResource flower = new NaturalResource(NaturalResource.FLOWER, getNextResourceId(), 300,
 				new TileCoordinate(0, 0));
 		environment.addResource(flower);
+
+		NaturalResource water = new NaturalResource(NaturalResource.WATER, getNextResourceId(), 300,
+				new TileCoordinate(10, 10));
+		environment.addResource(water);
 	}
 
 	public void simulate() {
