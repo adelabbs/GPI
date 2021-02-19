@@ -120,7 +120,7 @@ public abstract class BugManager {
 	 */
 	public void updateStats() {
 		currentTick++;
-		if (currentTick % TIME_INTERVAL == 0) {
+		if (currentTick % updateInterval == 0) {
 			currentTick = 1;
 			updateHunger();
 			updateThirst();
