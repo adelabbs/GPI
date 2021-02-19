@@ -11,8 +11,6 @@ import test.manual.SimuPara;
 
 public abstract class BugManager {
 
-	public static final int TIME_INTERVAL = 50;
-
 	private String groupID = "0";
 	private String agressivity = "peaceful";
 
@@ -20,7 +18,7 @@ public abstract class BugManager {
 	private int tileY = 0;
 
 	private int currentTick = 0;
-	private int updateInterval = TIME_INTERVAL;
+	private int updateInterval = SimuPara.TIME_INTERVAL;
 
 	private Environment environment;
 
