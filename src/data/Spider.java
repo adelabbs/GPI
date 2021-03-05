@@ -4,7 +4,7 @@ import process.InsectVisitor;
 
 public class Spider extends Insect {
 
-	public Ant(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst,
+	public Spider(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst,
 			int maxSpeed) {
 		super(id, destinationPosition, maxHealth, maxHunger, maxThirst, maxSpeed, "Spider");
 	}

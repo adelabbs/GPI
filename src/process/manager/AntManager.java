@@ -12,8 +12,8 @@ import test.manual.SimuPara;
 public class AntManager extends BugManager {
 
 	private Ant insect;
-	private boolean thirsty;
-	private boolean hungry;
+	private boolean thirsty = false;
+	private boolean hungry = false;
 	private boolean wandering;
 	private boolean waiting;
 	private int waitTime = 0;
@@ -172,7 +172,6 @@ public class AntManager extends BugManager {
 			}
 
 		}
-
 	}
 
 	@Override
