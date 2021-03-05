@@ -47,8 +47,6 @@ public class AntManager extends BugManager {
 		}
 	}
 
-
-
 	private void wander() {
 		AntManagerState newState = AntManagerState.WANDERING;
 
@@ -81,7 +79,8 @@ public class AntManager extends BugManager {
 		if (waitTime > 0) {
 			waitTime--;
 		}
-
+	}
+	
 	private void goDrink() {
 		AntManagerState newState = AntManagerState.THIRSTY;
 		if (canDrink()) {
@@ -96,10 +95,10 @@ public class AntManager extends BugManager {
 
 		setState(newState);
 	}
-	
+
 	private void goEat() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private boolean waterAvailable() {

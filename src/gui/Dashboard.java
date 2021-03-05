@@ -32,6 +32,7 @@ public class Dashboard extends JPanel {
 
 	private Simulation simulation;
 	Graphics2D g2;
+	private boolean end = false;
 
 	private static boolean DEBUG = false;
 
@@ -54,6 +55,9 @@ public class Dashboard extends JPanel {
 		printInsects(g2);
 		if (DEBUG) {
 			printDebugGrid(g2);
+		}
+		if(end) {
+			printEndMessage(g2);
 		}
 	}
 
@@ -81,7 +85,7 @@ public class Dashboard extends JPanel {
 	}
 	
 	public void printEnd() {
-		printEndMessage(g2);
+		end = true;
 	}
 
 	private void loadRessources() {
