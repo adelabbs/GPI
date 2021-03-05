@@ -12,10 +12,10 @@ import test.manual.SimuPara;
 public class AntManager extends BugManager {
 
 	private Ant insect;
-	private boolean thirsty;
-	private boolean hungry;
-	private boolean wandering;
-	private boolean waiting;
+	private boolean thirsty = false;
+	private boolean hungry = false;
+	private boolean wandering = false;
+	private boolean waiting = true;
 	private int waitTime = 0;
 
 	public AntManager(String groupID, String agressivity, Ant insect, Environment environment) {
@@ -33,14 +33,6 @@ public class AntManager extends BugManager {
 
 		int maxHunger = insect.getMaxHunger();
 		int maxThirst = insect.getMaxThirst();
-
-		if (hunger <= 0) {
-			insect.decreaseCurrentHealth();
-		}
-
-		if (thirst <= 0) {
-			insect.decreaseCurrentHealth();
-		}
 
 		if (waiting) {
 			if (waitTime > 0) {
@@ -86,6 +78,45 @@ public class AntManager extends BugManager {
 			super.moveInsect(insect);
 		}
 
+	}
+
+	public void update2() {
+		updateStats();
+		discoverPOI();
+		readState();
+	}
+
+	private void readState() {
+		int hunger = insect.getCurrentHunger();
+		int thirst = insect.getCurrentThirst();
+
+		int maxHunger = insect.getMaxHunger();
+		int maxThirst = insect.getMaxThirst();
+		idle();
+		if (!waiting) {
+
+		}
+
+		if (((thirst / maxThirst) <= SimuPara.INSECT_THIRST_THRESHOLD) && !thirsty) {
+			this.goDrink();
+			thirsty = true;
+		}
+
+		else if (((hunger / maxHunger) <= SimuPara.INSECT_HUNGER_THRESHOLD) && !hungry) {
+			this.goEat();
+			hungry = true;
+		} else {
+			wandering = true;
+
+		}
+	}
+
+	private void idle() {
+		if (waitTime > 0) {
+			waitTime--;
+		} else {
+			waiting = false;
+		}
 	}
 
 	public void eat(int quantity) {

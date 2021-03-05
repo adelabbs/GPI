@@ -19,11 +19,6 @@ import test.manual.SimuPara;
 public class SimulationTest {
 
 	@Test
-	public void testSimulate() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testAddInsect() {
 		Coordinate coordinate = new Coordinate(1, 1);
 		Ant a = new Ant(345555, coordinate, 10, 10, 10, 10);
@@ -151,14 +146,14 @@ public class SimulationTest {
 
 		Environment e = Environment.getInstance();
 		e.addResource(water);
-		BugManager antManager = new AntManager("1", "peaceful", ant, e);
+		AntManager antManager = new AntManager("1", "peaceful", ant, e);
 		
 		ant.setCurrentThirst(10);
 		ant.add(water);
 		int currentThirst=ant.getCurrentThirst();
 		int currentResource= water.getQuantity();
 		
-		antManager.update();
+		antManager.drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
 		
 		
 		assertEquals(currentThirst+SimuPara.INSECT_DEFAULT_DRINK_QTT,ant.getCurrentThirst());
