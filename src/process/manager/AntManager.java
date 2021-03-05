@@ -16,6 +16,7 @@ public class AntManager extends BugManager {
 	private boolean hungry = false;
 	private boolean wandering = false;
 	private boolean waiting = true;
+
 	private int waitTime = 0;
 
 	public AntManager(String groupID, String agressivity, Ant insect, Environment environment) {
@@ -203,7 +204,6 @@ public class AntManager extends BugManager {
 			}
 
 		}
-
 	}
 
 	@Override

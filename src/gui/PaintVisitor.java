@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import data.Ant;
 import data.Bee;
 import data.Insect;
+import data.Spider;
 import process.InsectVisitor;
 
 public class PaintVisitor implements InsectVisitor<Void> {
@@ -118,6 +119,46 @@ public class PaintVisitor implements InsectVisitor<Void> {
 		}
 		return null;
 	}
+	
+	@Override
+	public Void visit(Spider insect) {
+		String filename = "resources/images/araignee_test2.png";
+		try {
+			BufferedImage bufferImage = ImageIO.read(new File(filename));
+			bufferImage = rotate(bufferImage, insect.getDirection());
+			g.drawImage(bufferImage, (int) insect.getCurrentPosition().getAbscissa(),
+					(int) insect.getCurrentPosition().getOrdinate(), null);
+			state = getLifeState(insect);
+			
+			double lifeRatio = insect.getCurrentHealth() / (double) insect.getMaxHealth();
+			int ratio = (int) (lifeRatio * 100);
+			
+			//Life bar system
+			g.drawRect((int) insect.getCurrentPosition().getAbscissa(), (int) insect.getCurrentPosition().getOrdinate() - LIFEBAR_POSITION,
+					LIFEBAR_WIDTH, LIFEBAR_HEIGHT);
+			g.fillRect((int) insect.getCurrentPosition().getAbscissa(), (int) insect.getCurrentPosition().getOrdinate() - LIFEBAR_POSITION,
+					ratio / 2, LIFEBAR_HEIGHT);
+			
+			if(state[HUNGER_CASE] != null) {
+				//Icon Hunger
+				BufferedImage bufferIconHunger = ImageIO.read(new File(state[HUNGER_CASE]));
+				g.drawImage(bufferIconHunger,(int) insect.getCurrentPosition().getAbscissa() + INSECT_SIZE - ICON_HUNGER,
+						(int) insect.getCurrentPosition().getOrdinate() - DY, null);
+			}
+			
+			if(state[THIRST_CASE] != null) {
+				//Icon Thirst
+				BufferedImage bufferImageThirst = ImageIO.read(new File(state[THIRST_CASE]));
+				g.drawImage(bufferImageThirst,(int) insect.getCurrentPosition().getAbscissa() + INSECT_SIZE - ICON_THIRST,
+						(int) insect.getCurrentPosition().getOrdinate() - DY, null);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 	/***
 	 * This method is used to rotate insects sprite
