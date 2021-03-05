@@ -55,11 +55,16 @@ public class InsectGUI extends JFrame implements Runnable {
 		dashboard.setSimulation(simulation);
 		dashboard.revalidate();
 		dashboard.repaint();
+		if(simulation.getInsects().isEmpty()) {
+			simulation.setState(SimulationState.STOP);
+		}
 	}
 
 	@Override
 	public void run() {
 		while (!stop) {
+			
+
 			if (simulation.isReady()) {
 				simulation.launch();
 			}
@@ -69,6 +74,7 @@ public class InsectGUI extends JFrame implements Runnable {
 				updateValues();
 			}
 			if (simulation.getState() == SimulationState.STOP) {
+				dashboard.printEnd();
 				stop = true;
 			}
 		}

@@ -1,8 +1,10 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import javax.swing.JPanel;
 import data.Insect;
 import data.NaturalResource;
 import process.Simulation;
+import process.SimulationState;
 import test.manual.SimuPara;
 
 public class Dashboard extends JPanel {
@@ -28,6 +31,7 @@ public class Dashboard extends JPanel {
 	ArrayList<NaturalResource> resources = null;
 
 	private Simulation simulation;
+	Graphics2D g2;
 
 	private static boolean DEBUG = false;
 
@@ -42,7 +46,7 @@ public class Dashboard extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		// Use Graphics2D to have more drawing options later
-		Graphics2D g2 = (Graphics2D) g;
+		g2 = (Graphics2D) g;
 
 		printMap(g2);
 		printTiles(g2);
@@ -75,6 +79,10 @@ public class Dashboard extends JPanel {
 			g2.drawLine(1, i, width, i);
 		}
 	}
+	
+	public void printEnd() {
+		printEndMessage(g2);
+	}
 
 	private void loadRessources() {
 		resources = simulation.getEnvironment().getResources();
@@ -106,6 +114,15 @@ public class Dashboard extends JPanel {
 
 	}
 
+	private void printEndMessage(Graphics2D g2) {
+		int width = getWidth();
+		int height = getHeight();
+		
+		g2.setFont(new Font("Segoe Script", Font.BOLD, 40));
+		g2.setPaint(Color.RED);
+		g2.drawString("FIN DE LA SIMULATION !",50,100);
+	}
+	
 	private void loadTiles() {
 		for (int i = 0; i < 5; i++) {
 			String filename = FILE_PATH + i + FILE_EXTENSION;
