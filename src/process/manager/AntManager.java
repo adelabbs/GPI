@@ -48,6 +48,7 @@ public class AntManager extends BugManager {
 	}
 
 	private void wander() {
+		// TODO if no destination -> set destination
 		AntManagerState newState = AntManagerState.WANDERING;
 
 		if (isAtDestination()) {
@@ -80,7 +81,7 @@ public class AntManager extends BugManager {
 			waitTime--;
 		}
 	}
-	
+
 	private void goDrink() {
 		AntManagerState newState = AntManagerState.THIRSTY;
 		if (canDrink()) {
