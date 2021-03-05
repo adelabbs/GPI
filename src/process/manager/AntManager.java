@@ -26,14 +26,13 @@ public class AntManager extends BugManager {
 	@Override
 	public void update() {
 		updateStats();
+		discoverPOI();
 
 		int hunger = insect.getCurrentHunger();
 		int thirst = insect.getCurrentThirst();
-		int health = insect.getCurrentHealth();
 
 		int maxHunger = insect.getMaxHunger();
 		int maxThirst = insect.getMaxThirst();
-		int maxHealth = insect.getMaxHealth();
 
 		if (hunger <= 0) {
 			insect.decreaseCurrentHealth();
@@ -124,7 +123,7 @@ public class AntManager extends BugManager {
 
 		if (calculatedThirst > maxThirst) {
 			insect.setCurrentThirst(insect.getMaxThirst());
-			quantity = calculatedThirst - maxThirst;
+			quantity -= calculatedThirst - maxThirst;
 		} else {
 			insect.setCurrentThirst(currentThirst + quantity);
 		}
@@ -133,10 +132,11 @@ public class AntManager extends BugManager {
 		int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
 		int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
 
-		TileCoordinate tileCoordinate = new TileCoordinate(x, y);
-
 		for (NaturalResource resource : Environment.getInstance().getResources()) {
-			if (resource.getCoordinates() == tileCoordinate) {
+			TileCoordinate resourcePosition = resource.getCoordinates();
+			int resourceX = resourcePosition.getAbscissa();
+			int resourceY = resourcePosition.getOrdinate();
+			if (resourceX == x && resourceY == y) {
 				resource.setQuantity(resource.getQuantity() - quantity);
 			}
 		}
