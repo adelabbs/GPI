@@ -9,10 +9,12 @@ import data.Coordinate;
 import data.Environment;
 import data.Insect;
 import data.NaturalResource;
+import data.Spider;
 import data.TileCoordinate;
 import process.manager.AntManager;
 import process.manager.BeeManager;
 import process.manager.BugManager;
+import process.manager.SpiderManager;
 import test.manual.SimuPara;
 
 /**
@@ -73,6 +75,11 @@ public class Simulation {
 			bugManagersByIds.put(bee.getId(), beeManager);
 			bugManagersByIds.put(ant.getId(), antManager);
 		}
+		Spider spider = new Spider(getNextInsectId(), new Coordinate(2 * SimuPara.SCALE, 16 * SimuPara.SCALE),
+				SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, 1);
+		BugManager spiderManager = new SpiderManager("3", "agressive", environment, spider);
+		insects.add(spider);
+		bugManagersByIds.put(spider.getId(), spiderManager);
 		environment.setInsects(insects);
 	}
 
