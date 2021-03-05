@@ -13,7 +13,6 @@ public abstract class BugManager {
 
 	private String groupID = "0";
 	private String agressivity = "peaceful";
-
 	private int tileX = 0;
 	private int tileY = 0;
 

@@ -12,12 +12,8 @@ import test.manual.SimuPara;
 public class AntManager extends BugManager {
 
 	private Ant insect;
-	private boolean thirsty = false;
-	private boolean hungry = false;
-	private boolean wandering = false;
-	private boolean waiting = true;
-
 	private int waitTime = 0;
+	private AntManagerState state = AntManagerState.WANDERING;
 
 	public AntManager(String groupID, String agressivity, Ant insect, Environment environment) {
 		super(groupID, agressivity, environment);
@@ -29,95 +25,83 @@ public class AntManager extends BugManager {
 		updateStats();
 		discoverPOI();
 
-		int hunger = insect.getCurrentHunger();
-		int thirst = insect.getCurrentThirst();
+		switch (state) {
+		case WANDERING:
+			wander();
+			break;
 
-		int maxHunger = insect.getMaxHunger();
-		int maxThirst = insect.getMaxThirst();
+		case IDLE:
+			idle();
+			break;
 
-		if (waiting) {
-			if (waitTime > 0) {
-				waitTime--;
-			} else {
-				waiting = false;
-			}
-		} else {
+		case HUNGRY:
+			goEat();
+			break;
 
-			if (((thirst / maxThirst) <= SimuPara.INSECT_THIRST_THRESHOLD) && !thirsty) {
-				this.goDrink();
-				thirsty = true;
-			}
+		case THIRSTY:
+			goDrink();
+			break;
 
-			else if (((hunger / maxHunger) <= SimuPara.INSECT_HUNGER_THRESHOLD) && !hungry) {
-				this.goEat();
-				hungry = true;
-			} else {
-				wandering = true;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + state);
+		}
+	}
 
-			}
+	private void wander() {
+		AntManagerState newState = AntManagerState.WANDERING;
 
-			if (insect.getDestinationPosition() == insect.getCurrentPosition())
+		if (isAtDestination()) {
 
-			{
-				if (!thirsty && !hungry && !waiting) {
-					waiting = true;
-					waitTime = (int) (Math.random() * 200);
-				}
-				if (wandering) {
-					// test si l'insecte a trouvé un POI valide et met le wandering a false
+			waitTime = (int) Math.random() * 100 + 50;
+			newState = AntManagerState.IDLE;
 
-					insect.setDestinationPosition(new Coordinate(Math.random() * SimuPara.SIMULATION_MAP_SIZE,
-							Math.random() * SimuPara.SIMULATION_MAP_SIZE));
-				} else if (thirsty) {
-					drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
+		}
 
-				} else if (hungry) {
-					eat(SimuPara.INSECT_DEFAULT_DRINK_QTT);
-				}
-
-			}
+		else {
 			super.moveInsect(insect);
 		}
 
-	}
-
-	public void update2() {
-		updateStats();
-		discoverPOI();
-		readState();
-	}
-
-	private void readState() {
-		int hunger = insect.getCurrentHunger();
-		int thirst = insect.getCurrentThirst();
-
-		int maxHunger = insect.getMaxHunger();
-		int maxThirst = insect.getMaxThirst();
-		idle();
-		if (!waiting) {
-
+		if (insect.isThirsty()) {
+			newState = AntManagerState.THIRSTY;
 		}
 
-		if (((thirst / maxThirst) <= SimuPara.INSECT_THIRST_THRESHOLD) && !thirsty) {
-			this.goDrink();
-			thirsty = true;
+		else if (insect.isHungry()) {
+			newState = AntManagerState.HUNGRY;
 		}
 
-		else if (((hunger / maxHunger) <= SimuPara.INSECT_HUNGER_THRESHOLD) && !hungry) {
-			this.goEat();
-			hungry = true;
-		} else {
-			wandering = true;
+		setState(newState);
 
-		}
 	}
 
 	private void idle() {
+		AntManagerState newState = AntManagerState.IDLE;
+
 		if (waitTime > 0) {
 			waitTime--;
-		} else {
-			waiting = false;
+
+	private void goDrink() {
+		AntManagerState newState = AntManagerState.THIRSTY;
+		if (canDrink()) {
+			drink(10);
+			// TODO 10 -> const
+		} else if (waterAvailable()) {
+			// TODO
+		} else if (insect.getCurrentThirst() / insect.getMaxThirst() <= 0.9) {
+			// TODO 0,9 -> constant
+			newState = AntManagerState.WANDERING;
 		}
+
+		setState(newState);
+	}
+
+	private boolean waterAvailable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private boolean canDrink() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	public void eat(int quantity) {
@@ -175,37 +159,6 @@ public class AntManager extends BugManager {
 
 	}
 
-	private void goEat() {
-		boolean nofood = true;
-		for (NaturalResource ressource : insect.getPoi()) {
-			if (ressource.getType() == Constants.FOOD) {
-				nofood = false;
-				insect.setDestinationPosition(ressource.getCoordinates());
-			}
-			if (nofood) {
-				wandering = true;
-
-			}
-
-		}
-
-	}
-
-	private void goDrink() {
-		boolean noWater = true;
-		for (NaturalResource ressource : insect.getPoi()) {
-			if (ressource.getType() == Constants.WATER) {
-				noWater = false;
-				insect.setDestinationPosition(ressource.getCoordinates());
-			}
-			if (noWater) {
-				wandering = true;
-
-			}
-
-		}
-	}
-
 	@Override
 	public Insect getInsect() {
 		return insect;
@@ -219,12 +172,21 @@ public class AntManager extends BugManager {
 		this.waitTime = waitTime;
 	}
 
-	public boolean isWaiting() {
-		return waiting;
+	public AntManagerState getState() {
+		return state;
 	}
 
-	public void setWaiting(boolean waiting) {
-		this.waiting = waiting;
+	public void setState(AntManagerState state) {
+		this.state = state;
+	}
+
+	public boolean isAtDestination() {
+
+		if (insect.getDestinationPosition() == insect.getCurrentPosition()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

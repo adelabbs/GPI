@@ -14,4 +14,6 @@ public class Ant extends Insect {
 		return visitor.visit(this);
 	}
 
+	
+
 }
