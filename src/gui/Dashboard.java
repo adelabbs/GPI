@@ -151,9 +151,7 @@ public class Dashboard extends JPanel {
 		g2.drawString("Resources", 1040, 260);
 		g2.drawRect(1030, 240, 130, 25);
 		//Print resources bar count & bar
-		
-		waterQuantity = 300;
-		
+				
 		double ratioFd = flowerQuantity / (double) maxFlower;
 		int ratioF = (int) (ratioFd * 120);
 		
