@@ -20,7 +20,7 @@ public class InsectGUI extends JFrame implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(1100, 1100);
-	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(1000, 1000);
+	private static final Dimension IDEAL_DASHBOARD_DIMENSION = new Dimension(1200, 1000);
 
 	private Dashboard dashboard;
 
@@ -55,9 +55,6 @@ public class InsectGUI extends JFrame implements Runnable {
 		dashboard.setSimulation(simulation);
 		dashboard.revalidate();
 		dashboard.repaint();
-		if(simulation.getInsects().isEmpty()) {
-			simulation.setState(SimulationState.STOP);
-		}
 	}
 
 	@Override

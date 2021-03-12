@@ -119,6 +119,10 @@ public class Simulation {
 			}
 		}
 		removeAllDeadInsects();
+		
+		if(getInsects().isEmpty()) {
+			setState(SimulationState.STOP);
+		}
 	}
 
 	public void add(Insect insect) {

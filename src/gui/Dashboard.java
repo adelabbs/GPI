@@ -33,7 +33,13 @@ public class Dashboard extends JPanel {
 	private Simulation simulation;
 	Graphics2D g2;
 	private boolean end = false;
-
+	
+	//Lateral bar
+	private int nbIAnts = 0;
+	private int nbIBees = 0;
+	private int nbISpiders = 0;
+	private boolean setMax = false;
+	
 	private static boolean DEBUG = false;
 
 	public Dashboard(Simulation simulation) {
@@ -53,6 +59,8 @@ public class Dashboard extends JPanel {
 		printTiles(g2);
 		printResources(g2);
 		printInsects(g2);
+		printLateralBar(g2);
+
 		if (DEBUG) {
 			printDebugGrid(g2);
 		}
@@ -62,6 +70,55 @@ public class Dashboard extends JPanel {
 	}
 
 	private void printMap(Graphics2D g2) {
+	}
+	
+	
+	private void getMaxInsectsOnField() {
+		for(Insect i : simulation.getInsects()) {
+			if(i.getType().equals("Ant")) {
+				nbIAnts++;
+			} else if(i.getType().equals("Bee")) {
+				nbIBees++;
+			} else if(i.getType().equals("Spider")) {
+				nbISpiders++;
+			}
+		}
+	}
+	
+	private void printLateralBar(Graphics2D g2) {
+		int height = getHeight();
+		
+		int nbAnts = 0;
+		int nbBees = 0;
+		int nbSpiders = 0;
+		
+		
+		if(!setMax) {
+			getMaxInsectsOnField();
+			setMax = true;
+		}
+				
+		for(Insect i : simulation.getInsects()) {
+			if(i.getType().equals("Ant")) {
+				nbAnts++;
+			} else if(i.getType().equals("Bee")) {
+				nbBees++;
+			} else if(i.getType().equals("Spider")) {
+				nbSpiders++;
+			}
+		}
+			
+		//Lateral Bar Border
+		g2.fillRect(1000,1,1000,height);
+		//Scoreboard panel
+		g2.setFont(new Font("Lancer", Font.BOLD, 20));
+		g2.setColor(Color.RED);
+		g2.drawString("Scoreboard", 1040, 50);
+		g2.drawRect(1030, 30, 130, 25);
+		//Print insects number
+		g2.drawString("Ant(s) : " + String.valueOf(nbAnts) + "/" + String.valueOf(nbIAnts), 1040, 100);
+		g2.drawString("Bee(s) : " + String.valueOf(nbBees) + "/" + String.valueOf(nbIBees), 1040, 140);
+		g2.drawString("Spider(s) : " + String.valueOf(nbSpiders) + "/" + String.valueOf(nbISpiders), 1040, 180);
 	}
 
 	private void printInsects(Graphics2D g2) {
@@ -119,12 +176,9 @@ public class Dashboard extends JPanel {
 	}
 
 	private void printEndMessage(Graphics2D g2) {
-		int width = getWidth();
-		int height = getHeight();
-		
-		g2.setFont(new Font("Segoe Script", Font.BOLD, 40));
+		g2.setFont(new Font("Lancer", Font.BOLD, 40));
 		g2.setPaint(Color.RED);
-		g2.drawString("FIN DE LA SIMULATION !",50,100);
+		g2.drawString("FIN DE LA SIMULATION !",300,300);
 	}
 	
 	private void loadTiles() {
