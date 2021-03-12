@@ -175,6 +175,7 @@ public class Dashboard extends JPanel {
 
 	
 	private void printInsects(Graphics2D g2) {
+		// TODO peut produire des java.util.ConcurrentModificationException
 		for (Insect insect : simulation.getInsects()) {
 			PaintVisitor paintVisitor = new PaintVisitor(g2);
 			insect.accept(paintVisitor);
