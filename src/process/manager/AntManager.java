@@ -53,25 +53,24 @@ public class AntManager extends BugManager {
 
 		if (insect.getDestinationPosition() == null) {
 			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
-		}
-
-		if (isAtDestination()) {
-
+		} else if (isAtDestination()) {
 			waitTime = (int) Math.random() * 100 + 50;
 			newState = AntManagerState.IDLE;
+
+			if (insect.isThirsty()) {
+				newState = AntManagerState.THIRSTY;
+			}
+
+			else if (insect.isHungry()) {
+				newState = AntManagerState.HUNGRY;
+			} else {
+				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+			}
 
 		}
 
 		else {
 			moveInsect(insect);
-		}
-
-		if (insect.isThirsty()) {
-			newState = AntManagerState.THIRSTY;
-		}
-
-		else if (insect.isHungry()) {
-			newState = AntManagerState.HUNGRY;
 		}
 
 		setState(newState);
@@ -95,24 +94,38 @@ public class AntManager extends BugManager {
 
 		AntManagerState newState = AntManagerState.THIRSTY;
 
-		if (insect.getCurrentThirst() / insect.getMaxThirst() >= SimuPara.INSECT_DEFAULT_DRINK_UPPER_THRESHOLD) {
+		if (insect.getCurrentThirst()
+				/ (double) insect.getMaxThirst() >= SimuPara.INSECT_DEFAULT_DRINK_UPPER_THRESHOLD) {
 			newState = AntManagerState.WANDERING;
+			setDestinationResource(null);
+			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
 
 		} else if (canConsume(Constants.WATER)) {
-			drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
+			if (waitTime <= 0) {
+				waitTime = SimuPara.CONSUMING_TIME_INTERVAL;
+				drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
+			} else {
+				waitTime--;
+			}
+
+		} else if (getDestinationResource() == null) {
+			NaturalResource newResource = findNewResource(Constants.WATER);
+			if (newResource != null) {
+
+				insect.setDestinationPosition(newResource.getCoordinates());
+
+				setDestinationResource(newResource);
+			} else {
+				newState = AntManagerState.WANDERING;
+				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+
+			}
 
 		} else if (!isAtDestination()) {
 			moveInsect(insect);
 
 		} else {
-			NaturalResource newResource = findNewResource(Constants.WATER);
-			if (newResource != null) {
-				insect.setDestinationPosition(newResource.getCoordinates());
-				setDestinationResource(newResource);
-			} else {
-				newState = AntManagerState.WANDERING;
-				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
-			}
+
 		}
 
 		setState(newState);
@@ -122,24 +135,39 @@ public class AntManager extends BugManager {
 
 		AntManagerState newState = AntManagerState.HUNGRY;
 
-		if (insect.getCurrentHunger() / insect.getMaxHunger() >= SimuPara.INSECT_DEFAULT_EAT_UPPER_THRESHOLD) {
+		if (insect.getCurrentHunger() / (double) insect.getMaxHunger() >= SimuPara.INSECT_DEFAULT_EAT_UPPER_THRESHOLD) {
 			newState = AntManagerState.WANDERING;
+			setDestinationResource(null);
+			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
 
-		} else if (canConsume(Constants.FOOD)) {
-			drink(SimuPara.INSECT_DEFAULT_EAT_QTT);
+		} else if (canConsume(Constants.FLOWER)) {
+			// TODO change to Constants.FOOD when implemented
+			if (waitTime <= 0) {
+				waitTime = SimuPara.CONSUMING_TIME_INTERVAL;
+				eat(SimuPara.INSECT_DEFAULT_EAT_QTT);
+			} else {
+				waitTime--;
+			}
 
-		} else if (getDestinationResource() != null) {
-			super.moveInsect(insect);
-
-		} else {
-			NaturalResource newResource = findNewResource(Constants.FOOD);
+		} else if (getDestinationResource() == null) {
+			NaturalResource newResource = findNewResource(Constants.FLOWER);
+			// TODO change to Constants.FOOD when implemented
 			if (newResource != null) {
-				setDestinationResource(newResource);
+
 				insect.setDestinationPosition(newResource.getCoordinates());
+
+				setDestinationResource(newResource);
 			} else {
 				newState = AntManagerState.WANDERING;
 				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+
 			}
+
+		} else if (!isAtDestination()) {
+			moveInsect(insect);
+
+		} else {
+
 		}
 
 		setState(newState);
@@ -155,8 +183,7 @@ public class AntManager extends BugManager {
 
 			TileCoordinate resourcePosition = resource.getCoordinates();
 
-			if (resourcePosition.getAbscissa() == x && resourcePosition.getOrdinate() == y
-					&& getDestinationResource().getQuantity() > 0) {
+			if (resourcePosition.getAbscissa() == x && resourcePosition.getOrdinate() == y) {
 				return true;
 			}
 		}
@@ -194,7 +221,7 @@ public class AntManager extends BugManager {
 		}
 
 		int currentThirst = insect.getCurrentThirst();
-		int maxThirst = insect.getMaxThirst();
+		int maxThirst = insect.getMaxHunger();
 		int calculatedThirst = currentThirst + quantity;
 
 		if (calculatedThirst > maxThirst) {

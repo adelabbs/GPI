@@ -6,8 +6,6 @@ public class NaturalResource {
 	private int quantity;
 	private TileCoordinate coordinates;
 
-	public static final String FLOWER = "flower";
-	public static final String WATER = "water";
 
 	public NaturalResource(String type, Integer integer, int quantity, TileCoordinate coordinates) {
 		this.type = type;

@@ -147,16 +147,16 @@ public abstract class Insect {
 	public void setDestinationPosition(TileCoordinate destinationTile) {
 		Coordinate destinationPosition = new Coordinate(
 				destinationTile.getAbscissa() * SimuPara.SCALE + SimuPara.INSECT_DEFAULT_SIZE / 2,
-				destinationTile.getAbscissa() * SimuPara.SCALE + SimuPara.INSECT_DEFAULT_SIZE / 2);
+				destinationTile.getOrdinate() * SimuPara.SCALE + SimuPara.INSECT_DEFAULT_SIZE / 2);
 		this.destinationPosition = destinationPosition;
 	}
 	
 	public boolean isThirsty() {
-		return (currentThirst / maxThirst) <= SimuPara.INSECT_THIRST_THRESHOLD;
+		return (currentThirst / (double) maxThirst) <= SimuPara.INSECT_THIRST_THRESHOLD;
 	}
 	
 	public boolean isHungry() {
-		return (currentHunger / maxHunger) <= SimuPara.INSECT_HUNGER_THRESHOLD;
+		return (currentHunger / (double) maxHunger) <= SimuPara.INSECT_HUNGER_THRESHOLD;
 	}
 
 	public String getType() {

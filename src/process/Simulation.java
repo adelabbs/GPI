@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import data.Ant;
 import data.Bee;
+import data.Constants;
 import data.Coordinate;
 import data.Environment;
 import data.Insect;
@@ -84,11 +85,11 @@ public class Simulation {
 	}
 
 	private void createResources() {
-		NaturalResource flower = new NaturalResource(NaturalResource.FLOWER, getNextResourceId(), 300,
+		NaturalResource flower = new NaturalResource(Constants.FLOWER, getNextResourceId(), 300,
 				new TileCoordinate(0, 0));
 		environment.addResource(flower);
 
-		NaturalResource water = new NaturalResource(NaturalResource.WATER, getNextResourceId(), 300,
+		NaturalResource water = new NaturalResource(Constants.WATER, getNextResourceId(), 300,
 				new TileCoordinate(10, 10));
 		environment.addResource(water);
 
@@ -102,7 +103,7 @@ public class Simulation {
 		while (i < 10) {
 			int x = (int) (0 + Math.random() * ((19 - 0)));
 			int y = (int) (0 + Math.random() * ((19 - 0)));
-			NaturalResource water = new NaturalResource(NaturalResource.WATER, getNextResourceId(), 300,
+			NaturalResource water = new NaturalResource(Constants.WATER, getNextResourceId(), 300,
 					new TileCoordinate(x, y));
 			if (!environment.getResources().contains(water)) {
 				environment.addResource(water);
