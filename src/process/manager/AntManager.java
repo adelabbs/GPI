@@ -98,7 +98,7 @@ public class AntManager extends BugManager {
 		if (insect.getCurrentThirst() / insect.getMaxThirst() >= SimuPara.INSECT_DEFAULT_DRINK_UPPER_THRESHOLD) {
 			newState = AntManagerState.WANDERING;
 
-		} else if (canConsume()) {
+		} else if (canConsume(Constants.WATER)) {
 			drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
 
 		} else if (!isAtDestination()) {
@@ -125,7 +125,7 @@ public class AntManager extends BugManager {
 		if (insect.getCurrentHunger() / insect.getMaxHunger() >= SimuPara.INSECT_DEFAULT_EAT_UPPER_THRESHOLD) {
 			newState = AntManagerState.WANDERING;
 
-		} else if (canConsume()) {
+		} else if (canConsume(Constants.FOOD)) {
 			drink(SimuPara.INSECT_DEFAULT_EAT_QTT);
 
 		} else if (getDestinationResource() != null) {
@@ -145,31 +145,30 @@ public class AntManager extends BugManager {
 		setState(newState);
 	}
 
-	private boolean canConsume() {
-		
-		NaturalResource resource  = getDestinationResource();
-		if(resource!=null) {
-		
+	private boolean canConsume(String type) {
 
-		int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
-		int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
+		NaturalResource resource = getDestinationResource();
+		if (resource != null && resource.getType().equals(type)) {
 
-		TileCoordinate resourcePosition = resource.getCoordinates();
+			int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
+			int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
 
-		if (resourcePosition.getAbscissa() == x && resourcePosition.getOrdinate() == y
-				&& getDestinationResource().getQuantity() > 0) {
-			return true;
-		}
+			TileCoordinate resourcePosition = resource.getCoordinates();
+
+			if (resourcePosition.getAbscissa() == x && resourcePosition.getOrdinate() == y
+					&& getDestinationResource().getQuantity() > 0) {
+				return true;
+			}
 		}
 		return false;
 	}
 
 	public void eat(int quantity) {
 		int ressourceQuantity = getDestinationResource().getQuantity();
-		if(ressourceQuantity<quantity) {
+		if (ressourceQuantity < quantity) {
 			quantity = ressourceQuantity;
 		}
-		
+
 		int currentHunger = insect.getCurrentHunger();
 		int maxHunger = insect.getMaxHunger();
 		int calculatedHunger = currentHunger + quantity;
@@ -181,15 +180,15 @@ public class AntManager extends BugManager {
 			insect.setCurrentHunger(currentHunger + quantity);
 		}
 
-		getDestinationResource().setQuantity(ressourceQuantity-quantity);
-		if(getDestinationResource().getQuantity()<=0) {
+		getDestinationResource().setQuantity(ressourceQuantity - quantity);
+		if (getDestinationResource().getQuantity() <= 0) {
 			insect.remove(getDestinationResource());
 			setDestinationResource(null);
 		}
 	}
 
 	public void drink(int quantity) {
-		//TODO copy paste eat()
+		// TODO copy paste eat()
 	}
 
 	@Override
