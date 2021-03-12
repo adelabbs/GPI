@@ -146,15 +146,20 @@ public class AntManager extends BugManager {
 	}
 
 	private boolean canConsume() {
+		
+		NaturalResource resource  = getDestinationResource();
+		if(resource!=null) {
+		
 
 		int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
 		int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
 
-		TileCoordinate resourcePosition = getDestinationResource().getCoordinates();
+		TileCoordinate resourcePosition = resource.getCoordinates();
 
 		if (resourcePosition.getAbscissa() == x && resourcePosition.getOrdinate() == y
 				&& getDestinationResource().getQuantity() > 0) {
 			return true;
+		}
 		}
 		return false;
 	}
