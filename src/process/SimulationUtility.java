@@ -19,5 +19,9 @@ public class SimulationUtility {
 		int convertedY = ((int) position.getOrdinate()) / SimuPara.SCALE;
 		return convertedX == tilePosition.getAbscissa() && convertedY == tilePosition.getOrdinate();
 	}
+	
+	public static Coordinate getRandomCoordinate() {
+		return new Coordinate(Math.random()*SimuPara.SIMULATION_MAP_SIZE, Math.random()*SimuPara.SIMULATION_MAP_SIZE);
+	}
 
 }

@@ -2,6 +2,7 @@ package process.manager;
 
 import java.util.ArrayList;
 
+import data.Constants;
 import data.Coordinate;
 import data.Environment;
 import data.Insect;
@@ -15,6 +16,8 @@ public abstract class BugManager {
 	private String agressivity = "peaceful";
 	private int tileX = 0;
 	private int tileY = 0;
+	
+	private NaturalResource destinationResource = null;
 
 	private int currentTick = 0;
 	private int updateInterval = SimuPara.TIME_INTERVAL;
@@ -162,7 +165,8 @@ public abstract class BugManager {
 		// convertedY);
 		for (NaturalResource resource : resources) {
 			TileCoordinate resourcePosition = resource.getCoordinates();
-			if (resourcePosition.getAbscissa() == convertedX && resourcePosition.getOrdinate() == convertedY) {
+			if (resourcePosition.getAbscissa() == convertedX && resourcePosition.getOrdinate() == convertedY
+					&& resource.getQuantity() > 0) {
 				getInsect().add(resource);
 			}
 		}
@@ -177,6 +181,17 @@ public abstract class BugManager {
 		return Math.sqrt((Math.pow(position1.getAbscissa() - position2.getAbscissa(), 2)
 				+ (Math.pow(position1.getOrdinate() - position2.getOrdinate(), 2))));
 	}
+	
+	public NaturalResource findNewResource(String resourceType) {
+		NaturalResource newResource = null;
+		for(NaturalResource resource : getInsect().getPoi()) {
+			if(resource.getType().equals(resourceType)) {
+				return resource;
+			}
+		}
+		return newResource;
+	}
+
 
 	public int getTileY() {
 		return tileY;
@@ -209,5 +224,15 @@ public abstract class BugManager {
 	public Environment getEnvironment() {
 		return environment;
 	}
+
+	public NaturalResource getDestinationResource() {
+		return destinationResource;
+	}
+
+	public void setDestinationResource(NaturalResource destinationResource) {
+		this.destinationResource = destinationResource;
+	}
+	
+	
 
 }
