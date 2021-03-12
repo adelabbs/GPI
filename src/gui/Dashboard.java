@@ -169,7 +169,6 @@ public class Dashboard extends JPanel {
 		g2.drawString("Water : " + String.valueOf(waterQuantity) + "/" + String.valueOf(maxWater), 1010, 370);
 		g2.drawRect(1030, 380, 120, 20);
 		g2.fillRect(1030, 380, ratioW, 20);
-		System.out.println(ratioF);
 		
 	}
 
