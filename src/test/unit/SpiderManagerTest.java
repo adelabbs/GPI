@@ -74,7 +74,6 @@ public class SpiderManagerTest {
 				dmin = dEachInsect;
 			}
 		}
-		
 		assertEquals(ant2,insect);
 	}
 	
