@@ -13,6 +13,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+
 import data.Insect;
 import data.NaturalResource;
 import process.Simulation;
@@ -35,10 +36,15 @@ public class Dashboard extends JPanel {
 	private boolean end = false;
 	
 	//Lateral bar
+	//Insects count
 	private int nbIAnts = 0;
 	private int nbIBees = 0;
 	private int nbISpiders = 0;
 	private boolean setMax = false;
+	//Resources count
+	private int maxWater = 0;
+	private int maxFlower = 0;
+
 	
 	private static boolean DEBUG = false;
 
@@ -85,16 +91,30 @@ public class Dashboard extends JPanel {
 		}
 	}
 	
+	private void getMaxResourcesOnField() {
+		for(NaturalResource re : simulation.getEnvironment().getResources()) {
+			if(re.getType().equals("flower")) {
+				maxFlower += re.getQuantity();
+			} else {
+				maxWater += re.getQuantity();
+			}
+		}
+	}
+	
 	private void printLateralBar(Graphics2D g2) {
 		int height = getHeight();
 		
 		int nbAnts = 0;
 		int nbBees = 0;
 		int nbSpiders = 0;
+		int waterQuantity = 0;
+		int flowerQuantity = 0;
+		
 		
 		
 		if(!setMax) {
 			getMaxInsectsOnField();
+			getMaxResourcesOnField();
 			setMax = true;
 		}
 				
@@ -119,8 +139,44 @@ public class Dashboard extends JPanel {
 		g2.drawString("Ant(s) : " + String.valueOf(nbAnts) + "/" + String.valueOf(nbIAnts), 1040, 100);
 		g2.drawString("Bee(s) : " + String.valueOf(nbBees) + "/" + String.valueOf(nbIBees), 1040, 140);
 		g2.drawString("Spider(s) : " + String.valueOf(nbSpiders) + "/" + String.valueOf(nbISpiders), 1040, 180);
+		
+		//Resources on field
+		for(NaturalResource re : simulation.getEnvironment().getResources()) {
+			if(re.getType().equals("flower")) {
+				flowerQuantity += re.getQuantity();
+			} else {
+				waterQuantity += re.getQuantity();
+			}
+		}
+		g2.drawString("Resources", 1040, 260);
+		g2.drawRect(1030, 240, 130, 25);
+		//Print resources bar count & bar
+		
+		waterQuantity = 300;
+		
+		double ratioFd = flowerQuantity / (double) maxFlower;
+		int ratioF = (int) (ratioFd * 120);
+		
+		double ratioWd = waterQuantity / (double) maxWater;
+		int ratioW = (int) (ratioWd * 120);
+		
+		
+		
+		//Food
+		g2.drawString("Food : " + String.valueOf(flowerQuantity) + "/" + String.valueOf(maxFlower), 1010, 300);
+		g2.drawRect(1030, 320, 120, 20);
+		g2.fillRect(1030, 320, ratioF, 20);
+		
+		//Water
+		g2.drawString("Water : " + String.valueOf(waterQuantity) + "/" + String.valueOf(maxWater), 1010, 370);
+		g2.drawRect(1030, 380, 120, 20);
+		g2.fillRect(1030, 380, ratioW, 20);
+		System.out.println(ratioF);
+		
 	}
 
+
+	
 	private void printInsects(Graphics2D g2) {
 		for (Insect insect : simulation.getInsects()) {
 			PaintVisitor paintVisitor = new PaintVisitor(g2);
