@@ -188,7 +188,28 @@ public class AntManager extends BugManager {
 	}
 
 	public void drink(int quantity) {
-		// TODO copy paste eat()
+		int ressourceQuantity = getDestinationResource().getQuantity();
+		if (ressourceQuantity < quantity) {
+			quantity = ressourceQuantity;
+		}
+
+		int currentThirst = insect.getCurrentThirst();
+		int maxThirst = insect.getMaxThirst();
+		int calculatedThirst = currentThirst + quantity;
+
+		if (calculatedThirst > maxThirst) {
+			insect.setCurrentThirst(insect.getMaxThirst());
+			quantity = calculatedThirst - maxThirst;
+		} else {
+			insect.setCurrentThirst(currentThirst + quantity);
+		}
+
+		getDestinationResource().setQuantity(ressourceQuantity - quantity);
+		if (getDestinationResource().getQuantity() <= 0) {
+			insect.remove(getDestinationResource());
+			setDestinationResource(null);
+		}
+
 	}
 
 	@Override
