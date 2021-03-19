@@ -19,18 +19,18 @@ public class SpiderManager extends BugManager {
 	private SpiderManagerState state = SpiderManagerState.WANDERING;
 	private int range = 5; // 5 tiles
 
-	public SpiderManager(String groupID, String agressivity, Environment environment, Spider spider) {
+	public SpiderManager(String groupID, String agressivity, Spider spider, Environment environment) {
 		super(groupID, agressivity, environment);
 		this.insect = spider;
 	}
-	
+
 	@Override
 	public void update() {
 		updateStats();
 		discoverPOI();
 		discoverPrey();
-		
-		//TODO case where the spider attack
+
+		// TODO case where the spider attack
 		switch (state) {
 		case WANDERING:
 			wander();
@@ -52,57 +52,57 @@ public class SpiderManager extends BugManager {
 			throw new IllegalArgumentException("Unexpected value: " + state);
 		}
 	}
-	
+
 	private void discoverPrey() {
 		ArrayList<Insect> insects = getEnvironment().getInsects();
 		Coordinate insectPosition = getInsect().getCurrentPosition();
-		
-		double rangeC = (double)range*50;
+
+		double rangeC = (double) range * 50;
 		double distance;
-		
+
 		for (Insect insect : insects) {
-			distance = distance(insectPosition,insect.getCurrentPosition());
-			if(distance < rangeC) {
+			distance = distance(insectPosition, insect.getCurrentPosition());
+			if (distance < rangeC) {
 				this.insect.addPrey(insect);
-			}else {
-				// this function remove the insect only if he exist in 
-				//arrayList
+			} else {
+				// this function remove the insect only if he exist in
+				// arrayList
 				this.insect.remove(insect);
 			}
 		}
 	}
-	
+
 	private Insect selectedPrey() {
 		ArrayList<Insect> insects = this.insect.getPrey();
 		Coordinate insectPosition = getInsect().getCurrentPosition();
 		Insect prey = null;
-		
-		double dmin = 1000; // initialize the minimum 
+
+		double dmin = 1000; // initialize the minimum
 		double distance;
-		
+
 		for (Insect insect : insects) {
-			distance = distance(insectPosition,insect.getCurrentPosition());
-			if(distance< dmin) {
+			distance = distance(insectPosition, insect.getCurrentPosition());
+			if (distance < dmin) {
 				dmin = distance;
 				prey = insect;
 			}
 		}
 		return prey;
 	}
-	
+
 	private void movetoPrey(Insect prey) {
 		Coordinate preyPosition = prey.getCurrentPosition();
 		getInsect().setDestinationPosition(preyPosition);
 	}
-	
+
 	public void attackPrey(Insect prey) {
-		//if the insect is arrived t destination
-		if(getInsect().getCurrentPosition() == getInsect().getDestinationPosition()) {
-			prey.setCurrentHealth(prey.getCurrentHealth()-1);
-			
-			//the spider eat the prey 
-			if(getInsect().getCurrentHunger() < getInsect().getMaxHunger()) {
-				getInsect().setCurrentHunger(getInsect().getCurrentHunger()+1);
+		// if the insect is arrived t destination
+		if (getInsect().getCurrentPosition() == getInsect().getDestinationPosition()) {
+			prey.setCurrentHealth(prey.getCurrentHealth() - 1);
+
+			// the spider eat the prey
+			if (getInsect().getCurrentHunger() < getInsect().getMaxHunger()) {
+				getInsect().setCurrentHunger(getInsect().getCurrentHunger() + 1);
 			}
 		}
 	}
@@ -133,7 +133,6 @@ public class SpiderManager extends BugManager {
 		}
 
 		setState(newState);
-
 
 	}
 
@@ -184,7 +183,7 @@ public class SpiderManager extends BugManager {
 			moveInsect(insect);
 
 		} else {
-			//?
+			// ?
 		}
 
 		setState(newState);
@@ -236,10 +235,10 @@ public class SpiderManager extends BugManager {
 
 	public void eat(int quantity) {
 		int ressourceQuantity = getDestinationResource().getQuantity();
-		if(ressourceQuantity<quantity) {
+		if (ressourceQuantity < quantity) {
 			quantity = ressourceQuantity;
 		}
-		
+
 		int currentHunger = insect.getCurrentHunger();
 		int maxHunger = insect.getMaxHunger();
 		int calculatedHunger = currentHunger + quantity;
@@ -251,8 +250,8 @@ public class SpiderManager extends BugManager {
 			insect.setCurrentHunger(currentHunger + quantity);
 		}
 
-		getDestinationResource().setQuantity(ressourceQuantity-quantity);
-		if(getDestinationResource().getQuantity()<=0) {
+		getDestinationResource().setQuantity(ressourceQuantity - quantity);
+		if (getDestinationResource().getQuantity() <= 0) {
 			insect.remove(getDestinationResource());
 			setDestinationResource(null);
 		}

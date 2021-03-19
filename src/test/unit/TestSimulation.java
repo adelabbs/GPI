@@ -17,7 +17,7 @@ public class TestSimulation {
 	public void testAddInsect() {
 		Coordinate coordinate = new Coordinate(1, 1);
 		Ant a = new Ant(345555, coordinate, 10, 10, 10, 10);
-		SimulationEntry SE = new SimulationEntry(50, 0);
+		SimulationEntry SE = new SimulationEntry();
 		Simulation S = new Simulation(SE);
 		int taille = S.getInsects().size();
 		S.add(a);
@@ -30,7 +30,7 @@ public class TestSimulation {
 		Coordinate coordinate = new Coordinate(1, 1);
 		Ant a = new Ant(345555, coordinate, 10, 10, 10, 10);
 		Ant b = new Ant(345555, coordinate, 10, 10, 10, 10);
-		SimulationEntry SE = new SimulationEntry(50, 0);
+		SimulationEntry SE = new SimulationEntry();
 		Simulation S = new Simulation(SE);
 
 		S.add(a);
@@ -45,7 +45,7 @@ public class TestSimulation {
 		Coordinate coordinate = new Coordinate(1, 1);
 		Ant a = new Ant(345555, coordinate, 10, 10, 10, 10);
 		Ant b = new Ant(345555, coordinate, 10, 10, 10, 10);
-		SimulationEntry SE = new SimulationEntry(50, 0);
+		SimulationEntry SE = new SimulationEntry();
 		Simulation S = new Simulation(SE);
 		S.add(a);
 		S.add(b);
@@ -58,7 +58,7 @@ public class TestSimulation {
 	@Test
 	public void testIsRunning() {
 
-		SimulationEntry SE = new SimulationEntry(50, 0);
+		SimulationEntry SE = new SimulationEntry();
 		Simulation S = new Simulation(SE);
 		S.simulate();
 		assertEquals(S.getState() == SimulationState.RUNNING, S.isRunning());

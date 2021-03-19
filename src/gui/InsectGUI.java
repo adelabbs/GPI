@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import process.Simulation;
 import process.SimulationEntry;
 import process.SimulationUtility;
-import test.manual.SimuPara;
 
 /*
  * Main GUI class for simulation
@@ -29,8 +28,7 @@ public class InsectGUI extends JFrame implements Runnable {
 
 	public InsectGUI() {
 		super("BugStudio");
-		SimulationEntry simEntry = new SimulationEntry(SimuPara.SIMULATION_TILES,
-				SimuPara.SIMULATION_INSECT_COUNT_PER_TYPE);
+		SimulationEntry simEntry = new SimulationEntry();
 		simulation = new Simulation(simEntry);
 		dashboard = new Dashboard(simulation);
 		init();
@@ -59,7 +57,6 @@ public class InsectGUI extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		while (!stop) {
-			
 
 			if (simulation.isReady()) {
 				simulation.launch();

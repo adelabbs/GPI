@@ -3,19 +3,14 @@ package process;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.Ant;
-import data.Bee;
 import data.Constants;
 import data.Coordinate;
 import data.Environment;
 import data.Insect;
 import data.NaturalResource;
-import data.Spider;
 import data.TileCoordinate;
-import process.manager.AntManager;
-import process.manager.BeeManager;
+
 import process.manager.BugManager;
-import process.manager.SpiderManager;
 import test.manual.SimuPara;
 
 /**
@@ -25,12 +20,10 @@ import test.manual.SimuPara;
  *
  */
 public class Simulation {
-	private static final boolean DEBUG = true;
+	// private static final boolean DEBUG = false;
 	private SimulationEntry simulationEntry;
 	private Environment environment;
 	private SimulationState state;
-	private Integer currentInsectId = 0;
-	private Integer currentResourceId = 0;
 
 	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
 	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
@@ -52,9 +45,9 @@ public class Simulation {
 
 		environment = Environment.getInstance();
 		environment.setMap(map);
-		int insectCount = simulationEntry.getInsectCount();
-		createInsects(insectCount);
-		createResources();
+		createInsects(simulationEntry.getAntCount(), simulationEntry.getBeeCount(), simulationEntry.getSpiderCount());
+		createResources(simulationEntry.getFlowerCount(), simulationEntry.getWaterCount(),
+				simulationEntry.getFoodCount());
 		setState(SimulationState.READY);
 	}
 
@@ -62,53 +55,69 @@ public class Simulation {
 		return bugManagersByIds;
 	}
 
-	private void createInsects(int insectCount) {
+	private void createInsects(int antCount, int beeCount, int spiderCount) {
 		ArrayList<Insect> insects = new ArrayList<Insect>();
-		for (int i = 1; i < insectCount + 1; i++) {
-			Ant ant = new Ant(getNextInsectId(), new Coordinate(15 * i, 15 * i), SimuPara.MAX_HEALTH,
-					SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, i);
-			Bee bee = new Bee(getNextInsectId(), new Coordinate(40 * i, 60 * i), SimuPara.MAX_HEALTH,
-					SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, i);
-			BugManager antManager = new AntManager("1", "peaceful", ant, environment);
-			BugManager beeManager = new BeeManager("2", "peaceful", bee, environment);
-			insects.add(bee);
-			insects.add(ant);
-			bugManagersByIds.put(bee.getId(), beeManager);
-			bugManagersByIds.put(ant.getId(), antManager);
-		}
-		Spider spider = new Spider(getNextInsectId(), new Coordinate(2 * SimuPara.SCALE, 16 * SimuPara.SCALE),
-				SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, 1);
-		BugManager spiderManager = new SpiderManager("3", "agressive", environment, spider);
-		insects.add(spider);
-		bugManagersByIds.put(spider.getId(), spiderManager);
+		createInsects(Constants.ANT, antCount, insects);
+		createInsects(Constants.BEE, beeCount, insects);
+		createInsects(Constants.SPIDER, spiderCount, insects);
 		environment.setInsects(insects);
 	}
 
-	private void createResources() {
-		NaturalResource flower = new NaturalResource(Constants.FLOWER, getNextResourceId(), 300,
-				new TileCoordinate(0, 0));
-		environment.addResource(flower);
+	private void createInsects(String type, int count, ArrayList<Insect> insects) {
+		if (count < 0)
+			throw new IllegalArgumentException("Negative resource count");
 
-		NaturalResource water = new NaturalResource(Constants.WATER, getNextResourceId(), 300,
-				new TileCoordinate(10, 10));
-		environment.addResource(water);
+		InsectFactory factory = InsectFactory.getInstance();
+		int i = 0;
+		while (i < count) {
+			int x = (int) (0 + Math.random() * ((SimuPara.SIMULATION_TILES - 0)));
+			int y = (int) (0 + Math.random() * ((SimuPara.SIMULATION_TILES - 0)));
 
-		if (DEBUG) {
-			createTestResources();
+			Coordinate position = new Coordinate(x * SimuPara.SIMULATION_TILES, y * SimuPara.SIMULATION_TILES);
+			try {
+				Insect insect = factory.createInsect(type, position);
+				BugManager bugManager = factory.createBugManager(type, insect); // TODO replace type with specific group
+																				// number
+				insects.add(insect);
+				bugManagersByIds.put(insect.getId(), bugManager);
+				i++;
+			} catch (IllegalArgumentException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 	}
 
-	public void createTestResources() {
+	private void createResources(int flowerCount, int waterCount, int foodCount) throws IllegalArgumentException {
+		if (waterCount + foodCount + flowerCount > SimuPara.SIMULATION_TILES * SimuPara.SIMULATION_TILES)
+			throw new IllegalArgumentException("Resources count exceeds map capacity");
+		try {
+			createResources(Constants.FLOWER, flowerCount);
+			createResources(Constants.WATER, waterCount);
+			createResources(Constants.FOOD, foodCount);
+		} catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	private void createResources(String type, int count) throws IllegalArgumentException {
+		if (count < 0)
+			throw new IllegalArgumentException("Negative resource count");
 		int i = 0;
-		while (i < 10) {
+		while (i < count) {
 			int x = (int) (0 + Math.random() * ((19 - 0)));
 			int y = (int) (0 + Math.random() * ((19 - 0)));
-			NaturalResource water = new NaturalResource(Constants.WATER, getNextResourceId(), 300,
-					new TileCoordinate(x, y));
-			if (!environment.getResources().contains(water)) {
-				environment.addResource(water);
-				i++;
+			TileCoordinate position = new TileCoordinate(x, y);
+			if (!environment.getResources().containsKey(position)) {
+				try {
+					NaturalResource resource = NaturalResourceFactory.createResource(type, position);
+					environment.addResource(resource);
+					i++;
+				} catch (IllegalArgumentException e) {
+					System.err.println(e.getMessage());
+				}
+
 			}
+
 		}
 	}
 
@@ -120,8 +129,8 @@ public class Simulation {
 			}
 		}
 		removeAllDeadInsects();
-		
-		if(getInsects().isEmpty()) {
+
+		if (getInsects().isEmpty()) {
 			setState(SimulationState.STOP);
 		}
 	}
@@ -180,7 +189,7 @@ public class Simulation {
 	public boolean isReady() {
 		return state == SimulationState.READY;
 	}
-	
+
 	public boolean isOver() {
 		return state == SimulationState.STOP;
 	}
@@ -189,11 +198,4 @@ public class Simulation {
 		return state;
 	}
 
-	private Integer getNextInsectId() {
-		return ++currentInsectId;
-	}
-
-	private Integer getNextResourceId() {
-		return ++currentResourceId;
-	}
 }

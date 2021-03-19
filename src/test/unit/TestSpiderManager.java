@@ -21,7 +21,7 @@ public class TestSpiderManager {
 		AntManager manager = new AntManager(null, null, ant, null);
 		
 		Spider spider = new Spider(1, new Coordinate(150, 170), 10, 10, 10, 1);
-		SpiderManager spidermanager = new SpiderManager(null, null, null, spider);
+		SpiderManager spidermanager = new SpiderManager(null, null, spider, null);
 		
 		Environment e = Environment.getInstance();
 		
@@ -50,7 +50,7 @@ public class TestSpiderManager {
 		AntManager manager2 = new AntManager(null, null, ant2, null);
 		
 		Spider spider = new Spider(1, new Coordinate(150, 170), 10, 10, 10, 1);
-		SpiderManager spidermanager = new SpiderManager(null, null, null, spider);
+		SpiderManager spidermanager = new SpiderManager(null, null, spider, null);
 		
 		Environment e = Environment.getInstance();
 		
@@ -82,7 +82,7 @@ public class TestSpiderManager {
 		AntManager manager = new AntManager(null, null, ant, e);
 		
 		Spider spider = new Spider(1, new Coordinate(150, 170), 10, 10, 10, 1);
-		SpiderManager spidermanager = new SpiderManager(null, null, e, spider);
+		SpiderManager spidermanager = new SpiderManager(null, null, spider, null);
 		
 		int range = 5;
 		
@@ -111,7 +111,7 @@ public class TestSpiderManager {
 		AntManager manager = new AntManager(null, null, ant, null);
 		
 		Spider spider = new Spider(1, new Coordinate(150, 170), 10, 10, 10, 1);
-		SpiderManager spidermanager = new SpiderManager(null, null, null, spider);
+		SpiderManager spidermanager = new SpiderManager(null, null, spider, null);
 		
 		Environment e = Environment.getInstance();
 		

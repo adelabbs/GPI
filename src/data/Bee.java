@@ -6,7 +6,7 @@ public class Bee extends Insect {
 
 	public Bee(Integer id, Coordinate destinationPosition, int maxHealth, int maxHunger, int maxThirst,
 			int maxSpeed) {
-		super(id, destinationPosition, maxHealth, maxHunger, maxThirst, maxSpeed, "Bee");
+		super(id, destinationPosition, maxHealth, maxHunger, maxThirst, maxSpeed, Constants.BEE);
 	}
 
 	@Override

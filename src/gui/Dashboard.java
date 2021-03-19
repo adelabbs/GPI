@@ -33,17 +33,16 @@ public class Dashboard extends JPanel {
 	Graphics2D g2;
 	private boolean end = false;
 	
-	//Lateral bar
-	//Insects count
+	// Lateral bar
+	// Insects count
 	private int nbIAnts = 0;
 	private int nbIBees = 0;
 	private int nbISpiders = 0;
 	private boolean setMax = false;
-	//Resources count
+	// Resources count
 	private int maxWater = 0;
 	private int maxFlower = 0;
 
-	
 	private static boolean DEBUG = false;
 
 	public Dashboard(Simulation simulation) {
@@ -68,79 +67,76 @@ public class Dashboard extends JPanel {
 		if (DEBUG) {
 			printDebugGrid(g2);
 		}
-		if(end) {
+		if (end) {
 			printEndMessage(g2);
 		}
 	}
 
 	private void printMap(Graphics2D g2) {
 	}
-	
-	
+
 	private void getMaxInsectsOnField() {
-		for(Insect i : simulation.getInsects()) {
-			if(i.getType().equals("Ant")) {
+		for (Insect i : simulation.getInsects()) {
+			if (i.getType().equals("Ant")) {
 				nbIAnts++;
-			} else if(i.getType().equals("Bee")) {
+			} else if (i.getType().equals("Bee")) {
 				nbIBees++;
-			} else if(i.getType().equals("Spider")) {
+			} else if (i.getType().equals("Spider")) {
 				nbISpiders++;
 			}
 		}
 	}
-	
+
 	private void getMaxResourcesOnField() {
-		for(NaturalResource re : simulation.getEnvironment().getResources()) {
-			if(re.getType().equals("flower")) {
+		for (NaturalResource re : simulation.getEnvironment().getResourcesList()) {
+			if (re.getType().equals("flower")) {
 				maxFlower += re.getQuantity();
 			} else {
 				maxWater += re.getQuantity();
 			}
 		}
 	}
-	
+
 	private void printLateralBar(Graphics2D g2) {
 		int height = getHeight();
-		
+
 		int nbAnts = 0;
 		int nbBees = 0;
 		int nbSpiders = 0;
 		int waterQuantity = 0;
 		int flowerQuantity = 0;
-		
-		
-		
-		if(!setMax) {
+
+		if (!setMax) {
 			getMaxInsectsOnField();
 			getMaxResourcesOnField();
 			setMax = true;
 		}
-				
-		for(Insect i : simulation.getInsects()) {
-			if(i.getType().equals("Ant")) {
+
+		for (Insect i : simulation.getInsects()) {
+			if (i.getType().equals("Ant")) {
 				nbAnts++;
-			} else if(i.getType().equals("Bee")) {
+			} else if (i.getType().equals("Bee")) {
 				nbBees++;
-			} else if(i.getType().equals("Spider")) {
+			} else if (i.getType().equals("Spider")) {
 				nbSpiders++;
 			}
 		}
-			
-		//Lateral Bar Border
-		g2.fillRect(1000,1,1000,height);
-		//Scoreboard panel
+
+		// Lateral Bar Border
+		g2.fillRect(1000, 1, 1000, height);
+		// Scoreboard panel
 		g2.setFont(new Font("Lancer", Font.BOLD, 20));
 		g2.setColor(Color.RED);
 		g2.drawString("Scoreboard", 1040, 50);
 		g2.drawRect(1030, 30, 130, 25);
-		//Print insects number
+		// Print insects number
 		g2.drawString("Ant(s) : " + String.valueOf(nbAnts) + "/" + String.valueOf(nbIAnts), 1040, 100);
 		g2.drawString("Bee(s) : " + String.valueOf(nbBees) + "/" + String.valueOf(nbIBees), 1040, 140);
 		g2.drawString("Spider(s) : " + String.valueOf(nbSpiders) + "/" + String.valueOf(nbISpiders), 1040, 180);
-		
-		//Resources on field
-		for(NaturalResource re : simulation.getEnvironment().getResources()) {
-			if(re.getType().equals("flower")) {
+
+		// Resources on field
+		for (NaturalResource re : simulation.getEnvironment().getResourcesList()) {
+			if (re.getType().equals("flower")) {
 				flowerQuantity += re.getQuantity();
 			} else {
 				waterQuantity += re.getQuantity();
@@ -148,30 +144,26 @@ public class Dashboard extends JPanel {
 		}
 		g2.drawString("Resources", 1040, 260);
 		g2.drawRect(1030, 240, 130, 25);
-		//Print resources bar count & bar
-				
+		// Print resources bar count & bar
+
 		double ratioFd = flowerQuantity / (double) maxFlower;
 		int ratioF = (int) (ratioFd * 120);
-		
+
 		double ratioWd = waterQuantity / (double) maxWater;
 		int ratioW = (int) (ratioWd * 120);
-		
-		
-		
-		//Food
+
+		// Food
 		g2.drawString("Food : " + String.valueOf(flowerQuantity) + "/" + String.valueOf(maxFlower), 1010, 300);
 		g2.drawRect(1030, 320, 120, 20);
 		g2.fillRect(1030, 320, ratioF, 20);
-		
-		//Water
+
+		// Water
 		g2.drawString("Water : " + String.valueOf(waterQuantity) + "/" + String.valueOf(maxWater), 1010, 370);
 		g2.drawRect(1030, 380, 120, 20);
 		g2.fillRect(1030, 380, ratioW, 20);
-		
+
 	}
 
-
-	
 	private void printInsects(Graphics2D g2) {
 		// TODO peut produire des java.util.ConcurrentModificationException
 		for (Insect insect : simulation.getInsects()) {
@@ -192,13 +184,13 @@ public class Dashboard extends JPanel {
 			g2.drawLine(1, i, width, i);
 		}
 	}
-	
+
 	public void printEnd() {
 		end = true;
 	}
 
 	private void loadRessources() {
-		resources = simulation.getEnvironment().getResources();
+		resources = simulation.getEnvironment().getResourcesList();
 		BufferedImage bufferImage = null;
 		String filename = null;
 
@@ -230,9 +222,9 @@ public class Dashboard extends JPanel {
 	private void printEndMessage(Graphics2D g2) {
 		g2.setFont(new Font("Lancer", Font.BOLD, 40));
 		g2.setPaint(Color.RED);
-		g2.drawString("FIN DE LA SIMULATION !",300,300);
+		g2.drawString("FIN DE LA SIMULATION !", 300, 300);
 	}
-	
+
 	private void loadTiles() {
 		for (int i = 0; i < 5; i++) {
 			String filename = FILE_PATH + i + FILE_EXTENSION;

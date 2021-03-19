@@ -4,8 +4,13 @@ import data.Ant;
 import data.Bee;
 import data.Constants;
 import data.Coordinate;
+import data.Environment;
 import data.Insect;
 import data.Spider;
+import process.manager.AntManager;
+import process.manager.BeeManager;
+import process.manager.BugManager;
+import process.manager.SpiderManager;
 import test.manual.SimuPara;
 
 /**
@@ -17,15 +22,15 @@ import test.manual.SimuPara;
  */
 public class InsectFactory {
 
-	private InsectFactory instance;
+	private static InsectFactory instance = new InsectFactory();
 
 	private int nextId = 0;
 
-	public InsectFactory() {
+	private InsectFactory() {
 
 	}
 
-	public InsectFactory getInstance() {
+	public static InsectFactory getInstance() {
 		return instance;
 	}
 
@@ -47,14 +52,31 @@ public class InsectFactory {
 	public Insect createInsect(String type, Coordinate position) throws IllegalArgumentException {
 		switch (type) {
 		case Constants.ANT:
-			return createAnt(position);
+			return (Ant) createAnt(position);
 		case Constants.BEE:
-			return createBee(position);
+			return (Bee) createBee(position);
 		case Constants.SPIDER:
-			return createSpider(position);
+			return (Spider) createSpider(position);
 		default:
 			throw new IllegalArgumentException("Unknown insect type : " + type);
 		}
+	}
+
+	public BugManager createBugManager(String group, Insect insect) throws IllegalArgumentException {
+		if (insect == null)
+			throw new IllegalArgumentException("Insect is null");
+		String type = insect.getType();
+		switch (type) {
+		case Constants.ANT:
+			return new AntManager(group, "peaceful", (Ant) insect, Environment.getInstance());
+		case Constants.BEE:
+			return new BeeManager(group, "peaceful", (Bee) insect, Environment.getInstance());
+		case Constants.SPIDER:
+			return new SpiderManager(group, "peaceful", (Spider) insect, Environment.getInstance());
+		default:
+			throw new IllegalArgumentException("Unknown insect type : " + type);
+		}
+
 	}
 
 	private int getNextId() {

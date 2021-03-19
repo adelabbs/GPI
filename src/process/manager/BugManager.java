@@ -15,7 +15,7 @@ public abstract class BugManager {
 	private String agressivity = "peaceful";
 	private int tileX = 0;
 	private int tileY = 0;
-	
+
 	private NaturalResource destinationResource = null;
 
 	private int currentTick = 0;
@@ -155,7 +155,7 @@ public abstract class BugManager {
 	 * The naïve point of interest discovery
 	 */
 	public void discoverPOI() {
-		ArrayList<NaturalResource> resources = environment.getResources();
+		ArrayList<NaturalResource> resources = environment.getResourcesList();
 		Coordinate insectPosition = getInsect().getCurrentPosition();
 		int convertedX = ((int) insectPosition.getAbscissa()) / SimuPara.SCALE;
 
@@ -180,17 +180,16 @@ public abstract class BugManager {
 		return Math.sqrt((Math.pow(position1.getAbscissa() - position2.getAbscissa(), 2)
 				+ (Math.pow(position1.getOrdinate() - position2.getOrdinate(), 2))));
 	}
-	
+
 	public NaturalResource findNewResource(String resourceType) {
 		NaturalResource newResource = null;
-		for(NaturalResource resource : getInsect().getPoi()) {
-			if(resource.getType().equals(resourceType)) {
+		for (NaturalResource resource : getInsect().getPoi()) {
+			if (resource.getType().equals(resourceType)) {
 				return resource;
 			}
 		}
 		return newResource;
 	}
-
 
 	public int getTileY() {
 		return tileY;
@@ -231,7 +230,5 @@ public abstract class BugManager {
 	public void setDestinationResource(NaturalResource destinationResource) {
 		this.destinationResource = destinationResource;
 	}
-	
-	
 
 }

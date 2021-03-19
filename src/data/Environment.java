@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The current environment is represented by a grid.
@@ -13,9 +14,9 @@ public class Environment {
 	 */
 	private static Environment instance = new Environment();
 	private Integer[][] map;
-	private ArrayList<NaturalResource> resources = new ArrayList<NaturalResource>();
+	private HashMap<TileCoordinate, NaturalResource> resources = new HashMap<TileCoordinate, NaturalResource>();
 	private ArrayList<Insect> insects = new ArrayList<Insect>();
-	
+
 	/**
 	 * Private constructor ensuring no access from outside of the class.
 	 */
@@ -32,14 +33,6 @@ public class Environment {
 
 	public void setMap(Integer[][] map) {
 		this.map = map;
-	}
-
-	public ArrayList<NaturalResource> getResources() {
-		return resources;
-	}
-
-	public void setResources(ArrayList<NaturalResource> resources) {
-		this.resources = resources;
 	}
 
 	public ArrayList<Insect> getInsects() {
@@ -60,14 +53,37 @@ public class Environment {
 		insects.remove(insect);
 	}
 
-	public synchronized void addResource(NaturalResource resource) {
+	public synchronized void addResource(NaturalResource resource) throws IllegalArgumentException {
+		boolean inserted = false;
 		if (resource != null) {
-			resources.add(resource);
+			if (resource.getCoordinates() != null) {
+				resources.put(resource.getCoordinates(), resource);
+				inserted = true;
+			}
+		}
+		if (!inserted) {
+			throw new IllegalArgumentException("Empty resource");
 		}
 	}
 
 	public synchronized void remove(NaturalResource resource) {
-		resources.remove(resource);
+		resources.remove(resource.getCoordinates());
+	}
+
+	public HashMap<TileCoordinate, NaturalResource> getResources() {
+		return resources;
+	}
+
+	public ArrayList<NaturalResource> getResourcesList() {
+		return new ArrayList<NaturalResource>(resources.values());
+	}
+
+	public NaturalResource getResource(TileCoordinate position) {
+		return resources.get(position);
+	}
+
+	public void setResources(HashMap<TileCoordinate, NaturalResource> resources) {
+		this.resources = resources;
 	}
 
 	public String printMap() {
