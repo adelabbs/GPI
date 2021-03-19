@@ -2,7 +2,6 @@ package process.manager;
 
 import data.Ant;
 import data.Constants;
-import data.Coordinate;
 import data.Environment;
 import data.Insect;
 import data.NaturalResource;
@@ -125,7 +124,7 @@ public class AntManager extends BugManager {
 			moveInsect(insect);
 
 		} else {
-			//?
+			// ?
 		}
 
 		setState(newState);
@@ -258,13 +257,6 @@ public class AntManager extends BugManager {
 
 	public void setState(AntManagerState state) {
 		this.state = state;
-	}
-
-	public boolean isAtDestination() {
-		Coordinate destination = insect.getDestinationPosition();
-		Coordinate currentPosition = insect.getCurrentPosition();
-		return currentPosition.getAbscissa() == destination.getAbscissa()
-				&& currentPosition.getOrdinate() == destination.getOrdinate();
 	}
 
 }

@@ -9,7 +9,7 @@ import data.Coordinate;
 import data.Environment;
 import data.Insect;
 import data.Spider;
-
+import process.SimulationUtility;
 import process.manager.AntManager;
 import process.manager.SpiderManager;
 
@@ -31,7 +31,7 @@ public class TestSpiderManager {
 		e.add(ant);
 		e.add(spider);
 		
-		double distance = spidermanager.distance(spider.getCurrentPosition(),ant.getCurrentPosition());
+		double distance = SimulationUtility.distance(spider.getCurrentPosition(),ant.getCurrentPosition());
 		Boolean detection = false;
 		
 		if(distance < rangeC) {
@@ -66,7 +66,7 @@ public class TestSpiderManager {
 		Insect insect=null;
 		
 		for (Insect i : e.getInsects()) {
-			dEachInsect = spidermanager.distance(spider.getCurrentPosition(),i.getCurrentPosition());
+			dEachInsect = SimulationUtility.distance(spider.getCurrentPosition(),i.getCurrentPosition());
 			if(dEachInsect< dmin && dEachInsect>1.0) {
 				insect= i;
 				dmin = dEachInsect;
@@ -92,11 +92,11 @@ public class TestSpiderManager {
 		e.add(spider);
 		
 		spider.setDestinationPosition(ant.getCurrentPosition());
-		double distance = spidermanager.distance(spider.getCurrentPosition(),ant.getCurrentPosition());
+		double distance = SimulationUtility.distance(spider.getCurrentPosition(),ant.getCurrentPosition());
 		
 		spidermanager.update();
 		
-		double distance2 = spidermanager.distance(spider.getCurrentPosition(),ant.getCurrentPosition());
+		double distance2 = SimulationUtility.distance(spider.getCurrentPosition(),ant.getCurrentPosition());
 		
 		if(distance> distance2) {
 			closer = true;
