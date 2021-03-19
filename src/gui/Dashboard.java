@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import javax.swing.JPanel;
 import data.Insect;
 import data.NaturalResource;
 import process.Simulation;
-import process.SimulationState;
 import test.manual.SimuPara;
 
 public class Dashboard extends JPanel {

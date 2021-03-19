@@ -2,7 +2,6 @@ package process.manager;
 
 import java.util.ArrayList;
 
-import data.Constants;
 import data.Coordinate;
 import data.Environment;
 import data.Insect;

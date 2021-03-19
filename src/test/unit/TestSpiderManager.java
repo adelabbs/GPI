@@ -9,13 +9,11 @@ import data.Coordinate;
 import data.Environment;
 import data.Insect;
 import data.Spider;
-import data.TileCoordinate;
-import process.SimulationUtility;
+
 import process.manager.AntManager;
 import process.manager.SpiderManager;
-import test.manual.SimuPara;
 
-public class SpiderManagerTest {
+public class TestSpiderManager {
 	
 	@Test
 	public void testDetection() {

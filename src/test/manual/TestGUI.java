@@ -9,6 +9,4 @@ public class TestGUI {
 		Thread thread = new Thread(insectGUI);
 		thread.start();
 	}
-
 }
-	

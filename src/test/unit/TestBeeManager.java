@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class BeeManagerTest {
+public class TestBeeManager {
 
 	@Test
 	public void testUpdate() {

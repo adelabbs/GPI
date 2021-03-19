@@ -125,7 +125,7 @@ public class AntManager extends BugManager {
 			moveInsect(insect);
 
 		} else {
-
+			//?
 		}
 
 		setState(newState);
@@ -261,12 +261,10 @@ public class AntManager extends BugManager {
 	}
 
 	public boolean isAtDestination() {
-
-		if (insect.getDestinationPosition() == insect.getCurrentPosition()) {
-			return true;
-		} else {
-			return false;
-		}
+		Coordinate destination = insect.getDestinationPosition();
+		Coordinate currentPosition = insect.getCurrentPosition();
+		return currentPosition.getAbscissa() == destination.getAbscissa()
+				&& currentPosition.getOrdinate() == destination.getOrdinate();
 	}
 
 }

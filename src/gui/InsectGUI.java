@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 
 import process.Simulation;
 import process.SimulationEntry;
-import process.SimulationState;
 import process.SimulationUtility;
 import test.manual.SimuPara;
 
@@ -70,7 +69,7 @@ public class InsectGUI extends JFrame implements Runnable {
 				simulation.simulate();
 				updateValues();
 			}
-			if (simulation.getState() == SimulationState.STOP) {
+			if (simulation.isOver()) {
 				dashboard.printEnd();
 				stop = true;
 			}

@@ -1,7 +1,7 @@
 package test.manual;
 
 public class SimuPara {
-	public static final int SIMULATION_SPEED = 2; //lower values = higher speeds
+	public static final int SIMULATION_SPEED = 10; //lower values = higher speeds
 	public static final int SIMULATION_MAP_SIZE = 1000;
 	public static final int SCALE = 50;
 
@@ -27,5 +27,9 @@ public class SimuPara {
 	
 	public static final double INSECT_DEFAULT_DRINK_UPPER_THRESHOLD = 0.75; // in decimal (30% = 0.3
 	public static final double INSECT_DEFAULT_EAT_UPPER_THRESHOLD = 0.75; // in decimal (30% = 0.3
+	
+	public static final int ANT_SPEED = 1;
+	public static final int BEE_SPEED = 1;
+	public static final int SPIDER_SPEED = 1;
 
 }

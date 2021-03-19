@@ -180,6 +180,10 @@ public class Simulation {
 	public boolean isReady() {
 		return state == SimulationState.READY;
 	}
+	
+	public boolean isOver() {
+		return state == SimulationState.STOP;
+	}
 
 	public SimulationState getState() {
 		return state;
