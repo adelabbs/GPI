@@ -73,7 +73,7 @@ public class Simulation {
 			int x = (int) (0 + Math.random() * ((SimuPara.SIMULATION_TILES - 0)));
 			int y = (int) (0 + Math.random() * ((SimuPara.SIMULATION_TILES - 0)));
 
-			Coordinate position = new Coordinate(x * SimuPara.SIMULATION_TILES, y * SimuPara.SIMULATION_TILES);
+			Coordinate position = new Coordinate(x * SimuPara.SCALE, y * SimuPara.SCALE);
 			try {
 				Insect insect = factory.createInsect(type, position);
 				BugManager bugManager = factory.createBugManager(type, insect); // TODO replace type with specific group
