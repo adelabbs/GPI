@@ -112,12 +112,19 @@ public class SpiderManager extends BugManager {
 
 		if (insect.getDestinationPosition() == null) {
 			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
-		}
-
-		if (isAtDestination()) {
-
+		} else if (isAtDestination()) {
 			waitTime = (int) Math.random() * 100 + 50;
 			newState = SpiderManagerState.IDLE;
+
+			if (insect.isThirsty()) {
+				newState = SpiderManagerState.THIRSTY;
+			}
+
+			else if (insect.isHungry()) {
+				newState = SpiderManagerState.HUNGRY;
+			} else {
+				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+			}
 
 		}
 
@@ -125,15 +132,8 @@ public class SpiderManager extends BugManager {
 			moveInsect(insect);
 		}
 
-		if (insect.isThirsty()) {
-			newState = SpiderManagerState.THIRSTY;
-		}
-
-		else if (insect.isHungry()) {
-			newState = SpiderManagerState.HUNGRY;
-		}
-
 		setState(newState);
+
 
 	}
 
@@ -153,25 +153,38 @@ public class SpiderManager extends BugManager {
 	private void goDrink() {
 
 		SpiderManagerState newState = SpiderManagerState.THIRSTY;
-
-		if (insect.getCurrentThirst() / insect.getMaxThirst() >= SimuPara.INSECT_DEFAULT_DRINK_UPPER_THRESHOLD) {
+		if (insect.getCurrentThirst()
+				/ (double) insect.getMaxThirst() >= SimuPara.INSECT_DEFAULT_DRINK_UPPER_THRESHOLD) {
 			newState = SpiderManagerState.WANDERING;
+			setDestinationResource(null);
+			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
 
-		} else if (canConsume()) {
-			drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
+		} else if (canConsume(Constants.WATER)) {
+			if (waitTime <= 0) {
+				waitTime = SimuPara.CONSUMING_TIME_INTERVAL;
+				drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
+			} else {
+				waitTime--;
+			}
+
+		} else if (getDestinationResource() == null) {
+			NaturalResource newResource = findNewResource(Constants.WATER);
+			if (newResource != null) {
+
+				insect.setDestinationPosition(newResource.getCoordinates());
+
+				setDestinationResource(newResource);
+			} else {
+				newState = SpiderManagerState.WANDERING;
+				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+
+			}
 
 		} else if (!isAtDestination()) {
 			moveInsect(insect);
 
 		} else {
-			NaturalResource newResource = findNewResource(Constants.WATER);
-			if (newResource != null) {
-				insect.setDestinationPosition(newResource.getCoordinates());
-				setDestinationResource(newResource);
-			} else {
-				newState = SpiderManagerState.WANDERING;
-				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
-			}
+			//?
 		}
 
 		setState(newState);
@@ -184,7 +197,7 @@ public class SpiderManager extends BugManager {
 		if (insect.getCurrentHunger() / insect.getMaxHunger() >= SimuPara.INSECT_DEFAULT_EAT_UPPER_THRESHOLD) {
 			newState = SpiderManagerState.WANDERING;
 
-		} else if (canConsume()) {
+		} else if (canConsume(Constants.WATER)) {
 			drink(SimuPara.INSECT_DEFAULT_EAT_QTT);
 
 		} else if (getDestinationResource() != null) {
@@ -204,21 +217,19 @@ public class SpiderManager extends BugManager {
 		setState(newState);
 	}
 
-	private boolean canConsume() {
-		
-		NaturalResource resource  = getDestinationResource();
-		if(resource!=null) {
-		
+	private boolean canConsume(String type) {
 
-		int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
-		int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
+		NaturalResource resource = getDestinationResource();
+		if (resource != null && resource.getType().equals(type)) {
 
-		TileCoordinate resourcePosition = resource.getCoordinates();
+			int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
+			int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
 
-		if (resourcePosition.getAbscissa() == x && resourcePosition.getOrdinate() == y
-				&& getDestinationResource().getQuantity() > 0) {
-			return true;
-		}
+			TileCoordinate resourcePosition = resource.getCoordinates();
+
+			if (resourcePosition.getAbscissa() == x && resourcePosition.getOrdinate() == y) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -248,7 +259,27 @@ public class SpiderManager extends BugManager {
 	}
 
 	public void drink(int quantity) {
-		//TODO copy paste eat()
+		int ressourceQuantity = getDestinationResource().getQuantity();
+		if (ressourceQuantity < quantity) {
+			quantity = ressourceQuantity;
+		}
+
+		int currentThirst = insect.getCurrentThirst();
+		int maxThirst = insect.getMaxHunger();
+		int calculatedThirst = currentThirst + quantity;
+
+		if (calculatedThirst > maxThirst) {
+			insect.setCurrentThirst(insect.getMaxThirst());
+			quantity = calculatedThirst - maxThirst;
+		} else {
+			insect.setCurrentThirst(currentThirst + quantity);
+		}
+
+		getDestinationResource().setQuantity(ressourceQuantity - quantity);
+		if (getDestinationResource().getQuantity() <= 0) {
+			insect.remove(getDestinationResource());
+			setDestinationResource(null);
+		}
 	}
 
 	@Override
