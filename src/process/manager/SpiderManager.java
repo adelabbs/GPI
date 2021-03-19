@@ -18,6 +18,8 @@ public class SpiderManager extends BugManager {
 	private int waitTime = 0;
 	private SpiderManagerState state = SpiderManagerState.WANDERING;
 	private int range = 5; // 5 tiles
+	public static final int SPIDER_DAMAGE = SimuPara.MAX_HEALTH / 2;
+	
 
 	public SpiderManager(String groupID, String agressivity, Environment environment, Spider spider) {
 		super(groupID, agressivity, environment);
@@ -61,7 +63,7 @@ public class SpiderManager extends BugManager {
 		double distance;
 		
 		for (Insect insect : insects) {
-			distance = distance(insectPosition,insect.getCurrentPosition());
+			distance = SimulationUtility.distance(insectPosition,insect.getCurrentPosition());
 			if(distance < rangeC) {
 				this.insect.addPrey(insect);
 			}else {
@@ -81,7 +83,7 @@ public class SpiderManager extends BugManager {
 		double distance;
 		
 		for (Insect insect : insects) {
-			distance = distance(insectPosition,insect.getCurrentPosition());
+			distance = SimulationUtility.distance(insectPosition,insect.getCurrentPosition());
 			if(distance< dmin) {
 				dmin = distance;
 				prey = insect;
@@ -191,29 +193,39 @@ public class SpiderManager extends BugManager {
 	}
 
 	private void goEat() {
-
 		SpiderManagerState newState = SpiderManagerState.HUNGRY;
 
-		if (insect.getCurrentHunger() / insect.getMaxHunger() >= SimuPara.INSECT_DEFAULT_EAT_UPPER_THRESHOLD) {
+		Insect prey = null;
+		
+		if (insect.getCurrentHunger() / (double) insect.getMaxHunger() >= SimuPara.INSECT_DEFAULT_EAT_UPPER_THRESHOLD) {
 			newState = SpiderManagerState.WANDERING;
-
-		} else if (canConsume(Constants.WATER)) {
-			drink(SimuPara.INSECT_DEFAULT_EAT_QTT);
-
-		} else if (getDestinationResource() != null) {
-			super.moveInsect(insect);
-
 		} else {
-			NaturalResource newResource = findNewResource(Constants.FOOD);
-			if (newResource != null) {
-				setDestinationResource(newResource);
-				insect.setDestinationPosition(newResource.getCoordinates());
-			} else {
-				newState = SpiderManagerState.WANDERING;
-				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+			ArrayList<Insect> insects = Environment.getInstance().getInsects();
+			// Time to hunt
+			if(insect.isHungry()) {
+				Coordinate pos = null;
+				
+				for(Insect i : insects) {
+					double distance = SimuPara.SIMULATION_MAP_SIZE;
+					
+					if(!(i.equals(insect))){
+						if(distance > SimulationUtility.distance(insect.getCurrentPosition(), i.getCurrentPosition())) {
+							distance = SimulationUtility.distance(insect.getCurrentPosition(), i.getCurrentPosition());
+							pos = i.getCurrentPosition();
+							prey = i;
+						}
+					}
+				}
+				insect.setDestinationPosition(pos);
+				moveInsect(insect);
+			}
+			
+		}
+		if(prey != null) {
+			if(SimulationUtility.distance(insect.getCurrentPosition(), prey.getCurrentPosition()) < 1) {
+				eat(prey);
 			}
 		}
-
 		setState(newState);
 	}
 
@@ -234,28 +246,9 @@ public class SpiderManager extends BugManager {
 		return false;
 	}
 
-	public void eat(int quantity) {
-		int ressourceQuantity = getDestinationResource().getQuantity();
-		if(ressourceQuantity<quantity) {
-			quantity = ressourceQuantity;
-		}
-		
-		int currentHunger = insect.getCurrentHunger();
-		int maxHunger = insect.getMaxHunger();
-		int calculatedHunger = currentHunger + quantity;
-
-		if (calculatedHunger > maxHunger) {
-			insect.setCurrentHunger(insect.getMaxHunger());
-			quantity = calculatedHunger - maxHunger;
-		} else {
-			insect.setCurrentHunger(currentHunger + quantity);
-		}
-
-		getDestinationResource().setQuantity(ressourceQuantity-quantity);
-		if(getDestinationResource().getQuantity()<=0) {
-			insect.remove(getDestinationResource());
-			setDestinationResource(null);
-		}
+	public void eat(Insect prey) {
+		prey.setCurrentHealth(prey.getCurrentHealth() - SPIDER_DAMAGE);
+		insect.setCurrentHunger(insect.getCurrentHunger() + SPIDER_DAMAGE);
 	}
 
 	public void drink(int quantity) {

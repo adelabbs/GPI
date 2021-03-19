@@ -7,6 +7,7 @@ import data.Environment;
 import data.Insect;
 import data.NaturalResource;
 import data.TileCoordinate;
+import process.SimulationUtility;
 import test.manual.SimuPara;
 
 public abstract class BugManager {
@@ -100,7 +101,7 @@ public abstract class BugManager {
 		double deltaX = destination.getAbscissa() - origin.getAbscissa();
 		double deltaY = destination.getOrdinate() - origin.getOrdinate();
 
-		double length = distance(origin, destination);
+		double length = SimulationUtility.distance(origin, destination);
 
 		if (insect.getSpeed() < length) {
 
@@ -175,12 +176,6 @@ public abstract class BugManager {
 		return getInsect().getCurrentHealth() <= 0;
 	}
 
-	public double distance(Coordinate position1, Coordinate position2) {
-
-		return Math.sqrt((Math.pow(position1.getAbscissa() - position2.getAbscissa(), 2)
-				+ (Math.pow(position1.getOrdinate() - position2.getOrdinate(), 2))));
-	}
-	
 	public NaturalResource findNewResource(String resourceType) {
 		NaturalResource newResource = null;
 		for(NaturalResource resource : getInsect().getPoi()) {
