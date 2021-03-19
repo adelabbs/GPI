@@ -25,8 +25,8 @@ public class TestSpiderManager {
 		
 		Environment e = Environment.getInstance();
 		
-		int range = 5;
-		double rangeC = (double)range*50;
+		
+		double rangeC = (double) spidermanager.getRange()*50;
 		
 		e.add(ant);
 		e.add(spider);
@@ -54,8 +54,8 @@ public class TestSpiderManager {
 		
 		Environment e = Environment.getInstance();
 		
-		int range = 5;
-		double rangeC = (double)range*50;
+		
+		
 		
 		e.add(ant);
 		e.add(ant2);
@@ -85,7 +85,7 @@ public class TestSpiderManager {
 		SpiderManager spidermanager = new SpiderManager(null, null, e, spider);
 		
 		int range = 5;
-		double rangeC = (double)range*50;
+		
 		Boolean closer = false;
 		
 		e.add(ant);
@@ -122,8 +122,8 @@ public class TestSpiderManager {
 		e.add(spider);
 		
 		int antHealth = ant.getCurrentHealth() -1;
-		//TODO attack
-		ant.setCurrentHealth(ant.getCurrentHealth()-1);
+	    spidermanager.attackPrey(ant);
+	
 		
 		assertEquals(antHealth,ant.getCurrentHealth());
 	}

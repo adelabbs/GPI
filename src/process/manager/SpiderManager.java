@@ -95,7 +95,7 @@ public class SpiderManager extends BugManager {
 		getInsect().setDestinationPosition(preyPosition);
 	}
 	
-	private void attackPrey(Insect prey) {
+	public void attackPrey(Insect prey) {
 		//if the insect is arrived t destination
 		if(getInsect().getCurrentPosition() == getInsect().getDestinationPosition()) {
 			prey.setCurrentHealth(prey.getCurrentHealth()-1);

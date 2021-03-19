@@ -28,13 +28,15 @@ public class TestBugManager {
 
 	@Test
 	public void testIsDead() {
-		fail("Not yet implemented");
+		Ant ant = new Ant(1, new Coordinate(15, 15), SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST, 1);
+		BugManager antManager = new AntManager("1", "peaceful", ant, null);
+		
+		ant.setCurrentHealth(0);
+		assertTrue(antManager.isDead());
+
 	}
 
-	@Test
-	public void testDistance() {
-		fail("Not yet implemented");
-	}
+	
 
 
 	@Test
