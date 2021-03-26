@@ -21,8 +21,8 @@ public class SimuPara {
 
 	public static final double INSECT_THIRST_THRESHOLD = 0.50; // in decimal (30% = 0.3)
 	public static final double INSECT_HUNGER_THRESHOLD = 0.30;
-	public static final int TIME_INTERVAL = 75;
-	public static final int CONSUMING_TIME_INTERVAL = 20;
+	public static final int TIME_INTERVAL = 50;
+	public static final int CONSUMING_TIME_INTERVAL = 15;
 
 	public static final double INSECT_DEFAULT_DRINK_UPPER_THRESHOLD = 0.75; // in decimal (30% = 0.3
 	public static final double INSECT_DEFAULT_EAT_UPPER_THRESHOLD = 0.75; // in decimal (30% = 0.3
@@ -45,4 +45,6 @@ public class SimuPara {
 	public static final int SPIDER_COUNT = 1; // TODO Add images, before keep FOOD_COUNT at 0
 	public static final int CENTIPEDE_COUNT = 1;
 
+	public static final int NEST_MAX_HEALTH = 1000;
+	public static final int NEST_MAX_CAPACITY = 4;
 }
