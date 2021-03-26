@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import test.manual.SimuPara;
 
-public class Nest {
-	
-	public static final int MIN_LIFESPAN = 10000;
-	public static final int MAX_LIFESPAN = 20000;
+public abstract class Nest {
 
 	private Integer id;
 	private String type;
@@ -22,7 +19,6 @@ public class Nest {
 
 	private int maxHealth;
 	private int currentHealth;
-	private int lifeSpan;
 	
 	public Nest(Integer id, String type, Coordinate position, int maxHealth,
 			int capacity) {
@@ -30,7 +26,6 @@ public class Nest {
 		this.position=position;
 		this.maxHealth=maxHealth;
 		this.type=type;
-		lifeSpan = (int) (MIN_LIFESPAN + Math.random() * ((MAX_LIFESPAN - MIN_LIFESPAN) + 1));
 	}
 
 	public Integer getId() {
@@ -103,13 +98,5 @@ public class Nest {
 
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
-	}
-
-	public int getLifeSpan() {
-		return lifeSpan;
-	}
-
-	public void setLifeSpan(int lifeSpan) {
-		this.lifeSpan = lifeSpan;
 	}
 }
