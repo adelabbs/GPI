@@ -2,17 +2,15 @@ package data;
 
 import java.util.ArrayList;
 
-import test.manual.SimuPara;
-
 public abstract class Nest {
 
 	private Integer id;
 	private String type;
 
 	private Coordinate position;
-	private ArrayList<Insect> insects = new ArrayList<Insect>();
 
 	private int size;
+	private ArrayList<Insect> insects = new ArrayList<Insect>();
 	
 	private int capacity;
 	private int currentInsects;
@@ -50,14 +48,6 @@ public abstract class Nest {
 
 	public void setPosition(Coordinate position) {
 		this.position = position;
-	}
-
-	public ArrayList<Insect> getInsects() {
-		return insects;
-	}
-
-	public void setInsects(ArrayList<Insect> insects) {
-		this.insects = insects;
 	}
 
 	public int getSize() {
@@ -98,5 +88,13 @@ public abstract class Nest {
 
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
+	}
+
+	public ArrayList<Insect> getInsects() {
+		return insects;
+	}
+
+	public void setInsects(ArrayList<Insect> insects) {
+		this.insects = insects;
 	}
 }
