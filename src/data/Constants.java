@@ -8,5 +8,5 @@ public class Constants {
 	public static final String ANT = "Ant";
 	public static final String BEE = "Bee";
 	public static final String SPIDER = "Spider";
-
+	public static final String CENTIPEDE = "Centipede";
 }

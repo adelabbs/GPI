@@ -1,0 +1,327 @@
+package process.manager;
+
+
+import java.util.ArrayList;
+
+import data.Centipede;
+import data.Constants;
+import data.Coordinate;
+import data.Environment;
+import data.Insect;
+import data.NaturalResource;
+import data.TileCoordinate;
+import process.SimulationUtility;
+import test.manual.SimuPara;
+
+public class CentipedeManager extends BugManager {
+	private Centipede insect;
+	private int waitTime = 0;
+	private CentipedeManagerState state = CentipedeManagerState.WANDERING;
+	private int range = 5;
+	
+	public static final int CENTIPEDE_DAMAGE = SimuPara.MAX_HEALTH / 3;
+
+	public static final int TERRITORY_RADIUS = 300;
+	public static final Coordinate TERRITORY_ORIGIN = new Coordinate(0, 0); 
+	
+	
+	public CentipedeManager(String groupID, String agressivity, Centipede insect, Environment environment) {
+		super(groupID, agressivity, environment);
+		this.insect = insect;
+	}
+
+	@Override
+	public void update() {
+		updateStats();
+		discoverPOI();
+		System.out.println(state);
+		// TODO case where the Centipede attack
+		switch (state) {
+		case WANDERING:
+			wander();
+			break;
+
+		case IDLE:
+			idle();
+			break;
+
+		case HUNGRY:
+			goEat();
+			break;
+
+		case THIRSTY:
+			goDrink();
+			break;
+		
+		case DEFEND:
+			defend();
+			break;
+
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + state);
+		}
+	}
+
+	public Coordinate getInRangeCoordinate() {
+		if(!isHome()) {
+			return TERRITORY_ORIGIN;
+		}
+		return new Coordinate(Math.random() * TERRITORY_RADIUS, Math.random() * TERRITORY_RADIUS);
+	}
+	
+	
+	private void defend() {
+		CentipedeManagerState newState = CentipedeManagerState.DEFEND;
+		Insect openent = findInsectInTerritory();
+		if(openent != null) {
+			if(SimulationUtility.distance(insect.getCurrentPosition(), openent.getCurrentPosition()) < 2) {
+				openent.setCurrentHealth(openent.getCurrentHealth() - CENTIPEDE_DAMAGE);
+				newState = CentipedeManagerState.WANDERING;
+			}
+			else if(SimulationUtility.distance(insect.getCurrentPosition(), TERRITORY_ORIGIN) <= TERRITORY_RADIUS) {
+				
+				insect.setDestinationPosition(openent.getCurrentPosition());
+				moveInsect(insect);
+				newState = CentipedeManagerState.WANDERING;
+			}
+		}
+		setState(newState);
+	}
+	
+	private Insect findInsectInTerritory() {
+		Insect prey = null;
+		ArrayList<Insect> insects = Environment.getInstance().getInsects();
+		for (Insect i : insects) {
+			if(i != insect) {
+				if(SimulationUtility.distance(insect.getCurrentPosition(), i.getCurrentPosition()) < TERRITORY_RADIUS) {
+					prey = i;
+				}
+			}
+		}
+		return prey;
+	}
+	
+	private boolean isHome() {
+		return(SimulationUtility.distance(insect.getCurrentPosition(), TERRITORY_ORIGIN) < TERRITORY_RADIUS);
+	}
+	
+	private void wander() {
+		CentipedeManagerState newState = CentipedeManagerState.WANDERING;
+
+		if (insect.getDestinationPosition() == null) {
+			insect.setDestinationPosition(getInRangeCoordinate());
+		} else if (isAtDestination()) {
+			//TODO defend territory 
+			waitTime = (int) Math.random() * 100 + 50;
+			newState = CentipedeManagerState.IDLE;
+			
+			if (insect.isThirsty()) {
+				newState = CentipedeManagerState.THIRSTY;
+			}
+
+			else if (insect.isHungry()) {
+				newState = CentipedeManagerState.HUNGRY;
+			} 
+			
+			else if(findInsectInTerritory() != null && isHome()) {
+				newState = CentipedeManagerState.DEFEND;
+			} else {
+				//Random movement in insect's territory
+				insect.setDestinationPosition(getInRangeCoordinate());
+			}
+		}
+
+		else {
+			moveInsect(insect);
+		}
+
+		setState(newState);
+
+	}
+
+	private void idle() {
+		CentipedeManagerState newState = CentipedeManagerState.IDLE;
+
+		if (waitTime > 0) {
+			waitTime--;
+		}
+
+		else {
+			newState = CentipedeManagerState.WANDERING;
+		}
+		setState(newState);
+	}
+
+	private void goDrink() {
+
+		CentipedeManagerState newState = CentipedeManagerState.THIRSTY;
+		if (insect.getCurrentThirst()
+				/ (double) insect.getMaxThirst() >= SimuPara.INSECT_DEFAULT_DRINK_UPPER_THRESHOLD) {
+			newState = CentipedeManagerState.WANDERING;
+			setDestinationResource(null);
+			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+
+		} else if (canConsume(Constants.WATER)) {
+			if (waitTime <= 0) {
+				waitTime = SimuPara.CONSUMING_TIME_INTERVAL;
+				drink(SimuPara.INSECT_DEFAULT_DRINK_QTT);
+			} else {
+				waitTime--;
+			}
+
+		} else if (getDestinationResource() == null) {
+			NaturalResource newResource = findNewResource(Constants.WATER);
+			if (newResource != null) {
+
+				insect.setDestinationPosition(newResource.getCoordinates());
+
+				setDestinationResource(newResource);
+			} else {
+				newState = CentipedeManagerState.WANDERING;
+				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+
+			}
+
+		} else if (!isAtDestination()) {
+			moveInsect(insect);
+
+		} else {
+			// ?
+		}
+
+		setState(newState);
+	}
+
+	private void goEat() {
+
+		CentipedeManagerState newState = CentipedeManagerState.HUNGRY;
+
+		if (insect.getCurrentHunger() / (double) insect.getMaxHunger() >= SimuPara.INSECT_DEFAULT_EAT_UPPER_THRESHOLD) {
+			newState = CentipedeManagerState.WANDERING;
+			setDestinationResource(null);
+			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+
+		} else if (canConsume(Constants.FLOWER)) {
+			// TODO change to Constants.FOOD when implemented
+			if (waitTime <= 0) {
+				waitTime = SimuPara.CONSUMING_TIME_INTERVAL;
+				eat(SimuPara.INSECT_DEFAULT_EAT_QTT);
+			} else {
+				waitTime--;
+			}
+
+		} else if (getDestinationResource() == null) {
+			NaturalResource newResource = findNewResource(Constants.FLOWER);
+			// TODO change to Constants.FOOD when implemented
+			if (newResource != null) {
+
+				insect.setDestinationPosition(newResource.getCoordinates());
+
+				setDestinationResource(newResource);
+			} else {
+				newState = CentipedeManagerState.WANDERING;
+				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+
+			}
+
+		} else if (!isAtDestination()) {
+			moveInsect(insect);
+
+		} else {
+
+		}
+
+		setState(newState);
+	}
+
+	private boolean canConsume(String type) {
+
+		NaturalResource resource = getDestinationResource();
+		if (resource != null && resource.getType().equals(type)) {
+
+			int x = (int) ((insect.getCurrentPosition().getAbscissa()) / SimuPara.SCALE);
+			int y = (int) ((insect.getCurrentPosition().getOrdinate()) / SimuPara.SCALE);
+
+			TileCoordinate resourcePosition = resource.getCoordinates();
+
+			if (resourcePosition.getAbscissa() == x && resourcePosition.getOrdinate() == y) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void eat(int quantity) {
+		int ressourceQuantity = getDestinationResource().getQuantity();
+		if (ressourceQuantity < quantity) {
+			quantity = ressourceQuantity;
+		}
+
+		int currentHunger = insect.getCurrentHunger();
+		int maxHunger = insect.getMaxHunger();
+		int calculatedHunger = currentHunger + quantity;
+
+		if (calculatedHunger > maxHunger) {
+			insect.setCurrentHunger(insect.getMaxHunger());
+			quantity = calculatedHunger - maxHunger;
+		} else {
+			insect.setCurrentHunger(currentHunger + quantity);
+		}
+
+		getDestinationResource().setQuantity(ressourceQuantity - quantity);
+		if (getDestinationResource().getQuantity() <= 0) {
+			insect.remove(getDestinationResource());
+			setDestinationResource(null);
+		}
+	}
+
+	public void drink(int quantity) {
+		int ressourceQuantity = getDestinationResource().getQuantity();
+		if (ressourceQuantity < quantity) {
+			quantity = ressourceQuantity;
+		}
+
+		int currentThirst = insect.getCurrentThirst();
+		int maxThirst = insect.getMaxHunger();
+		int calculatedThirst = currentThirst + quantity;
+
+		if (calculatedThirst > maxThirst) {
+			insect.setCurrentThirst(insect.getMaxThirst());
+			quantity = calculatedThirst - maxThirst;
+		} else {
+			insect.setCurrentThirst(currentThirst + quantity);
+		}
+
+		getDestinationResource().setQuantity(ressourceQuantity - quantity);
+		if (getDestinationResource().getQuantity() <= 0) {
+			insect.remove(getDestinationResource());
+			setDestinationResource(null);
+		}
+	}
+
+	@Override
+	public Insect getInsect() {
+		return insect;
+	}
+
+	public int getWaitTime() {
+		return waitTime;
+	}
+
+	public void setWaitTime(int waitTime) {
+		this.waitTime = waitTime;
+	}
+
+	public CentipedeManagerState getState() {
+		return state;
+	}
+
+	public void setState(CentipedeManagerState state) {
+		this.state = state;
+	}
+
+	public int getRange() {
+		return range;
+	}
+
+}

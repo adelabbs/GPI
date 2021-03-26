@@ -7,6 +7,7 @@ public class SimulationEntry {
 	private int antCount;
 	private int beeCount;
 	private int spiderCount;
+	private int centipedeCount;
 
 	private int flowerCount;
 	private int waterCount;
@@ -17,6 +18,7 @@ public class SimulationEntry {
 		antCount = SimuPara.ANT_COUNT;
 		beeCount = SimuPara.BEE_COUNT;
 		spiderCount = SimuPara.SPIDER_COUNT;
+		centipedeCount = SimuPara.CENTIPEDE_COUNT;
 		flowerCount = SimuPara.FLOWER_COUNT;
 		waterCount = SimuPara.WATER_COUNT;
 		foodCount = SimuPara.FOOD_COUNT;
@@ -51,6 +53,14 @@ public class SimulationEntry {
 
 	public int getSpiderCount() {
 		return spiderCount;
+	}
+	
+	public int getCentipedeCount() {
+		return centipedeCount;
+	}
+	
+	public void setCentipedeCount(int centipedeCount) {
+		this.centipedeCount = centipedeCount;
 	}
 
 	public void setSpiderCount(int spiderCount) {

@@ -45,7 +45,7 @@ public class Simulation {
 
 		environment = Environment.getInstance();
 		environment.setMap(map);
-		createInsects(simulationEntry.getAntCount(), simulationEntry.getBeeCount(), simulationEntry.getSpiderCount());
+		createInsects(simulationEntry.getAntCount(), simulationEntry.getBeeCount(), simulationEntry.getSpiderCount(), simulationEntry.getCentipedeCount());
 		createResources(simulationEntry.getFlowerCount(), simulationEntry.getWaterCount(),
 				simulationEntry.getFoodCount());
 		setState(SimulationState.READY);
@@ -55,11 +55,12 @@ public class Simulation {
 		return bugManagersByIds;
 	}
 
-	private void createInsects(int antCount, int beeCount, int spiderCount) {
+	private void createInsects(int antCount, int beeCount, int spiderCount, int centipedeCount) {
 		ArrayList<Insect> insects = new ArrayList<Insect>();
 		createInsects(Constants.ANT, antCount, insects);
 		createInsects(Constants.BEE, beeCount, insects);
 		createInsects(Constants.SPIDER, spiderCount, insects);
+		createInsects(Constants.CENTIPEDE, centipedeCount, insects);
 		environment.setInsects(insects);
 	}
 

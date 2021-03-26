@@ -30,6 +30,7 @@ public class SimuPara {
 	public static final int ANT_SPEED = 1;
 	public static final int BEE_SPEED = 1;
 	public static final int SPIDER_SPEED = 1;
+	public static final int CENTIPEDE_SPEED = 1;
 
 	public static final int FLOWER_DEFAULT_QUANTITY = 300;
 	public static final int WATER_DEFAULT_QUANTITY = 200;
@@ -42,5 +43,6 @@ public class SimuPara {
 	public static final int ANT_COUNT = 3;
 	public static final int BEE_COUNT = 2;
 	public static final int SPIDER_COUNT = 1; // TODO Add images, before keep FOOD_COUNT at 0
+	public static final int CENTIPEDE_COUNT = 1;
 
 }

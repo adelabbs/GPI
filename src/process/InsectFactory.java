@@ -2,6 +2,7 @@ package process;
 
 import data.Ant;
 import data.Bee;
+import data.Centipede;
 import data.Constants;
 import data.Coordinate;
 import data.Environment;
@@ -10,6 +11,7 @@ import data.Spider;
 import process.manager.AntManager;
 import process.manager.BeeManager;
 import process.manager.BugManager;
+import process.manager.CentipedeManager;
 import process.manager.SpiderManager;
 import test.manual.SimuPara;
 
@@ -48,6 +50,11 @@ public class InsectFactory {
 		return new Spider(getNextId(), position, SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST,
 				SimuPara.SPIDER_SPEED);
 	}
+	
+	public Centipede createCentipede(Coordinate position) {
+		return new Centipede(getNextId(), position, SimuPara.MAX_HEALTH, SimuPara.MAX_HUNGER, SimuPara.MAX_THIRST,
+				SimuPara.CENTIPEDE_SPEED);
+	}
 
 	public Insect createInsect(String type, Coordinate position) throws IllegalArgumentException {
 		switch (type) {
@@ -57,6 +64,9 @@ public class InsectFactory {
 			return (Bee) createBee(position);
 		case Constants.SPIDER:
 			return (Spider) createSpider(position);
+		case Constants.CENTIPEDE:
+			return (Centipede) createCentipede(position);
+			
 		default:
 			throw new IllegalArgumentException("Unknown insect type : " + type);
 		}
@@ -73,6 +83,9 @@ public class InsectFactory {
 			return new BeeManager(group, "peaceful", (Bee) insect, Environment.getInstance());
 		case Constants.SPIDER:
 			return new SpiderManager(group, "peaceful", (Spider) insect, Environment.getInstance());
+		case Constants.CENTIPEDE:
+			return new CentipedeManager(group, "peaceful", (Centipede) insect, Environment.getInstance());
+
 		default:
 			throw new IllegalArgumentException("Unknown insect type : " + type);
 		}
