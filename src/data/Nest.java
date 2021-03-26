@@ -18,12 +18,21 @@ public abstract class Nest {
 	private int maxHealth;
 	private int currentHealth;
 	
+	private int timeReproduction;
+	
 	public Nest(Integer id, String type, Coordinate position, int maxHealth,
-			int capacity) {
+			int capacity, int timeReproduction) {
 		this.id=id;
 		this.position=position;
 		this.maxHealth=maxHealth;
 		this.type=type;
+		this.timeReproduction = timeReproduction;
+	}
+	
+	public void incrementCurrentInsects() {
+		if (currentInsects < capacity) {
+			currentInsects++;
+		}
 	}
 
 	public Integer getId() {
@@ -96,5 +105,13 @@ public abstract class Nest {
 
 	public void setInsects(ArrayList<Insect> insects) {
 		this.insects = insects;
+	}
+
+	public int getTimeReproduction() {
+		return timeReproduction;
+	}
+
+	public void setTimeReproduction(int timeReproduction) {
+		this.timeReproduction = timeReproduction;
 	}
 }
