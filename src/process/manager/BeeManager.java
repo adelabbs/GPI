@@ -45,8 +45,9 @@ public class BeeManager extends BugManager {
 			goDrink();
 			break;
 		
-		case NEST:
+		/*case NEST:
 			goNest();
+			break;*/
 
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + state);
@@ -77,9 +78,9 @@ public class BeeManager extends BugManager {
 				newState = AntManagerState.HUNGRY;
 			}
 			
-			else if( !insect.isHungry() && !insect.isThirsty() ) {
+			/*else if( !insect.isHungry() && !insect.isThirsty() ) {
 				newState = AntManagerState.NEST;
-			}
+			}*/
 			
 			else {
 				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
