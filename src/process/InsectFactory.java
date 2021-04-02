@@ -19,7 +19,6 @@ import test.manual.SimuPara;
  * {@link InsectFactory} uses a Singleton design pattern to make sure
  * {@link Insect } ids are unique.
  * 
- * @author Adel
  *
  */
 public class InsectFactory {

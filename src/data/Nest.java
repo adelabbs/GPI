@@ -4,51 +4,30 @@ import java.util.ArrayList;
 
 public abstract class Nest {
 
-	private Integer id;
 	private String type;
 
 	private Coordinate position;
 
-	private int size;
 	private ArrayList<Insect> insects = new ArrayList<Insect>();
-	
-	private int capacity;
-	private int currentInsects;
+
+	private int maxCapacity;
+	private int currentInsectsCount = 0;
 
 	private int maxHealth;
 	private int currentHealth;
-	
-	private int timeReproduction;
-	
-	public Nest(Integer id, String type, Coordinate position, int maxHealth,
-			int capacity, int timeReproduction) {
-		this.id=id;
-		this.position=position;
-		this.maxHealth=maxHealth;
-		this.type=type;
-		this.timeReproduction = timeReproduction;
-	}
-	
-	public void incrementCurrentInsects() {
-		if (currentInsects < capacity) {
-			currentInsects++;
-		}
-	}
 
-	public Integer getId() {
-		return id;
-	}
+	private int reproductionTime;
 
-	public void setId(Integer id) {
-		this.id = id;
+	public Nest(String type, Coordinate position, int maxHealth, int maxCapacity, int reproductionTime) {
+		this.position = position;
+		this.maxHealth = maxHealth;
+		currentHealth = maxHealth;
+		this.type = type;
+		this.reproductionTime = reproductionTime;
 	}
 
 	public String getType() {
 		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public Coordinate getPosition() {
@@ -59,36 +38,43 @@ public abstract class Nest {
 		this.position = position;
 	}
 
-	public int getSize() {
-		return size;
+	public ArrayList<Insect> getInsects() {
+		return insects;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	public void setInsects(ArrayList<Insect> insects) {
+		this.insects = insects;
 	}
 
-	public int getCapacity() {
-		return capacity;
+	public void remove(Insect insect) {
+		if (insects.contains(insect)) {
+			insects.remove(insect);
+			decrementCurrentInsectsCount();
+		}
 	}
 
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
+	public int getMaxCapacity() {
+		return maxCapacity;
 	}
 
-	public int getCurrentInsects() {
-		return currentInsects;
+	public int getCurrentInsectsCount() {
+		return currentInsectsCount;
 	}
 
-	public void setCurrentInsects(int currentInsects) {
-		this.currentInsects = currentInsects;
+	public void incrementCurrentInsectsCount() {
+		if (currentInsectsCount < maxCapacity) {
+			currentInsectsCount++;
+		}
+	}
+
+	public void decrementCurrentInsectsCount() {
+		if (currentInsectsCount > 0) {
+			currentInsectsCount--;
+		}
 	}
 
 	public int getMaxHealth() {
 		return maxHealth;
-	}
-
-	public void setMaxHealth(int maxHealth) {
-		this.maxHealth = maxHealth;
 	}
 
 	public int getCurrentHealth() {
@@ -99,19 +85,11 @@ public abstract class Nest {
 		this.currentHealth = currentHealth;
 	}
 
-	public ArrayList<Insect> getInsects() {
-		return insects;
+	public int getReproductionTime() {
+		return reproductionTime;
 	}
 
-	public void setInsects(ArrayList<Insect> insects) {
-		this.insects = insects;
-	}
-
-	public int getTimeReproduction() {
-		return timeReproduction;
-	}
-
-	public void setTimeReproduction(int timeReproduction) {
-		this.timeReproduction = timeReproduction;
+	public void setReproductionTime(int reproductionTime) {
+		this.reproductionTime = reproductionTime;
 	}
 }

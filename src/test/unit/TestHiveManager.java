@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import data.Constants;
 import data.Coordinate;
 import data.Environment;
 import data.Hive;
@@ -26,8 +25,7 @@ public class TestHiveManager {
 		insects.add(f.createBee(new Coordinate(1, 1)));
 		e.setInsects(insects);
 
-		Hive nest = new Hive(1, Constants.HIVE, new Coordinate(0, 0), SimuPara.NEST_MAX_HEALTH,
-				SimuPara.NEST_MAX_CAPACITY, 0);
+		Hive nest = new Hive(new Coordinate(0, 0), SimuPara.NEST_MAX_HEALTH, SimuPara.NEST_MAX_CAPACITY, 0);
 		nest.setInsects(insects);
 
 		HiveManager manager = new HiveManager(null, nest);

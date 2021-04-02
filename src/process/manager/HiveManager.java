@@ -53,14 +53,16 @@ public class HiveManager extends NestManager {
 	}
 
 	public void idle() {
-		int currentInsects = getNest().getCurrentInsects();
-
+		int currentInsects = getNest().getCurrentInsectsCount();
 		if (currentInsects > 2) {
-			setWaitTime(getNest().getTimeReproduction());
+			setWaitTime(getNest().getReproductionTime());
 			// TODO stop insects
 			setState(NestManagerState.REPRODUCTION);
 		}
+	}
 
+	public void enter(Bee bee) {
+		nest.add(bee);
 	}
 
 	public void addInsectNest() {
@@ -76,9 +78,7 @@ public class HiveManager extends NestManager {
 			ordinate = insect.getCurrentPosition().getOrdinate();
 
 			if ((nestPosition.getAbscissa() == abscissa) && (nestPosition.getOrdinate() == ordinate)) {
-				nest.addBee((Bee) insect);
-				nest.incrementCurrentInsects();
-
+				nest.add((Bee) insect);
 			}
 		}
 	}
