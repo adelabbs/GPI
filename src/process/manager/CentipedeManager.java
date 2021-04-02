@@ -21,7 +21,7 @@ public class CentipedeManager extends BugManager {
 	
 	public static final int CENTIPEDE_DAMAGE = SimuPara.MAX_HEALTH / 3;
 
-	public static final int TERRITORY_RADIUS = 300;
+	public static final Coordinate TERRITORY_RADIUS = new Coordinate(300,300);
 	public static final Coordinate TERRITORY_ORIGIN = new Coordinate(0, 0); 
 	
 	
@@ -35,6 +35,8 @@ public class CentipedeManager extends BugManager {
 		updateStats();
 		discoverPOI();
 		System.out.println(state);
+		Coordinate nextPos = insect.getDestinationPosition();
+		System.out.println(nextPos.getAbscissa() + ", " + nextPos.getOrdinate());
 		// TODO case where the Centipede attack
 		switch (state) {
 		case WANDERING:
@@ -63,10 +65,14 @@ public class CentipedeManager extends BugManager {
 	}
 
 	public Coordinate getInRangeCoordinate() {
-		if(!isHome()) {
+		if(insect.isHungry() || insect.isThirsty()) {
+			return SimulationUtility.getRandomCoordinate();
+		}
+		
+		else if(!isHome()) {
 			return TERRITORY_ORIGIN;
 		}
-		return new Coordinate(Math.random() * TERRITORY_RADIUS, Math.random() * TERRITORY_RADIUS);
+		return new Coordinate(Math.random() * TERRITORY_RADIUS.getAbscissa(), Math.random() * TERRITORY_RADIUS.getOrdinate());
 	}
 	
 	
@@ -78,8 +84,7 @@ public class CentipedeManager extends BugManager {
 				openent.setCurrentHealth(openent.getCurrentHealth() - CENTIPEDE_DAMAGE);
 				newState = CentipedeManagerState.WANDERING;
 			}
-			else if(SimulationUtility.distance(insect.getCurrentPosition(), TERRITORY_ORIGIN) <= TERRITORY_RADIUS) {
-				
+			else if(SimulationUtility.distance(insect.getCurrentPosition(), TERRITORY_ORIGIN) <= TERRITORY_RADIUS.getAbscissa()) {
 				insect.setDestinationPosition(openent.getCurrentPosition());
 				moveInsect(insect);
 				newState = CentipedeManagerState.WANDERING;
@@ -93,7 +98,7 @@ public class CentipedeManager extends BugManager {
 		ArrayList<Insect> insects = Environment.getInstance().getInsects();
 		for (Insect i : insects) {
 			if(i != insect) {
-				if(SimulationUtility.distance(insect.getCurrentPosition(), i.getCurrentPosition()) < TERRITORY_RADIUS) {
+				if(SimulationUtility.distance(insect.getCurrentPosition(), i.getCurrentPosition()) < TERRITORY_RADIUS.getAbscissa()) {
 					prey = i;
 				}
 			}
@@ -102,7 +107,7 @@ public class CentipedeManager extends BugManager {
 	}
 	
 	private boolean isHome() {
-		return(SimulationUtility.distance(insect.getCurrentPosition(), TERRITORY_ORIGIN) < TERRITORY_RADIUS);
+		return(SimulationUtility.distance(insect.getCurrentPosition(), TERRITORY_ORIGIN) < TERRITORY_RADIUS.getAbscissa());
 	}
 	
 	private void wander() {
@@ -159,7 +164,7 @@ public class CentipedeManager extends BugManager {
 				/ (double) insect.getMaxThirst() >= SimuPara.INSECT_DEFAULT_DRINK_UPPER_THRESHOLD) {
 			newState = CentipedeManagerState.WANDERING;
 			setDestinationResource(null);
-			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+			insect.setDestinationPosition(getInRangeCoordinate());
 
 		} else if (canConsume(Constants.WATER)) {
 			if (waitTime <= 0) {
@@ -178,7 +183,7 @@ public class CentipedeManager extends BugManager {
 				setDestinationResource(newResource);
 			} else {
 				newState = CentipedeManagerState.WANDERING;
-				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+				insect.setDestinationPosition(getInRangeCoordinate());
 
 			}
 
@@ -199,7 +204,7 @@ public class CentipedeManager extends BugManager {
 		if (insect.getCurrentHunger() / (double) insect.getMaxHunger() >= SimuPara.INSECT_DEFAULT_EAT_UPPER_THRESHOLD) {
 			newState = CentipedeManagerState.WANDERING;
 			setDestinationResource(null);
-			insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+			insect.setDestinationPosition(getInRangeCoordinate());
 
 		} else if (canConsume(Constants.FLOWER)) {
 			// TODO change to Constants.FOOD when implemented
@@ -220,7 +225,7 @@ public class CentipedeManager extends BugManager {
 				setDestinationResource(newResource);
 			} else {
 				newState = CentipedeManagerState.WANDERING;
-				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
+				insect.setDestinationPosition(getInRangeCoordinate());
 
 			}
 
