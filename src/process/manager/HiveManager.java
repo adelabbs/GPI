@@ -43,6 +43,8 @@ public class HiveManager implements NestManager {
 	
 	@Override
 	public void idle() {
+		addInsectNest();
+		
 		int currentInsects = getNest().getCurrentInsects();
 		
 		if( currentInsects > 2) {
