@@ -26,6 +26,7 @@ public class Simulation {
 	private SimulationState state;
 
 	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
+	private ArrayList<Insect> newInsects = new ArrayList<Insect>();
 	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
 
 	public Simulation(SimulationEntry simulationEntry) {
@@ -45,14 +46,11 @@ public class Simulation {
 
 		environment = Environment.getInstance();
 		environment.setMap(map);
-		createInsects(simulationEntry.getAntCount(), simulationEntry.getBeeCount(), simulationEntry.getSpiderCount(), simulationEntry.getCentipedeCount());
+		createInsects(simulationEntry.getAntCount(), simulationEntry.getBeeCount(), simulationEntry.getSpiderCount(),
+				simulationEntry.getCentipedeCount());
 		createResources(simulationEntry.getFlowerCount(), simulationEntry.getWaterCount(),
 				simulationEntry.getFoodCount());
 		setState(SimulationState.READY);
-	}
-
-	public HashMap<Integer, BugManager> getBugManagersByIds() {
-		return bugManagersByIds;
 	}
 
 	private void createInsects(int antCount, int beeCount, int spiderCount, int centipedeCount) {
@@ -77,10 +75,8 @@ public class Simulation {
 			Coordinate position = new Coordinate(x * SimuPara.SCALE, y * SimuPara.SCALE);
 			try {
 				Insect insect = factory.createInsect(type, position);
-				BugManager bugManager = factory.createBugManager(type, insect); // TODO replace type with specific group
-																				// number
 				insects.add(insect);
-				bugManagersByIds.put(insect.getId(), bugManager);
+				createAndAddBugManager(insect);
 				i++;
 			} catch (IllegalArgumentException e) {
 				System.err.println(e.getMessage());
@@ -130,24 +126,46 @@ public class Simulation {
 			}
 		}
 		removeAllDeadInsects();
-
+		addAllNewInsects();
 		if (getInsects().isEmpty()) {
 			setState(SimulationState.STOP);
 		}
 	}
 
+	public ArrayList<Insect> getInsects() {
+		return environment.getInsects();
+	}
+
 	public void add(Insect insect) {
-		ArrayList<Insect> insects = environment.getInsects();
-		insects.add(insect);
+		environment.add(insect);
 	}
 
 	public void remove(Insect insect) {
-		ArrayList<Insect> insects = environment.getInsects();
-		insects.remove(insect);
+		environment.remove(insect);
 	}
 
-	public void remove(Integer bugManagerId) {
+	public HashMap<Integer, BugManager> getBugManagersByIds() {
+		return bugManagersByIds;
+	}
+
+	public synchronized void createAndAddBugManager(Insect insect) {
+		if (insect != null) {
+			InsectFactory factory = InsectFactory.getInstance();
+			BugManager bugManager = factory.createBugManager(insect.getType(), insect);
+			bugManagersByIds.put(insect.getId(), bugManager);
+		}
+	}
+
+	public synchronized void remove(Integer bugManagerId) {
 		bugManagersByIds.remove(bugManagerId);
+	}
+
+	public ArrayList<Integer> getDeadInsectsIds() {
+		return deadInsectsIds;
+	}
+
+	public void addDeadInsect(Integer id) {
+		deadInsectsIds.add(id);
 	}
 
 	public void removeAllDeadInsects() {
@@ -159,12 +177,24 @@ public class Simulation {
 		deadInsectsIds.clear();
 	}
 
-	public void addDeadInsect(Integer id) {
-		deadInsectsIds.add(id);
+	public ArrayList<Insect> getNewInsects() {
+		return newInsects;
 	}
 
-	public ArrayList<Insect> getInsects() {
-		return environment.getInsects();
+	public void addNewInsect(Insect insect) throws IllegalArgumentException {
+		if (insect != null) {
+			newInsects.add(insect);
+		} else {
+			throw new IllegalArgumentException("Insect is null");
+		}
+	}
+
+	public void addAllNewInsects() {
+		for (Insect insect : newInsects) {
+			environment.add(insect);
+			createAndAddBugManager(insect);
+		}
+		newInsects.clear();
 	}
 
 	public Environment getEnvironment() {

@@ -8,6 +8,7 @@ import data.Environment;
 import data.Hive;
 import data.Insect;
 import data.Nest;
+import process.InsectFactory;
 import process.Simulation;
 
 public class HiveManager extends NestManager {
@@ -40,7 +41,15 @@ public class HiveManager extends NestManager {
 
 	@Override
 	public void reproduce() {
-
+		InsectFactory factory = InsectFactory.getInstance();
+		Coordinate position = nest.getPosition();
+		Bee bee = factory.createBee(position);
+		Environment e = Environment.getInstance();
+		e.add(bee);
+		Simulation simulation = getSimulation();
+		if (simulation != null) {
+			simulation.addNewInsect(bee);
+		}
 	}
 
 	public void idle() {
