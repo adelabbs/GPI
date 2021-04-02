@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 
 import data.Insect;
 import data.NaturalResource;
+import data.Nest;
 import process.Simulation;
 import test.manual.SimuPara;
 
@@ -22,6 +24,7 @@ public class Dashboard extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FILE_PATH = "resources/tiles/Tile";
+	public static final String IMAGES_PATH = "resources/images/";
 	public static final String FILE_EXTENSION = ".png";
 
 	private HashMap<Integer, BufferedImage> tiles = new HashMap<Integer, BufferedImage>();
@@ -139,7 +142,8 @@ public class Dashboard extends JPanel {
 		g2.drawString("Ant(s) : " + String.valueOf(nbAnts) + "/" + String.valueOf(nbIAnts), 1040, 100);
 		g2.drawString("Bee(s) : " + String.valueOf(nbBees) + "/" + String.valueOf(nbIBees), 1040, 140);
 		g2.drawString("Spider(s) : " + String.valueOf(nbSpiders) + "/" + String.valueOf(nbISpiders), 1040, 180);
-		g2.drawString("Millipede(s) : " + String.valueOf(nbMillipedes) + "/" + String.valueOf(nbIMillipedes), 1040, 220);
+		g2.drawString("Millipede(s) : " + String.valueOf(nbMillipedes) + "/" + String.valueOf(nbIMillipedes), 1040,
+				220);
 
 		// Resources on field
 		for (NaturalResource re : simulation.getEnvironment().getResourcesList()) {
@@ -265,8 +269,19 @@ public class Dashboard extends JPanel {
 		}
 	}
 
-	private void printNests(Graphics2D g22) {
-		// TODO
+	private void printNests(Graphics2D g2) {
+		BufferedImage bufferImage;
+		String fileName = "";
+		for (Nest nest : simulation.getEnvironment().getNests()) {
+			fileName = IMAGES_PATH + nest.getType() + FILE_EXTENSION;
+			try {
+				bufferImage = ImageIO.read(new File(fileName));
+				g2.drawImage(bufferImage, nest.getPosition().getAbscissa() * SimuPara.SCALE,
+						nest.getPosition().getOrdinate() * SimuPara.SCALE, null);
+			} catch (IOException e) {
+				System.err.println("-- Can not read the image file ! --");
+			}
+		}
 	}
 
 	public void setSimulation(Simulation simulation) {

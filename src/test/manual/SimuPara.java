@@ -47,5 +47,5 @@ public class SimuPara {
 
 	public static final int NEST_MAX_HEALTH = 1000;
 	public static final int NEST_MAX_CAPACITY = 4;
-	public static final int NEST_REPRODUCTION_TIME = 0;
+	public static final int NEST_REPRODUCTION_TIME = 500;
 }

@@ -9,6 +9,7 @@ import data.Hive;
 import data.Insect;
 import data.NaturalResource;
 import data.TileCoordinate;
+import process.manager.HiveManager;
 import test.manual.SimuPara;
 
 public class SimulationBuilder {
@@ -123,6 +124,7 @@ public class SimulationBuilder {
 		if (!environment.getResources().containsKey(position)) {
 			Hive hive = NestFactory.createHive(position);
 			environment.add(hive);
+			simulation.add(new HiveManager(simulation, hive));
 		}
 	}
 

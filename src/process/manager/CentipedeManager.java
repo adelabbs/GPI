@@ -34,9 +34,9 @@ public class CentipedeManager extends BugManager {
 	public void update() {
 		updateStats();
 		discoverPOI();
-		System.out.println(state);
-		Coordinate nextPos = insect.getDestinationPosition();
-		System.out.println(nextPos.getAbscissa() + ", " + nextPos.getOrdinate());
+		//System.out.println(state);
+		//Coordinate nextPos = insect.getDestinationPosition();
+		//System.out.println(nextPos.getAbscissa() + ", " + nextPos.getOrdinate());
 		// TODO case where the Centipede attack
 		switch (state) {
 		case WANDERING:

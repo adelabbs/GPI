@@ -21,4 +21,8 @@ public abstract class NestManager {
 
 	public abstract Nest getNest();
 
+	public boolean isDead() {
+		return getNest().getCurrentHealth() <= 0;
+	}
+
 }

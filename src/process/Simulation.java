@@ -5,8 +5,9 @@ import java.util.HashMap;
 
 import data.Environment;
 import data.Insect;
-
+import data.Nest;
 import process.manager.BugManager;
+import process.manager.NestManager;
 
 /**
  * The Simulation processing class.
@@ -22,6 +23,9 @@ public class Simulation {
 	private ArrayList<Insect> newInsects = new ArrayList<Insect>();
 	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
 
+	private ArrayList<NestManager> nestManagers = new ArrayList<NestManager>();
+	private ArrayList<NestManager> deadNestManagers = new ArrayList<NestManager>();
+
 	public Simulation(SimulationEntry simulationEntry) {
 		SimulationBuilder builder = new SimulationBuilder(simulationEntry, this);
 		builder.buildSimulation();
@@ -34,6 +38,14 @@ public class Simulation {
 				addDeadInsect(bugManager.getInsectId());
 			}
 		}
+
+		for (NestManager nestManager : nestManagers) {
+			nestManager.update();
+			if (nestManager.isDead()) {
+				addDeadNestManager(nestManager);
+			}
+		}
+		removeDeadNests();
 		removeAllDeadInsects();
 		addAllNewInsects();
 		if (getInsects().isEmpty()) {
@@ -73,8 +85,45 @@ public class Simulation {
 		bugManagersByIds.remove(bugManagerId);
 	}
 
+	public ArrayList<NestManager> getNestManagers() {
+		return nestManagers;
+	}
+
+	public void setNestManagers(ArrayList<NestManager> nestManagers) {
+		this.nestManagers = nestManagers;
+	}
+
+	public void add(NestManager manager) {
+		if (manager != null) {
+			nestManagers.add(manager);
+		}
+	}
+
+	public void remove(NestManager manager) {
+		nestManagers.remove(manager);
+	}
+
+	public ArrayList<NestManager> getDeadNestManagers() {
+		return deadNestManagers;
+	}
+
+	private void removeDeadNests() {
+		for (NestManager deadNestManager : deadNestManagers) {
+			Nest deadNest = deadNestManager.getNest();
+			environment.remove(deadNest);
+			nestManagers.remove(deadNestManager);
+		}
+		deadNestManagers.clear();
+	}
+
 	public ArrayList<Integer> getDeadInsectsIds() {
 		return deadInsectsIds;
+	}
+
+	public void addDeadNestManager(NestManager manager) {
+		if (manager != null) {
+			deadNestManagers.add(manager);
+		}
 	}
 
 	public void addDeadInsect(Integer id) {
