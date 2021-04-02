@@ -123,8 +123,6 @@ public class AntManager extends BugManager {
 		} else if (!isAtDestination()) {
 			moveInsect(insect);
 
-		} else {
-			// ?
 		}
 
 		setState(newState);
@@ -164,8 +162,6 @@ public class AntManager extends BugManager {
 
 		} else if (!isAtDestination()) {
 			moveInsect(insect);
-
-		} else {
 
 		}
 

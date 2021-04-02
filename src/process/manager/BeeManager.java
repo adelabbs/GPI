@@ -57,7 +57,7 @@ public class BeeManager extends BugManager {
 			insect.setDestinationPosition(new Coordinate(Math.random() * SimuPara.SIMULATION_MAP_SIZE,
 					Math.random() * SimuPara.SIMULATION_MAP_SIZE));
 		}
-		super.moveInsect(insect);
+		//super.moveInsect(insect);
 
 	}
 	
