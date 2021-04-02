@@ -4,6 +4,7 @@ public enum AntManagerState {
 	WANDERING,
 	IDLE,
 	HUNGRY,
-	THIRSTY;
+	THIRSTY,
+	NEST;
 
 }
