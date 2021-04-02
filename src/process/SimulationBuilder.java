@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import data.Constants;
 import data.Coordinate;
 import data.Environment;
+import data.Hive;
 import data.Insect;
 import data.NaturalResource;
 import data.TileCoordinate;
@@ -23,10 +24,15 @@ public class SimulationBuilder {
 	public void buildSimulation() {
 		simulation.setEnvironment(environment);
 		buildMap();
+
 		createInsects(simulationEntry.getAntCount(), simulationEntry.getBeeCount(), simulationEntry.getSpiderCount(),
 				simulationEntry.getCentipedeCount());
+
 		createResources(simulationEntry.getFlowerCount(), simulationEntry.getWaterCount(),
 				simulationEntry.getFoodCount());
+
+		createNests();
+
 		simulation.setState(SimulationState.READY);
 	}
 
@@ -107,6 +113,16 @@ public class SimulationBuilder {
 					System.err.println(e.getMessage());
 				}
 			}
+		}
+	}
+
+	private void createNests() {
+		int x = (int) (0 + Math.random() * ((19 - 0)));
+		int y = (int) (0 + Math.random() * ((19 - 0)));
+		TileCoordinate position = new TileCoordinate(x, y);
+		if (!environment.getResources().containsKey(position)) {
+			Hive hive = NestFactory.createHive(position);
+			environment.add(hive);
 		}
 	}
 

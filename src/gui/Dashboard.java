@@ -12,7 +12,6 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-
 import data.Insect;
 import data.NaturalResource;
 import process.Simulation;
@@ -32,7 +31,7 @@ public class Dashboard extends JPanel {
 	private Simulation simulation;
 	Graphics2D g2;
 	private boolean end = false;
-	
+
 	// Lateral bar
 	// Insects count
 	private int nbIAnts = 0;
@@ -63,6 +62,7 @@ public class Dashboard extends JPanel {
 		printResources(g2);
 		printInsects(g2);
 		printLateralBar(g2);
+		printNests(g2);
 
 		if (DEBUG) {
 			printDebugGrid(g2);
@@ -256,6 +256,10 @@ public class Dashboard extends JPanel {
 			g2.drawImage(resourceTiles.get(nr.getId()), (int) nr.getCoordinates().getAbscissa() * SimuPara.SCALE,
 					(int) nr.getCoordinates().getOrdinate() * SimuPara.SCALE, null);
 		}
+	}
+
+	private void printNests(Graphics2D g22) {
+		// TODO
 	}
 
 	public void setSimulation(Simulation simulation) {

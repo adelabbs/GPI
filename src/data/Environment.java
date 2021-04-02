@@ -16,6 +16,7 @@ public class Environment {
 	private Integer[][] map;
 	private HashMap<TileCoordinate, NaturalResource> resources = new HashMap<TileCoordinate, NaturalResource>();
 	private ArrayList<Insect> insects = new ArrayList<Insect>();
+	private ArrayList<Nest> nests = new ArrayList<Nest>();
 
 	/**
 	 * Private constructor ensuring no access from outside of the class.
@@ -84,6 +85,24 @@ public class Environment {
 
 	public void setResources(HashMap<TileCoordinate, NaturalResource> resources) {
 		this.resources = resources;
+	}
+
+	public ArrayList<Nest> getNests() {
+		return nests;
+	}
+
+	public void add(Nest nest) {
+		if (nest != null) {
+			nests.add(nest);
+		}
+	}
+
+	public void remove(Nest nest) {
+		nests.remove(nest);
+	}
+
+	public void setNests(ArrayList<Nest> nests) {
+		this.nests = nests;
 	}
 
 	public String printMap() {
