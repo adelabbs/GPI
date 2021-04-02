@@ -9,6 +9,8 @@ import data.Insect;
 import data.NaturalResource;
 import data.Spider;
 import data.TileCoordinate;
+import process.Simulation;
+import process.SimulationEntry;
 import process.SimulationUtility;
 import test.manual.SimuPara;
 
@@ -17,7 +19,7 @@ public class SpiderManager extends BugManager {
 	private Spider insect;
 	private int waitTime = 0;
 	private SpiderManagerState state = SpiderManagerState.WANDERING;
-	private int range = 5; // 5 tiles
+	private int range = 1;
 	public static final int SPIDER_DAMAGE = SimuPara.MAX_HEALTH / 2;
 
 	public SpiderManager(String groupID, String agressivity, Spider spider, Environment environment) {
@@ -58,19 +60,14 @@ public class SpiderManager extends BugManager {
 		ArrayList<Insect> insects = getEnvironment().getInsects();
 		Coordinate insectPosition = getInsect().getCurrentPosition();
 
-		double rangeC = (double) range * 50;
+		double rangeC = (double) range * SimuPara.SIMULATION_TILES;
 		double distance;
 
 		for (Insect insect : insects) {
 			distance = SimulationUtility.distance(insectPosition, insect.getCurrentPosition());
 			if (distance < rangeC) {
-
 				this.insect.addPrey(insect);
-			} else {
-				// this function remove the insect only if he exist in
-				// arrayList
-				this.insect.remove(insect);
-			}
+			} 
 		}
 	}
 

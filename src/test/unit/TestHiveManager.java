@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import data.Constants;
 import data.Coordinate;
 import data.Environment;
 import data.Hive;
 import data.Insect;
+import data.TileCoordinate;
 import process.InsectFactory;
+import process.NestFactory;
 import process.manager.HiveManager;
-import test.manual.SimuPara;
 
 public class TestHiveManager {
 	@Test
@@ -26,11 +26,10 @@ public class TestHiveManager {
 		insects.add(f.createBee(new Coordinate(1, 1)));
 		e.setInsects(insects);
 
-		Hive nest = new Hive(1, Constants.HIVE, new Coordinate(0, 0), SimuPara.NEST_MAX_HEALTH,
-				SimuPara.NEST_MAX_CAPACITY);
+		Hive nest = NestFactory.createHive(new TileCoordinate(0, 0));
 		nest.setInsects(insects);
 
-		HiveManager manager = new HiveManager(nest);
+		HiveManager manager = new HiveManager(null, nest);
 		int initialInsectCount = e.getInsects().size();
 
 		// Then

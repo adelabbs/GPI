@@ -3,123 +3,28 @@ package process;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.Constants;
-import data.Coordinate;
 import data.Environment;
 import data.Insect;
-import data.NaturalResource;
-import data.TileCoordinate;
 
 import process.manager.BugManager;
-import test.manual.SimuPara;
 
 /**
  * The Simulation processing class.
  * 
- * @author Adel
  *
  */
 public class Simulation {
 	// private static final boolean DEBUG = false;
-	private SimulationEntry simulationEntry;
 	private Environment environment;
 	private SimulationState state;
 
 	private HashMap<Integer, BugManager> bugManagersByIds = new HashMap<Integer, BugManager>();
+	private ArrayList<Insect> newInsects = new ArrayList<Insect>();
 	private ArrayList<Integer> deadInsectsIds = new ArrayList<Integer>();
 
 	public Simulation(SimulationEntry simulationEntry) {
-		this.simulationEntry = simulationEntry;
-		buildSimulation();
-	}
-
-	private void buildSimulation() {
-		int size = simulationEntry.getMapSize();
-		Integer[][] map = new Integer[size][size];
-
-		for (int y = 0; y < size; y++) {
-			for (int x = 0; x < size; x++) {
-				map[y][x] = Integer.valueOf((int) (Math.random() * (SimuPara.TILESET_SIZE)));
-			}
-		}
-
-		environment = Environment.getInstance();
-		environment.setMap(map);
-		createInsects(simulationEntry.getAntCount(), simulationEntry.getBeeCount(), simulationEntry.getSpiderCount(), simulationEntry.getCentipedeCount());
-		createResources(simulationEntry.getFlowerCount(), simulationEntry.getWaterCount(),
-				simulationEntry.getFoodCount());
-		setState(SimulationState.READY);
-	}
-
-	public HashMap<Integer, BugManager> getBugManagersByIds() {
-		return bugManagersByIds;
-	}
-
-	private void createInsects(int antCount, int beeCount, int spiderCount, int centipedeCount) {
-		ArrayList<Insect> insects = new ArrayList<Insect>();
-		createInsects(Constants.ANT, antCount, insects);
-		createInsects(Constants.BEE, beeCount, insects);
-		createInsects(Constants.SPIDER, spiderCount, insects);
-		createInsects(Constants.CENTIPEDE, centipedeCount, insects);
-		environment.setInsects(insects);
-	}
-
-	private void createInsects(String type, int count, ArrayList<Insect> insects) {
-		if (count < 0)
-			throw new IllegalArgumentException("Negative resource count");
-
-		InsectFactory factory = InsectFactory.getInstance();
-		int i = 0;
-		while (i < count) {
-			int x = (int) (0 + Math.random() * ((SimuPara.SIMULATION_TILES - 0)));
-			int y = (int) (0 + Math.random() * ((SimuPara.SIMULATION_TILES - 0)));
-
-			Coordinate position = new Coordinate(x * SimuPara.SCALE, y * SimuPara.SCALE);
-			try {
-				Insect insect = factory.createInsect(type, position);
-				BugManager bugManager = factory.createBugManager(type, insect); // TODO replace type with specific group
-																				// number
-				insects.add(insect);
-				bugManagersByIds.put(insect.getId(), bugManager);
-				i++;
-			} catch (IllegalArgumentException e) {
-				System.err.println(e.getMessage());
-			}
-		}
-	}
-
-	private void createResources(int flowerCount, int waterCount, int foodCount) throws IllegalArgumentException {
-		if (waterCount + foodCount + flowerCount > SimuPara.SIMULATION_TILES * SimuPara.SIMULATION_TILES)
-			throw new IllegalArgumentException("Resources count exceeds map capacity");
-		try {
-			createResources(Constants.FLOWER, flowerCount);
-			createResources(Constants.WATER, waterCount);
-			createResources(Constants.FOOD, foodCount);
-		} catch (IllegalArgumentException e) {
-			System.err.println(e.getMessage());
-		}
-	}
-
-	private void createResources(String type, int count) throws IllegalArgumentException {
-		if (count < 0)
-			throw new IllegalArgumentException("Negative resource count");
-		int i = 0;
-		while (i < count) {
-			int x = (int) (0 + Math.random() * ((19 - 0)));
-			int y = (int) (0 + Math.random() * ((19 - 0)));
-			TileCoordinate position = new TileCoordinate(x, y);
-			if (!environment.getResources().containsKey(position)) {
-				try {
-					NaturalResource resource = NaturalResourceFactory.createResource(type, position);
-					environment.addResource(resource);
-					i++;
-				} catch (IllegalArgumentException e) {
-					System.err.println(e.getMessage());
-				}
-
-			}
-
-		}
+		SimulationBuilder builder = new SimulationBuilder(simulationEntry, this);
+		builder.buildSimulation();
 	}
 
 	public void simulate() {
@@ -130,24 +35,50 @@ public class Simulation {
 			}
 		}
 		removeAllDeadInsects();
-
+		addAllNewInsects();
 		if (getInsects().isEmpty()) {
 			setState(SimulationState.STOP);
 		}
 	}
 
+	public ArrayList<Insect> getInsects() {
+		return environment.getInsects();
+	}
+
 	public void add(Insect insect) {
-		ArrayList<Insect> insects = environment.getInsects();
-		insects.add(insect);
+		environment.add(insect);
 	}
 
 	public void remove(Insect insect) {
-		ArrayList<Insect> insects = environment.getInsects();
-		insects.remove(insect);
+		environment.remove(insect);
 	}
 
-	public void remove(Integer bugManagerId) {
+	public HashMap<Integer, BugManager> getBugManagersByIds() {
+		return bugManagersByIds;
+	}
+
+	public void setBugManagersByIds(HashMap<Integer, BugManager> bugManagersByIds) {
+		this.bugManagersByIds = bugManagersByIds;
+	}
+
+	public synchronized void createAndAddBugManager(Insect insect) {
+		if (insect != null) {
+			InsectFactory factory = InsectFactory.getInstance();
+			BugManager bugManager = factory.createBugManager(insect.getType(), insect);
+			bugManagersByIds.put(insect.getId(), bugManager);
+		}
+	}
+
+	public synchronized void remove(Integer bugManagerId) {
 		bugManagersByIds.remove(bugManagerId);
+	}
+
+	public ArrayList<Integer> getDeadInsectsIds() {
+		return deadInsectsIds;
+	}
+
+	public void addDeadInsect(Integer id) {
+		deadInsectsIds.add(id);
 	}
 
 	public void removeAllDeadInsects() {
@@ -159,16 +90,32 @@ public class Simulation {
 		deadInsectsIds.clear();
 	}
 
-	public void addDeadInsect(Integer id) {
-		deadInsectsIds.add(id);
+	public ArrayList<Insect> getNewInsects() {
+		return newInsects;
 	}
 
-	public ArrayList<Insect> getInsects() {
-		return environment.getInsects();
+	public void addNewInsect(Insect insect) throws IllegalArgumentException {
+		if (insect != null) {
+			newInsects.add(insect);
+		} else {
+			throw new IllegalArgumentException("Insect is null");
+		}
+	}
+
+	public void addAllNewInsects() {
+		for (Insect insect : newInsects) {
+			environment.add(insect);
+			createAndAddBugManager(insect);
+		}
+		newInsects.clear();
 	}
 
 	public Environment getEnvironment() {
 		return environment;
+	}
+
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
 	}
 
 	public Integer[][] getMap() {

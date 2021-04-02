@@ -30,4 +30,22 @@ public class Coordinate {
 	public String toString() {
 		return "Coordinate [abscissa=" + abscissa + ", ordinate=" + ordinate + "]";
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Coordinate other = (Coordinate) obj;
+		if (Double.doubleToLongBits(abscissa) != Double.doubleToLongBits(other.abscissa))
+			return false;
+		if (Double.doubleToLongBits(ordinate) != Double.doubleToLongBits(other.ordinate))
+			return false;
+		return true;
+	}
+	
+	
 }

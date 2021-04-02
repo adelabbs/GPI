@@ -12,7 +12,6 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-
 import data.Insect;
 import data.NaturalResource;
 import process.Simulation;
@@ -32,12 +31,13 @@ public class Dashboard extends JPanel {
 	private Simulation simulation;
 	Graphics2D g2;
 	private boolean end = false;
-	
+
 	// Lateral bar
 	// Insects count
 	private int nbIAnts = 0;
 	private int nbIBees = 0;
 	private int nbISpiders = 0;
+	private int nbIMillipedes = 0;
 	private boolean setMax = false;
 	// Resources count
 	private int maxWater = 0;
@@ -63,6 +63,7 @@ public class Dashboard extends JPanel {
 		printResources(g2);
 		printInsects(g2);
 		printLateralBar(g2);
+		printNests(g2);
 
 		if (DEBUG) {
 			printDebugGrid(g2);
@@ -83,6 +84,8 @@ public class Dashboard extends JPanel {
 				nbIBees++;
 			} else if (i.getType().equals("Spider")) {
 				nbISpiders++;
+			} else if (i.getType().equals("Centipede")) {
+				nbIMillipedes++;
 			}
 		}
 	}
@@ -103,6 +106,7 @@ public class Dashboard extends JPanel {
 		int nbAnts = 0;
 		int nbBees = 0;
 		int nbSpiders = 0;
+		int nbMillipedes = 0;
 		int waterQuantity = 0;
 		int flowerQuantity = 0;
 
@@ -119,11 +123,13 @@ public class Dashboard extends JPanel {
 				nbBees++;
 			} else if (i.getType().equals("Spider")) {
 				nbSpiders++;
+			} else if (i.getType().equals("Centipede")) {
+				nbMillipedes++;
 			}
 		}
 
 		// Lateral Bar Border
-		g2.fillRect(1000, 1, 1000, height);
+		g2.fillRect(1000, 0, 1000, height);
 		// Scoreboard panel
 		g2.setFont(new Font("Lancer", Font.BOLD, 20));
 		g2.setColor(Color.RED);
@@ -133,6 +139,7 @@ public class Dashboard extends JPanel {
 		g2.drawString("Ant(s) : " + String.valueOf(nbAnts) + "/" + String.valueOf(nbIAnts), 1040, 100);
 		g2.drawString("Bee(s) : " + String.valueOf(nbBees) + "/" + String.valueOf(nbIBees), 1040, 140);
 		g2.drawString("Spider(s) : " + String.valueOf(nbSpiders) + "/" + String.valueOf(nbISpiders), 1040, 180);
+		g2.drawString("Millipede(s) : " + String.valueOf(nbMillipedes) + "/" + String.valueOf(nbIMillipedes), 1040, 220);
 
 		// Resources on field
 		for (NaturalResource re : simulation.getEnvironment().getResourcesList()) {
@@ -256,6 +263,10 @@ public class Dashboard extends JPanel {
 			g2.drawImage(resourceTiles.get(nr.getId()), (int) nr.getCoordinates().getAbscissa() * SimuPara.SCALE,
 					(int) nr.getCoordinates().getOrdinate() * SimuPara.SCALE, null);
 		}
+	}
+
+	private void printNests(Graphics2D g22) {
+		// TODO
 	}
 
 	public void setSimulation(Simulation simulation) {
