@@ -162,7 +162,7 @@ public class PaintVisitor implements InsectVisitor<Void> {
 
 	@Override
 	public Void visit(Centipede insect) {
-		String filename = "resources/images/centipede.png";
+		String filename = "resources/images/millipede.png";
 		try {
 			BufferedImage bufferImage = ImageIO.read(new File(filename));
 			bufferImage = rotate(bufferImage, insect.getDirection());
