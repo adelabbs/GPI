@@ -6,7 +6,7 @@ public abstract class Nest {
 
 	private String type;
 
-	private Coordinate position;
+	private TileCoordinate position;
 
 	private ArrayList<Insect> insects = new ArrayList<Insect>();
 
@@ -18,7 +18,7 @@ public abstract class Nest {
 
 	private int reproductionTime;
 
-	public Nest(String type, Coordinate position, int maxHealth, int maxCapacity, int reproductionTime) {
+	public Nest(String type, TileCoordinate position, int maxHealth, int maxCapacity, int reproductionTime) {
 		this.position = position;
 		this.maxHealth = maxHealth;
 		currentHealth = maxHealth;
@@ -30,11 +30,11 @@ public abstract class Nest {
 		return type;
 	}
 
-	public Coordinate getPosition() {
+	public TileCoordinate getPosition() {
 		return position;
 	}
 
-	public void setPosition(Coordinate position) {
+	public void setPosition(TileCoordinate position) {
 		this.position = position;
 	}
 

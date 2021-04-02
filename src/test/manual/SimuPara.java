@@ -3,7 +3,7 @@ package test.manual;
 public class SimuPara {
 	public static final int SIMULATION_SPEED = 10; // lower values = higher speeds
 	public static final int SIMULATION_MAP_SIZE = 1000;
-	
+
 	public static final int SCALE = 50;
 
 	public static final int SIMULATION_TILES = SIMULATION_MAP_SIZE / SCALE;
@@ -47,4 +47,5 @@ public class SimuPara {
 
 	public static final int NEST_MAX_HEALTH = 1000;
 	public static final int NEST_MAX_CAPACITY = 4;
+	public static final int NEST_REPRODUCTION_TIME = 0;
 }

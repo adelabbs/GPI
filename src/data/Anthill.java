@@ -2,8 +2,8 @@ package data;
 
 public class Anthill extends Nest {
 
-	public Anthill(Coordinate position, int maxHealth, int capacity, int reproductionTime) {
-		super(Constants.ANTILL, position, maxHealth, capacity, reproductionTime);
+	public Anthill(TileCoordinate position, int maxHealth, int capacity, int reproductionTime) {
+		super(Constants.ANTHILL, position, maxHealth, capacity, reproductionTime);
 	}
 
 	public void add(Ant ant) {

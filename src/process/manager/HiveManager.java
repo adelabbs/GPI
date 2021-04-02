@@ -1,15 +1,14 @@
 package process.manager;
 
-import java.util.ArrayList;
 
 import data.Bee;
-import data.Coordinate;
 import data.Environment;
 import data.Hive;
-import data.Insect;
 import data.Nest;
+import data.TileCoordinate;
 import process.InsectFactory;
 import process.Simulation;
+import process.SimulationUtility;
 
 public class HiveManager extends NestManager {
 
@@ -42,8 +41,8 @@ public class HiveManager extends NestManager {
 	@Override
 	public void reproduce() {
 		InsectFactory factory = InsectFactory.getInstance();
-		Coordinate position = nest.getPosition();
-		Bee bee = factory.createBee(position);
+		TileCoordinate position = nest.getPosition();
+		Bee bee = factory.createBee(SimulationUtility.convertTileCoordinates(position));
 		Environment e = Environment.getInstance();
 		e.add(bee);
 		Simulation simulation = getSimulation();
@@ -67,6 +66,7 @@ public class HiveManager extends NestManager {
 
 	public void addInsectNest() {
 		// Use getEnvironment method
+		/*
 		ArrayList<Insect> insects = Environment.getInstance().getInsects();
 		Coordinate nestPosition = getNest().getPosition();
 
@@ -80,7 +80,7 @@ public class HiveManager extends NestManager {
 			if ((nestPosition.getAbscissa() == abscissa) && (nestPosition.getOrdinate() == ordinate)) {
 				nest.add((Bee) insect);
 			}
-		}
+		}*/
 	}
 
 	@Override
