@@ -1,7 +1,7 @@
 package test.manual;
 
 public class SimuPara {
-	public static final int SIMULATION_SPEED = 50; // lower values = higher speeds
+	public static final int SIMULATION_SPEED = 16; // lower values = higher speeds
 	public static final int SIMULATION_MAP_SIZE = 1000;
 
 	public static final int SCALE = 50;
