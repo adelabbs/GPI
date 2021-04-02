@@ -2,12 +2,14 @@ package process.manager;
 
 import data.Hive;
 import data.Nest;
+import process.Simulation;
 
-public class HiveManager implements NestManager {
+public class HiveManager extends NestManager {
 
 	private Hive nest;
 
-	public HiveManager(Hive nest) {
+	public HiveManager(Simulation simulation, Hive nest) {
+		super(simulation);
 		this.nest = nest;
 	}
 
@@ -19,7 +21,7 @@ public class HiveManager implements NestManager {
 
 	@Override
 	public void reproduce() {
-		// TODO
+		
 	}
 
 	@Override

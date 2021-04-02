@@ -1,13 +1,24 @@
 package process.manager;
 
 import data.Nest;
+import process.Simulation;
 
-public interface NestManager {
+public abstract class NestManager {
 
-	void update();
+	private Simulation simulation;
 
-	void reproduce();
+	public NestManager(Simulation simulation) {
+		this.simulation = simulation;
+	}
 
-	Nest getNest();
+	public Simulation getSimulation() {
+		return simulation;
+	}
+
+	public abstract void update();
+
+	public abstract void reproduce();
+
+	public abstract Nest getNest();
 
 }

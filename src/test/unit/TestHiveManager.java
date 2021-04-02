@@ -30,7 +30,7 @@ public class TestHiveManager {
 				SimuPara.NEST_MAX_CAPACITY);
 		nest.setInsects(insects);
 
-		HiveManager manager = new HiveManager(nest);
+		HiveManager manager = new HiveManager(null, nest);
 		int initialInsectCount = e.getInsects().size();
 
 		// Then
