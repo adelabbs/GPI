@@ -8,7 +8,7 @@ public class Centipede extends Insect {
 			int maxSpeed) {
 		super(id, destinationPosition, maxHealth, maxHunger, maxThirst, maxSpeed, Constants.CENTIPEDE);
 	}
-	
+
 	@Override
 	public <T> T accept(InsectVisitor<T> visitor) {
 		return visitor.visit(this);

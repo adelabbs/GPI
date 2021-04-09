@@ -55,8 +55,6 @@ public class SimuPara {
 
 	public static final int NEST_REPRODUCTION_TIME = 1500;
 	public static final int HIVE_REPRODUCTION_TIME = 1500;
-	public static final int ANTHILL_REPRODUCTION_TIME = 2500;
-
-	
+	public static final int ANTHILL_REPRODUCTION_TIME = 2000;
 
 }

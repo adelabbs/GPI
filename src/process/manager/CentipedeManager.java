@@ -31,7 +31,6 @@ public class CentipedeManager extends BugManager {
 	public void update() {
 		updateStats();
 		discoverPOI();
-		// TODO case where the Centipede attack
 		switch (state) {
 		case WANDERING:
 			wander();
@@ -76,32 +75,28 @@ public class CentipedeManager extends BugManager {
 		if (openent != null) {
 			Coordinate insectCoordinate = insect.getCurrentPosition();
 			Coordinate opponentInsectCoordinate = openent.getCurrentPosition();
-			
+
 			insect.setDestinationPosition(opponentInsectCoordinate);
-				System.out.println("chasing opponent");
 
-				if(SimulationUtility.distance(opponentInsectCoordinate,insectCoordinate)<=10) {
-					if(attackCoolDown <= 0) {
-						openent.setCurrentHealth(openent.getCurrentHealth() - SimuPara.INSECT_DAMAGE);
-						attackCoolDown = SimuPara.INSECT_ATTACK_TIME_INTERVAL;
-						insect.setSpeed(SimuPara.CENTIPEDE_CHASING_SPEED);
-						
-					}
-					else {
-						attackCoolDown--;
-					}
-				}	
-				
-				newState = CentipedeManagerState.DEFEND;
-				moveInsect(insect);
+			if (SimulationUtility.distance(opponentInsectCoordinate, insectCoordinate) <= 10) {
+				if (attackCoolDown <= 0) {
+					openent.setCurrentHealth(openent.getCurrentHealth() - SimuPara.INSECT_DAMAGE);
+					attackCoolDown = SimuPara.INSECT_ATTACK_TIME_INTERVAL;
+					insect.setSpeed(SimuPara.CENTIPEDE_CHASING_SPEED);
 
-		}
-		else {
+				} else {
+					attackCoolDown--;
+				}
+			}
+
+			newState = CentipedeManagerState.DEFEND;
+			moveInsect(insect);
+
+		} else {
 			newState = CentipedeManagerState.WANDERING;
 			insect.setSpeed(SimuPara.CENTIPEDE_SPEED);
-			System.out.println("no opponent");
 		}
-		
+
 		setState(newState);
 	}
 
@@ -116,10 +111,10 @@ public class CentipedeManager extends BugManager {
 				preyPosition = i.getCurrentPosition();
 				if (SimulationUtility.distance(TERRITORY_ORIGIN, i.getCurrentPosition()) < TERRITORY_RADIUS
 						.getAbscissa()) {
-					if(SimulationUtility.distance(insectPosition,preyPosition)<distance) {
+					if (SimulationUtility.distance(insectPosition, preyPosition) < distance) {
 						prey = i;
 					}
-					
+
 				}
 			}
 		}
@@ -211,8 +206,6 @@ public class CentipedeManager extends BugManager {
 		} else if (!isAtDestination()) {
 			moveInsect(insect);
 
-		} else {
-			// ?
 		}
 
 		setState(newState);
@@ -252,8 +245,6 @@ public class CentipedeManager extends BugManager {
 
 		} else if (!isAtDestination()) {
 			moveInsect(insect);
-
-		} else {
 
 		}
 
