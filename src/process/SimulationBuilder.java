@@ -2,6 +2,7 @@ package process;
 
 import java.util.ArrayList;
 
+import data.Anthill;
 import data.Constants;
 import data.Coordinate;
 import data.Environment;
@@ -9,6 +10,7 @@ import data.Hive;
 import data.Insect;
 import data.NaturalResource;
 import data.TileCoordinate;
+import process.manager.AntHillManager;
 import process.manager.HiveManager;
 import test.manual.SimuPara;
 
@@ -69,9 +71,10 @@ public class SimulationBuilder {
 
 		InsectFactory factory = InsectFactory.getInstance();
 		int i = 0;
+		int size = simulationEntry.getMapSize();
 		while (i < count) {
-			int x = (int) (0 + Math.random() * ((SimuPara.SIMULATION_TILES - 0)));
-			int y = (int) (0 + Math.random() * ((SimuPara.SIMULATION_TILES - 0)));
+			int x = (int) (0 + Math.random() * ((size - 1)));
+			int y = (int) (0 + Math.random() * ((size - 1)));
 
 			Coordinate position = new Coordinate(x * SimuPara.SCALE, y * SimuPara.SCALE);
 			try {
@@ -86,7 +89,8 @@ public class SimulationBuilder {
 	}
 
 	private void createResources(int flowerCount, int waterCount, int foodCount) throws IllegalArgumentException {
-		if (waterCount + foodCount + flowerCount > SimuPara.SIMULATION_TILES * SimuPara.SIMULATION_TILES)
+		int size = simulationEntry.getMapSize();
+		if (waterCount + foodCount + flowerCount > size * size)
 			throw new IllegalArgumentException("Resources count exceeds map capacity");
 		try {
 			createResources(Constants.FLOWER, flowerCount);
@@ -118,14 +122,47 @@ public class SimulationBuilder {
 	}
 
 	private void createNests() {
-		int x = (int) (0 + Math.random() * ((19 - 0)));
-		int y = (int) (0 + Math.random() * ((19 - 0)));
-		TileCoordinate position = new TileCoordinate(x, y);
-		if (!environment.getResources().containsKey(position)) {
-			Hive hive = NestFactory.createHive(position);
+		boolean createdHive = false;
+		boolean createdAntHill = false;
+		while (!((createdHive) && (createdAntHill))) {
+			if(!createdHive) {
+				createdHive = createHive();
+			}
+			if(!createdAntHill) {
+				createdAntHill = createAnthill();
+			}
+		}
+	}
+	
+	private boolean createHive() {
+		boolean created = false;
+		TileCoordinate hivePosition = generateRandomPosition();
+		if (!environment.getResources().containsKey(hivePosition)) {
+			Hive hive = NestFactory.createHive(hivePosition);
 			environment.add(hive);
 			simulation.add(new HiveManager(simulation, hive));
+			created = true;
 		}
+		return created;
+	}
+	
+	private boolean createAnthill() {
+		boolean created = false;
+		TileCoordinate antHillPosition = generateRandomPosition();
+		if (!environment.getResources().containsKey(antHillPosition)) {
+			Anthill antHill = NestFactory.createAnthill(antHillPosition);
+			environment.add(antHill);
+			simulation.add(new AntHillManager(simulation, antHill));
+			created = true;
+		}
+		return created;
+	}
+
+	private TileCoordinate generateRandomPosition() {
+		int size = simulationEntry.getMapSize();
+		int x = (int) (0 + Math.random() * ((size - 1)));
+		int y = (int) (0 + Math.random() * ((size - 1)));
+		return new TileCoordinate(x, y);
 	}
 
 	public SimulationEntry getSimulationEntry() {

@@ -12,7 +12,7 @@ import test.manual.SimuPara;
 public class HiveManager extends NestManager {
 
 	private Hive nest;
-	private int waitTime = SimuPara.NEST_REPRODUCTION_TIME;
+	private int waitTime = SimuPara.HIVE_REPRODUCTION_TIME;
 	private NestManagerState state = NestManagerState.IDLE;
 
 	public HiveManager(Simulation simulation, Hive nest) {
@@ -59,23 +59,6 @@ public class HiveManager extends NestManager {
 
 	public void enter(Bee bee) {
 		nest.add(bee);
-	}
-
-	public void addInsectNest() {
-		// Use getEnvironment method
-		/*
-		 * ArrayList<Insect> insects = Environment.getInstance().getInsects();
-		 * Coordinate nestPosition = getNest().getPosition();
-		 * 
-		 * double abscissa; double ordinate;
-		 * 
-		 * for (Insect insect : insects) { abscissa =
-		 * insect.getCurrentPosition().getAbscissa(); ordinate =
-		 * insect.getCurrentPosition().getOrdinate();
-		 * 
-		 * if ((nestPosition.getAbscissa() == abscissa) && (nestPosition.getOrdinate()
-		 * == ordinate)) { nest.add((Bee) insect); } }
-		 */
 	}
 
 	@Override

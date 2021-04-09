@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TestAntManager.class, TestSimulation.class, TestBugManager.class})
+@Suite.SuiteClasses({TestAntManager.class, TestSimulation.class, TestBugManager.class, TestSpiderManager.class })
 public class SimulationTestSuite {
 
 }

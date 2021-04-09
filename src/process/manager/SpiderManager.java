@@ -9,8 +9,6 @@ import data.Insect;
 import data.NaturalResource;
 import data.Spider;
 import data.TileCoordinate;
-import process.Simulation;
-import process.SimulationEntry;
 import process.SimulationUtility;
 import test.manual.SimuPara;
 

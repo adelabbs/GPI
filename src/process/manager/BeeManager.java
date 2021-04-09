@@ -27,7 +27,7 @@ public class BeeManager extends BugManager {
 	public void update() {
 		updateStats();
 		discoverPOI();
-		
+
 		switch (state) {
 		case WANDERING:
 			wander();
@@ -44,23 +44,21 @@ public class BeeManager extends BugManager {
 		case THIRSTY:
 			goDrink();
 			break;
-		
-		/*case NEST:
-			goNest();
-			break;*/
+
+		/*
+		 * case NEST: goNest(); break;
+		 */
 
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + state);
 		}
-		
+
 		if (insect.getDestinationPosition() == insect.getCurrentPosition()) {
 			insect.setDestinationPosition(new Coordinate(Math.random() * SimuPara.SIMULATION_MAP_SIZE,
 					Math.random() * SimuPara.SIMULATION_MAP_SIZE));
 		}
-		//super.moveInsect(insect);
-
 	}
-	
+
 	private void wander() {
 		BeeManagerState newState = BeeManagerState.WANDERING;
 
@@ -77,11 +75,12 @@ public class BeeManager extends BugManager {
 			else if (insect.isHungry()) {
 				newState = BeeManagerState.HUNGRY;
 			}
-			
-			/*else if( !insect.isHungry() && !insect.isThirsty() ) {
-				newState = AntManagerState.NEST;
-			}*/
-			
+
+			/*
+			 * else if( !insect.isHungry() && !insect.isThirsty() ) { newState =
+			 * AntManagerState.NEST; }
+			 */
+
 			else {
 				insect.setDestinationPosition(SimulationUtility.getRandomCoordinate());
 			}
@@ -101,7 +100,7 @@ public class BeeManager extends BugManager {
 
 		if (waitTime > 0) {
 			waitTime--;
-		}else {
+		} else {
 			newState = BeeManagerState.WANDERING;
 		}
 		setState(newState);
@@ -141,10 +140,7 @@ public class BeeManager extends BugManager {
 		} else if (!isAtDestination()) {
 			moveInsect(insect);
 
-		} else {
-			// ?
 		}
-
 		setState(newState);
 	}
 
@@ -189,20 +185,20 @@ public class BeeManager extends BugManager {
 
 		setState(newState);
 	}
-	
+
 	private void goNest() {
 		BeeManagerState newState = BeeManagerState.NEST;
-		
+
 		double abscissa = insect.getCurrentPosition().getAbscissa();
 		double ordinate = insect.getCurrentPosition().getOrdinate();
-		
+
 		double abscissaNest = getHive().getPosition().getAbscissa();
 		double ordinateNest = getHive().getPosition().getOrdinate();
 
 		if (insect.isHungry() || insect.isThirsty()) {
 			newState = BeeManagerState.THIRSTY;
-		} 
-		
+		}
+
 		else if ((abscissaNest == abscissa) && (ordinateNest == ordinate)) {
 			if (waitTime <= 0) {
 				waitTime = SimuPara.REPRODUCTION_TIME_INTERVAL;
@@ -211,7 +207,7 @@ public class BeeManager extends BugManager {
 			}
 		}
 	}
-	
+
 	private boolean canConsume(String type) {
 
 		NaturalResource resource = getDestinationResource();
@@ -228,7 +224,6 @@ public class BeeManager extends BugManager {
 		}
 		return false;
 	}
-	
 
 	public void eat(int quantity) {
 		int ressourceQuantity = getDestinationResource().getQuantity();
