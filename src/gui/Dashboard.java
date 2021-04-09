@@ -139,11 +139,10 @@ public class Dashboard extends JPanel {
 		g2.drawString("Scoreboard", 1040, 50);
 		g2.drawRect(1030, 30, 130, 25);
 		// Print insects number
-		g2.drawString("Ant(s) : " + String.valueOf(nbAnts) + "/" + String.valueOf(nbIAnts), 1040, 100);
-		g2.drawString("Bee(s) : " + String.valueOf(nbBees) + "/" + String.valueOf(nbIBees), 1040, 140);
-		g2.drawString("Spider(s) : " + String.valueOf(nbSpiders) + "/" + String.valueOf(nbISpiders), 1040, 180);
-		g2.drawString("Millipede(s) : " + String.valueOf(nbMillipedes) + "/" + String.valueOf(nbIMillipedes), 1040,
-				220);
+		g2.drawString("Ant(s) : " + String.valueOf(nbAnts), 1040, 100);
+		g2.drawString("Bee(s) : " + String.valueOf(nbBees), 1040, 140);
+		g2.drawString("Spider(s) : " + String.valueOf(nbSpiders), 1040, 180);
+		g2.drawString("Millipede(s) : " + String.valueOf(nbMillipedes), 1040, 220);
 
 		// Resources on field
 		for (NaturalResource re : simulation.getEnvironment().getResourcesList()) {
